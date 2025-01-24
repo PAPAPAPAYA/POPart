@@ -5,6 +5,7 @@ using UnityEngine;
 public class BubbleScript : MonoBehaviour
 {
 	public GameObject PSprefab_burst;
+	public GameObject BubbleCircle;//Find Prefab Bubble's child "Circle", try to change color of it if it's a bomb
 	public bool bomb = false;
 	public int hp = 0;
 	public int rowNumber;
@@ -20,6 +21,7 @@ public class BubbleScript : MonoBehaviour
 	{
 		SpawnHurtPS();
 		hp -= 1;
+		//CameraZoomScript.me.FitCamera();
 	}
 	private void OnBurst()
 	{
@@ -29,7 +31,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		BubbleMasterScript.me.bubbles.Remove(gameObject);
 		gameObject.SetActive(false);
-	}
+    }
 	
 	
 	#region FOR UPGRADES
