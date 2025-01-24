@@ -13,27 +13,21 @@ public class CameraZoomScript : MonoBehaviour
         me = this;
     }
     #endregion
-    public float zoomSpd;
+    public bool enable = true;//Enable Zooming function
+    public float zoomSpd;//Camera Zooming Speed
 
     void Start()
     {
-        float zAxis = -10f;
-        float[] bubblesZ = new float[BubbleMasterScript.me.bubbles.Count];
-        for (int i = 0; i < bubblesZ.Length; i++)
-        {
-            bubblesZ.SetValue(BubbleMasterScript.me.bubbles[i].transform.position.z, i);
-        }
-        if (bubblesZ.Length > 0)
-        {
-            zAxis = bubblesZ.Min() - 1f;
-        }
-        transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
+
     }
 
 
     void Update()
     {
-        //FitCamera();
+        if(enable)
+        {
+            FitCamera();
+        }
     }
     public void FitCamera()
     {
@@ -58,7 +52,19 @@ public class CameraZoomScript : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
         Vector3 camCenter = new Vector3(bound.center.x, bound.center.y, transform.position.z);
         transform.position = Vector3.Lerp(transform.position, camCenter, zoomSpd * Time.deltaTime);
-
-
+    }
+    public void SetCamZAxis()
+    {
+        float zAxis = -10f;
+        float[] bubblesZ = new float[BubbleMasterScript.me.bubbles.Count];
+        for (int i = 0; i < bubblesZ.Length; i++)
+        {
+            bubblesZ.SetValue(BubbleMasterScript.me.bubbles[i].transform.position.z, i);
+        }
+        if (bubblesZ.Length > 0)
+        {
+            zAxis = bubblesZ.Min() - 1f;
+        }
+        transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
     }
 }

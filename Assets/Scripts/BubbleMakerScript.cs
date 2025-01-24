@@ -33,7 +33,9 @@ public class BubbleMakerScript : MonoBehaviour
 			-amount_row / 2f * offset_row_y + amount_col / 2f * offset_col_y, 
 			0);
 		MakeBubbles(amount_row, amount_col);
-	}
+		CameraZoomScript.me.SetCamZAxis();
+
+    }
 	private void MakeBubbles(int x, int y)
 	{
 		for (int i = 0; i < x; i++)
