@@ -24,6 +24,8 @@ public class BubbleMakerScript : MonoBehaviour
 	
 	public int bubbleHp;
 
+
+
 	private void Start()
 	{
 		startPos = new Vector3(
@@ -31,7 +33,9 @@ public class BubbleMakerScript : MonoBehaviour
 			-amount_row / 2f * offset_row_y + amount_col / 2f * offset_col_y, 
 			0);
 		MakeBubbles(amount_row, amount_col);
-	}
+		CameraZoomScript.me.SetCamZAxis();
+
+    }
 	private void MakeBubbles(int x, int y)
 	{
 		for (int i = 0; i < x; i++)
@@ -49,7 +53,8 @@ public class BubbleMakerScript : MonoBehaviour
 				bs.rowNumber = i;
 				bs.colNumber = j;
 				bubble.name = bubble.name + " (" + i + ", " + j + ")";
-			}
-		}
+				//CameraZoomScript.me.SaveBubbleWidth(bubble.transform.position.x, bubble.transform.position.x, bubble.transform.position.y, bubble.transform.position.y);
+            }
+        }
 	}
 }
