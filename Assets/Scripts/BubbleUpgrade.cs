@@ -13,10 +13,21 @@ public class BubbleUpgrade : MonoBehaviour
         me = this;
     }
     #endregion
+    public enum Upgrades
+    {
+        lineExplode,
+        boxExplode
+    };
+    public GameObject prefab_thorn;
     //level for upgrade one bubble function
     public int lineExplodeLevel;
     public int boxExplodeLevel;
     public float ExplosionDelay = 0.25f;
+    [Header("ACTIVATED UPGRADEs")]
+    public bool lineExplosion;
+    public GameObject prefab_lineExplosion;
+    public bool boxExplosion;
+    public GameObject prefab_boxExplosion;
 
     private void Start()
     {
@@ -25,23 +36,27 @@ public class BubbleUpgrade : MonoBehaviour
         boxExplodeLevel = 1;
     }
 
+    public void ThornFan(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject thorn = Instantiate(prefab_thorn);
+        }
+    }
+
     //explode in horizontal and vertical line, each layer explode with different delay
     public void LineExplode(int rowNumber, int colNumber)
     {
-        foreach (var bubble in BubbleMasterScript.me.bubbles)
+        foreach (var bubble in BubbleMakerScript.me.bubbles)
         {
-            
-            BubbleScript bs = bubble.GetComponent<BubbleScript>();
+            BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
             if ((bs.rowNumber == rowNumber && (Mathf.Abs(bs.colNumber - colNumber) <= lineExplodeLevel) && bs.colNumber != colNumber) ||
                 (bs.colNumber == colNumber && (Mathf.Abs(bs.rowNumber - rowNumber) <= lineExplodeLevel) && bs.rowNumber != rowNumber))
             {
                 int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
                 bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
             }
-
         }
-
-
     }
 
     //explode in box around, level1 - 3x3, level2 - 5x5, level3 - 7x7...
@@ -60,9 +75,9 @@ public class BubbleUpgrade : MonoBehaviour
             }
         }
         //for each bubble in the offset boundary, explode with different delay
-        foreach (var bubble in BubbleMasterScript.me.bubbles)
+        foreach (var bubble in BubbleMakerScript.me.bubbles)
         {
-            BubbleScript bs = bubble.GetComponent<BubbleScript>();
+            BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
             if(offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
             {
                 int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
@@ -70,4 +85,15 @@ public class BubbleUpgrade : MonoBehaviour
             }
         }
     }
+
+    #region ButtonFunctions
+    public void ActivateLineExplosion()
+    {
+        lineExplosion = true;
+    }
+    public void ActivateBoxExplosion()
+    {
+        boxExplosion = true;
+    }
+    #endregion
 }
