@@ -135,6 +135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PSprefab_burst: {fileID: 4510758115324676906, guid: dcc0085f46950e042a7db599741d854b, type: 3}
+  BubbleCircle: {fileID: 7482265574867232785}
+  bomb: 0
+  hp: 0
+  rowNumber: 0
+  colNumber: 0
 --- !u!1 &7482265574867232785
 GameObject:
   m_ObjectHideFlags: 0
