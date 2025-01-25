@@ -8,6 +8,7 @@ public class ThornScript : MonoBehaviour
     public float lifespan;
     private float lifeSpanTimer;
     public float destroyRadius;
+    public int thornAmount;
 
     private void Start()
     {
