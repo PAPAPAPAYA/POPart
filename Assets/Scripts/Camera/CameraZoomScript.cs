@@ -32,26 +32,27 @@ public class CameraZoomScript : MonoBehaviour
     public void FitCamera()
     {
         Bounds bound = new();
-        float zAxis = -10f;
-        float[] bubblesZ = new float[BubbleMasterScript.me.bubbles.Count];
+        //float zAxis = -10f;
+        float[] bubblesZ = new float[BubbleMakerScript.me.bubbles.Count];
         for(int i = 0; i < bubblesZ.Length; i++)
         {
-            bubblesZ.SetValue(BubbleMasterScript.me.bubbles[i].transform.position.z, i);
-            if (BubbleMasterScript.me.bubbles[i] != null )
+            bubblesZ.SetValue(BubbleMakerScript.me.bubbles[i].transform.position.z, i);
+            if (BubbleMakerScript.me.bubbles[i] != null &&
+                BubbleMakerScript.me.bubbles[i].GetComponentInChildren<BubbleScript>().active)
             {
-                bound.Encapsulate(BubbleMasterScript.me.bubbles[i].GetComponent<Renderer>().bounds);
+                bound.Encapsulate(BubbleMakerScript.me.bubbles[i].GetComponentInChildren<Renderer>().bounds);
             }
         }
         if(bubblesZ.Length > 0)
         {
-            zAxis = bubblesZ.Min() - 1f;
+            //zAxis = bubblesZ.Min() - 1f;
         }
         Vector3 boundSize = bound.size;
-        float diagonal = Mathf.Sqrt((boundSize.x * boundSize.x) + (boundSize.y * boundSize.y) + (boundSize.z * boundSize.z));
+        //float diagonal = Mathf.Sqrt((boundSize.x * boundSize.x) + (boundSize.y * boundSize.y) + (boundSize.z * boundSize.z));
         Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, (boundSize.y + 0.8f) / 2.0f, zoomSpd * Time.deltaTime);
-        transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
-        Vector3 camCenter = new Vector3(bound.center.x, bound.center.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, camCenter, zoomSpd * Time.deltaTime);
+        //transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
+        //Vector3 camCenter = new Vector3(bound.center.x, bound.center.y, transform.position.z);
+        //transform.position = Vector3.Lerp(transform.position, camCenter, zoomSpd * Time.deltaTime);
     }
     public void SetCamZAxis()
     {
