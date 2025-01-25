@@ -12,21 +12,21 @@ public class GameManager : MonoBehaviour
 	}
 	#endregion
 
-    private int failBubbleNum; 
+    private int failBubbleNum;
+    
     public bool hasFailed = false;
-    // Start is called before the first frame update
+    public bool isPaused = false;
+
+    public int score = 0;
+
     void Start()
     {
         failBubbleNum = (int)Mathf.Pow(2*BubbleMakerScript.me.amount_layer - 1f, 2.0f); 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //if (!hasFailed)
-        //{
-        //    IfFail();
-        //}
+        Pause();
     }
 
     public void IfFail()
@@ -50,6 +50,24 @@ public class GameManager : MonoBehaviour
     public void Fail()
     {
         Time.timeScale = 0f;
+    }
+
+    private void Pause()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                Time.timeScale = 0f;
+                isPaused = true;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                isPaused = false;
+            }
+            MenuManager.me.SendMessage("ChangePauseMenuState");
+        }
     }
 
 }
