@@ -22,9 +22,9 @@ public class BubbleScript : MonoBehaviour
 	public int rowNumber;
 	public int colNumber;
 	[Header("POP")]
-	public float squeezeTime;
-	private float squeezeTimer;
-	private bool mouseDown;
+    public bool mouseDown;
+    public float squeezeTime;
+    public float squeezeTimer;
 	[Header("PUMP")]
     public float size_baseline; // when size baseline is reached, this bubble is active
     public bool active = false; // if active, it can be pop
@@ -82,7 +82,8 @@ public class BubbleScript : MonoBehaviour
 	}
     private void OnMouseDown()
     {
-		mouseDown = true;
+
+        mouseDown = true;
 		if (active)
 		{
 			// start playing ps_squeeze
@@ -101,6 +102,18 @@ public class BubbleScript : MonoBehaviour
 		// reset squeeze timer
 		squeezeTime = squeezeTimer;
     }
+
+	public void ResetBubble()
+	{
+        mouseDown = false;
+        // stop playing ps_squeeze
+        PS_squeeze.GetComponent<ParticleSystem>().Stop();
+        // stop shaking
+        shakeInstance.Stop(SP_squeeze.FadeOut, false);
+        // reset squeeze timer
+        squeezeTime = squeezeTimer;
+    }
+
     private void OnMouseDrag()
     {
   //      if (active)
