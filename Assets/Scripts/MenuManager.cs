@@ -21,9 +21,9 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         if (pauseMenu == null) pauseMenu = transform.Find("PauseMenu").gameObject;
-        //if (failMenu == null) failMenu = transform.Find("FailMenu").gameObject;
+        if (failMenu == null) failMenu = transform.Find("FailMenu").gameObject;
         pauseMenu.SetActive(false);
-        //failMenu.SetActive(false);
+        failMenu.SetActive(false);
     }
 
     void Update()
@@ -43,9 +43,21 @@ public class MenuManager : MonoBehaviour
             pauseMenu.SetActive(false);
         }
     }
+    private void OpenFailMenu()
+    {
+        if (GameManager.me.hasFailed)
+        {
+            failMenu.transform.Find("Score").gameObject.GetComponent<TextMeshProUGUI>().text = "Score: " + GameManager.me.score;
+            failMenu.SetActive(true);
+        }
+    }
 
     public void RestartGame()
     {
         SceneManager.LoadScene(1);
+    }
+    public void BackToTitle()
+    {
+        SceneManager.LoadScene(0);
     }
 }

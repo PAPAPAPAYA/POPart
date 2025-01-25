@@ -128,6 +128,8 @@ public class BubbleScript : MonoBehaviour
 		pumping = false;
 		transform.localScale = size_bursted;
 		Instantiate(PSprefab_burst, transform.position, Quaternion.identity);
+		//Score up
+		GameManager.me.score += 1;
 		// stop shaking
 		shakeInstance.Stop(0, false);
 		// stop playing ps_squeeze

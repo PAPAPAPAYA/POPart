@@ -57,6 +57,7 @@ public class BubbleMakerScript : MonoBehaviour
 		{
 			activateTimer = activateInterval;
 			ActivateABubble();
+			GameManager.me.IfFail();
 		}
 	}
     // used to initializing bubbles
