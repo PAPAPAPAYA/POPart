@@ -50,8 +50,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: pumpSpd
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: bubbleImg
+      value: 
+      objectReference: {fileID: 904520543399557806}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: SP_squeeze
       value: 
@@ -120,6 +124,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6525767489595557920}
   m_SourcePrefab: {fileID: 100100000, guid: 7f0125981a638f54888033e181289f03, type: 3}
+--- !u!1 &904520543399557806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7482265574867232785, guid: 7f0125981a638f54888033e181289f03, type: 3}
+  m_PrefabInstance: {fileID: 7736014561178276543}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1402950017882162342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8656938668280862233, guid: 7f0125981a638f54888033e181289f03, type: 3}

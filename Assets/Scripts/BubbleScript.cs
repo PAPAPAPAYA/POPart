@@ -13,7 +13,9 @@ public class BubbleScript : MonoBehaviour
 	public ShakePreset SP_squeeze;
 	private ShakeInstance shakeInstance;
 	public GameObject BubbleCircle;//Find Prefab Bubble's child "Circle", try to change color of it if it's a bomb
+	public GameObject bubbleImg;
 	[Header("UPGRADE BOOLs")]
+	public bool containUpgrade = false;
 	public bool lineExplosion = false;
 	public bool boxExplosion = false;
 	public bool thornFan = false;
@@ -21,6 +23,7 @@ public class BubbleScript : MonoBehaviour
 	public int hp = 0;
 	public int rowNumber;
 	public int colNumber;
+	private Material ogMat;
 	[Header("POP")]
     public bool mouseDown;
     public float squeezeTime;
@@ -39,10 +42,12 @@ public class BubbleScript : MonoBehaviour
 		shaker = GetComponent<Shaker>();
         shakeInstance = shaker.Shake(SP_squeeze);
 		shakeInstance.Stop(0, false);
+		ogMat = bubbleImg.GetComponent<SpriteRenderer>().material;
     }
 
     private void Update()
 	{
+		
 		// if size reached baseline, it's active
 		if(transform.localScale.x >= size_baseline)
 		{
@@ -100,35 +105,7 @@ public class BubbleScript : MonoBehaviour
         // stop shaking
         shakeInstance.Stop(SP_squeeze.FadeOut, false);
 		// reset squeeze timer
-		squeezeTime = squeezeTimer;
-    }
-
-	public void ResetBubble()
-	{
-        mouseDown = false;
-        // stop playing ps_squeeze
-        PS_squeeze.GetComponent<ParticleSystem>().Stop();
-        // stop shaking
-        shakeInstance.Stop(SP_squeeze.FadeOut, false);
-        // reset squeeze timer
-        squeezeTime = squeezeTimer;
-    }
-
-    private void OnMouseDrag()
-    {
-  //      if (active)
-		//{
-		//	if (squeezeTimer > 0)
-		//	{
-  //              PS_squeeze.GetComponent<ParticleSystem>().Play();
-  //              squeezeTimer -= Time.deltaTime;
-  //          }
-		//	else if (squeezeTimer <= 0)
-		//	{
-		//		squeezeTimer = squeezeTime;
-  //              hp--;
-		//	}
-		//}
+		squeezeTimer = squeezeTime;
     }
     private void OnBurst()
 	{
@@ -142,8 +119,12 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (thornFan)
 		{
-			BubbleUpgrade.me.ThornFan(5);
+			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2);
 		}
+		if (containUpgrade)
+		{
+            UpgradeInteractionManagerScript.me.ShowButtons();
+        }
 		active = false;
 		pumping = false;
 		transform.localScale = size_bursted;
@@ -152,6 +133,13 @@ public class BubbleScript : MonoBehaviour
 		shakeInstance.Stop(0, false);
 		// stop playing ps_squeeze
         PS_squeeze.GetComponent<ParticleSystem>().Stop();
+		// reset mat
+		bubbleImg.GetComponent<SpriteRenderer>().material = ogMat;
+		// reset upgrade
+		lineExplosion = false;
+		boxExplosion = false;
+		thornFan = false;
+		containUpgrade = false;
     }
     public void Pump()
 	{
@@ -175,28 +163,6 @@ public class BubbleScript : MonoBehaviour
 	
 	
 	#region FOR UPGRADES
-	private void Explode() // destroy neighbour bubbles
-	{
-
-        foreach (var bubble in BubbleMasterScript.me.bubbles)
-		{
-			BubbleScript bs = bubble.GetComponent<BubbleScript>();
-			if ((bs.rowNumber == rowNumber && bs.colNumber == colNumber - 1) ||
-			(bs.rowNumber == rowNumber && bs.colNumber == colNumber + 1) ||
-			(bs.rowNumber == rowNumber - 1 && bs.colNumber == colNumber) ||
-			(bs.rowNumber == rowNumber + 1 && bs.colNumber == colNumber))
-			{
-				bs.DelayedDMGCaller(0.25f, 1);
-			}
-			if ((bs.rowNumber == rowNumber && bs.colNumber == colNumber - 2) ||
-			(bs.rowNumber == rowNumber && bs.colNumber == colNumber + 2) ||
-			(bs.rowNumber == rowNumber - 2&& bs.colNumber == colNumber) ||
-			(bs.rowNumber == rowNumber + 2 && bs.colNumber == colNumber))
-			{
-				bs.DelayedDMGCaller(0.5f, 1);
-			}
-		}
-	}
 	public void DelayedDMGCaller(float delayDuration, int dmgAmount) // used to start coroutine from another script
 	{
 		StartCoroutine(DelayedDMG(delayDuration, dmgAmount));
