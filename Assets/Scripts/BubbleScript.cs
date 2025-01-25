@@ -19,17 +19,20 @@ public class BubbleScript : MonoBehaviour
 	}
 	private void OnMouseDown()
 	{
-		SpawnHurtPS();
+        SpawnHurtPS();
 		hp -= 1;
 		//CameraZoomScript.me.FitCamera();
 	}
 	private void OnBurst()
 	{
-		if (bomb)
+
+        if (bomb)
 		{
 			Explode();
-		}
-		BubbleMasterScript.me.bubbles.Remove(gameObject);
+            //BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
+            //BubbleUpgrade.me.BoxExplode(rowNumber, colNumber);
+        }
+        BubbleMasterScript.me.bubbles.Remove(gameObject);
 		gameObject.SetActive(false);
     }
 	
@@ -37,7 +40,8 @@ public class BubbleScript : MonoBehaviour
 	#region FOR UPGRADES
 	private void Explode() // destroy neighbour bubbles
 	{
-		foreach (var bubble in BubbleMasterScript.me.bubbles)
+
+        foreach (var bubble in BubbleMasterScript.me.bubbles)
 		{
 			BubbleScript bs = bubble.GetComponent<BubbleScript>();
 			if ((bs.rowNumber == rowNumber && bs.colNumber == colNumber - 1) ||
