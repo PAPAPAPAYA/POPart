@@ -13,52 +13,178 @@ public class BubbleMakerScript : MonoBehaviour
 		me = this;
 	}
 	#endregion
+	[Header("Bubble Prefabs")]
 	public GameObject prefab_bubble;
+	public List<GameObject> bubbles = new();
+	[Header("For Spawning Inactive Bubbles")]
 	private Vector3 startPos;
-	public int amount_row;
-	public int amount_col;
+	public int amount_layer;
 	public float offset_row_x;
 	public float offset_row_y;
 	public float offset_col_x;
 	public float offset_col_y;
-	
-	public int bubbleHp;
+    public int bubbleHp;
+	public int amount_initialPump;
+	[Header("For Activating Bubbles")]
+	public float activateInterval;
+	private float activateTimer;
 
 
-
-	private void Start()
+    private void Start()
 	{
-		startPos = new Vector3(
-			-amount_row / 2f * offset_row_x - amount_col / 2f * offset_col_x + offset_col_x, 
-			-amount_row / 2f * offset_row_y + amount_col / 2f * offset_col_y, 
-			0);
-		MakeBubbles(amount_row, amount_col);
-		CameraZoomScript.me.SetCamZAxis();
+		// initialize activateTimer
+		activateTimer = activateInterval;
+		
+		// spawn all the bubbles
+		MakeBubbles2();
 
+		// pump a few bubbles at start
+		InitialPump(amount_initialPump);
     }
-	private void MakeBubbles(int x, int y)
-	{
-		for (int i = 0; i < x; i++)
+    private void Update()
+    {
+		if (activateTimer > 0 &&
+			bubbles.Count == Mathf.Pow(amount_layer * 2 - 1, 2))
 		{
-			for (int j = 0; j < y; j++)
+			activateTimer -= Time.deltaTime;
+		}
+		else if (activateTimer <= 0)
+		{
+			activateTimer = activateInterval;
+			ActivateABubble();
+		}
+	}
+    // used to initializing bubbles
+    private void MakeBubbles2()
+	{
+		for (int i = 0; i < amount_layer; i++)
+		{
+			GameObject bubble1 = Instantiate(prefab_bubble);
+			if(i == 0)
 			{
-				GameObject bubble = Instantiate(prefab_bubble);
-				bubble.transform.position = new Vector3(
-					startPos.x + i * offset_row_x + j * offset_col_x,
-					startPos.y + i * offset_row_y - j * offset_col_y,
-					startPos.z + i * offset_row_y - j * offset_col_y);
-				BubbleMasterScript.me.bubbles.Add(bubble);
-				BubbleScript bs = bubble.GetComponent<BubbleScript>();
-				bs.hp = bubbleHp;
-				bs.rowNumber = i;
-				bs.colNumber = j;
-				bubble.name = bubble.name + " (" + i + ", " + j + ")";
-				//CameraZoomScript.me.SaveBubbleWidth(bubble.transform.position.x, bubble.transform.position.x, bubble.transform.position.y, bubble.transform.position.y);
+                bubble1.transform.position = new(0,
+                    0,
+                    0);
+				BubbleScript bs = bubble1.GetComponentInChildren<BubbleScript>();
+				bs.rowNumber = amount_layer;
+				bs.colNumber = amount_layer;
+                bubbles.Add(bubble1);
             }
+			else
+			{
+                bubble1.transform.position = bubbles[^1].transform.position + 
+					new Vector3(offset_col_x,
+                    -offset_col_y,
+                    -offset_col_y);
+                BubbleScript bs = bubble1.GetComponentInChildren<BubbleScript>();
+                bs.rowNumber = amount_layer - i + 1;
+                bs.colNumber = amount_layer + i;
+                bubbles.Add(bubble1);
+            }
+			for (int j = 0; j < i * 2 - 1; j++)
+			{
+				GameObject bubble2 = Instantiate(prefab_bubble);
+				bubble2.transform.position = bubbles[^1].transform.position +
+					new Vector3(offset_row_x,
+					offset_row_y,
+					offset_row_y);
+                BubbleScript bs = bubble2.GetComponentInChildren<BubbleScript>();
+				BubbleScript bs_last = bubbles[^1].GetComponentInChildren<BubbleScript>();
+                bs.rowNumber = bs_last.rowNumber + 1;
+                bs.colNumber = bs_last.colNumber;
+                bubbles.Add(bubble2);
+            }
+			for (int k = 1; k < i * 2 + 1; k++)
+			{
+				GameObject bubble3 = Instantiate(prefab_bubble);
+				bubble3.transform.position = bubbles[^1].transform.position + 
+					new Vector3(-offset_col_x,
+                    offset_col_y,
+                    offset_col_y);
+                BubbleScript bs = bubble3.GetComponentInChildren<BubbleScript>();
+                BubbleScript bs_last = bubbles[^1].GetComponentInChildren<BubbleScript>();
+                bs.rowNumber = bs_last.rowNumber;
+                bs.colNumber = bs_last.colNumber - 1;
+                bubbles.Add(bubble3);
+            }
+			for (int m = 1; m < i * 2 + 1; m++)
+			{
+				GameObject bubble4 = Instantiate(prefab_bubble);
+				bubble4.transform.position = bubbles[^1].transform.position + 
+					new Vector3(-offset_row_x,
+					-offset_row_y,
+					-offset_row_y);
+                BubbleScript bs = bubble4.GetComponentInChildren<BubbleScript>();
+                BubbleScript bs_last = bubbles[^1].GetComponentInChildren<BubbleScript>();
+                bs.rowNumber = bs_last.rowNumber - 1;
+                bs.colNumber = bs_last.colNumber;
+                bubbles.Add(bubble4);
+            }
+			for (int n = 1; n < i * 2 + 1; n++)
+			{
+				GameObject bubble5 = Instantiate(prefab_bubble);
+				bubble5.transform.position = bubbles[^1].transform.position + 
+					new Vector3(offset_col_x,
+					-offset_col_y,
+					-offset_col_y);
+                BubbleScript bs = bubble5.GetComponentInChildren<BubbleScript>();
+                BubbleScript bs_last = bubbles[^1].GetComponentInChildren<BubbleScript>();
+                bs.rowNumber = bs_last.rowNumber;
+                bs.colNumber = bs_last.colNumber + 1;
+                bubbles.Add(bubble5);
+            }
+		}
+	}
+	
+	// used to start pumping a single bubble
+	private void ActivateABubble()
+	{
+		for(int q = 0; q < bubbles.Count; q++)
+		{
+			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
+			if (!bs.pumping)
+			{
+				bs.hp = bubbleHp;
+				bs.pumping = true;
+                //CameraZoomScript.me.FitCamera();
+                break;
+			}
+		}
+	}
+
+	// used to start pumping a few bubbles at start
+	private void InitialPump(int amount)
+	{
+		for(int q = 0;q < amount; q++)
+		{
+            BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
+            bs.pumping = true;
+            bs.transform.localScale = new(bs.size_baseline, bs.size_baseline);
         }
 	}
-	private void MakeABubble()
-	{
 
-	}
+
+
+    // DEPRECATED
+    private void MakeBubbles(int x, int y)
+    {
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                GameObject bubble = Instantiate(prefab_bubble);
+                bubble.transform.position = new Vector3(
+                    startPos.x + i * offset_row_x + j * offset_col_x,
+                    startPos.y + i * offset_row_y - j * offset_col_y,
+                    startPos.z + i * offset_row_y - j * offset_col_y);
+                BubbleMasterScript.me.bubbles.Add(bubble);
+                BubbleScript bs = bubble.GetComponent<BubbleScript>();
+                bs.hp = bubbleHp;
+                bs.rowNumber = i;
+                bs.colNumber = j;
+                bubble.name = bubble.name + " (" + i + ", " + j + ")";
+                //CameraZoomScript.me.SaveBubbleWidth(bubble.transform.position.x, bubble.transform.position.x, bubble.transform.position.y, bubble.transform.position.y);
+            }
+        }
+    }
 }

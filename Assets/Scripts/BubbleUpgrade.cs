@@ -23,7 +23,6 @@ public class BubbleUpgrade : MonoBehaviour
         //default is set to 1
         lineExplodeLevel = 1;
         boxExplodeLevel = 1;
-
     }
 
     //explode in horizontal and vertical line, each layer explode with different delay
