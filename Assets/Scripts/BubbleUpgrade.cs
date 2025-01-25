@@ -23,6 +23,7 @@ public class BubbleUpgrade : MonoBehaviour
     public int lineExplodeLevel;
     public int boxExplodeLevel;
     public float ExplosionDelay = 0.25f;
+    public int thornFanLevel;
     [Header("ACTIVATED UPGRADEs")]
     public bool lineExplosion;
     public GameObject prefab_lineExplosion;
@@ -34,6 +35,7 @@ public class BubbleUpgrade : MonoBehaviour
         //default is set to 1
         lineExplodeLevel = 1;
         boxExplodeLevel = 1;
+        thornFanLevel = 1;
     }
 
     public void ThornFan(int amount)

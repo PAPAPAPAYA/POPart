@@ -129,7 +129,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (thornFan)
 		{
-			BubbleUpgrade.me.ThornFan(5);
+			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2);
 		}
 		active = false;
 		pumping = false;
