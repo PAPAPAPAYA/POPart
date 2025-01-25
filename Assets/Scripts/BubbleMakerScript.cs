@@ -24,6 +24,8 @@ public class BubbleMakerScript : MonoBehaviour
 	
 	public int bubbleHp;
 
+
+
 	private void Start()
 	{
 		startPos = new Vector3(
@@ -51,5 +53,9 @@ public class BubbleMakerScript : MonoBehaviour
 				bubble.name = bubble.name + " (" + i + ", " + j + ")";
 			}
 		}
+	}
+	private void MakeABubble()
+	{
+
 	}
 }

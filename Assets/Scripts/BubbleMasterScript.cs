@@ -29,7 +29,7 @@ public class BubbleMasterScript : MonoBehaviour
 		// when list populated, put in items once
 		if (bubblesPopulated && !bubblesReady)
 		{
-			PutInBombs();
+			//PutInBombs();
 			bubblesReady = true;
 		}
 	}
