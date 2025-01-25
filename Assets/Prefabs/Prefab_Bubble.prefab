@@ -137,12 +137,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PSprefab_burst: {fileID: 4510758115324676906, guid: dcc0085f46950e042a7db599741d854b, type: 3}
   PS_squeeze: {fileID: 5503503473182820826}
+  SP_squeeze: {fileID: 0}
   BubbleCircle: {fileID: 7482265574867232785}
-  bomb: 0
+  bubbleImg: {fileID: 0}
+  containUpgrade: 0
+  lineExplosion: 0
+  boxExplosion: 0
+  thornFan: 0
   hp: 1
   rowNumber: 0
   colNumber: 0
-  squeezeTime: 0.5
+  mouseDown: 0
+  squeezeTime: 0.3
+  squeezeTimer: 0
   size_baseline: 1.2
   active: 0
   pumping: 0

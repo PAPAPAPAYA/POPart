@@ -3430,7 +3430,7 @@ MonoBehaviour:
   offset_col_x: 0.8
   offset_col_y: 0.6
   bubbleHp: 1
-  amount_initialPump: 9
+  amount_initialPump: 16
   activateInterval: 0.1
   percentage_containUpgrade: 0.1
   percentage_lineExplosion: 0.2
