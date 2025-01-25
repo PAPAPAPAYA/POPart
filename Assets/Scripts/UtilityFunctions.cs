@@ -12,6 +12,7 @@ public class UtilityFunctions : MonoBehaviour
 		me = this;
 	}
 	
+	// used to shuffle given GameObject list
 	public List<GameObject> ShuffleList(List<GameObject> list)
 	{
 		List<GameObject>shuffled = new();
