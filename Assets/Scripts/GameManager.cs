@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
 	{
 		me = this;
+        Time.timeScale = 1.0f;
 	}
 	#endregion
 
     private int failBubbleNum;
-    
+
+    public bool wudi;//开挂无敌，不会死亡，方便测试
     public bool hasFailed = false;
     public bool isPaused = false;
 
@@ -31,25 +33,29 @@ public class GameManager : MonoBehaviour
 
     public void IfFail()
     {
-        int activecount = 0;
-        foreach (var bubble in BubbleMakerScript.me.bubbles)
+        if (!wudi)
         {
-            if (bubble.GetComponentInChildren<BubbleScript>().active)
+            int activecount = 0;
+            foreach (var bubble in BubbleMakerScript.me.bubbles)
             {
-                activecount++;
+                if (bubble.GetComponentInChildren<BubbleScript>().active)
+                {
+                    activecount++;
+                }
             }
-        }
-        if (activecount >= failBubbleNum)
-        {
-            print("You failed");
-            Fail();
-            hasFailed = true;
+            if (activecount >= failBubbleNum)
+            {
+                print("You failed");
+                hasFailed = true;
+                Fail();
+            }
         }
     }
 
     public void Fail()
     {
         Time.timeScale = 0f;
+        MenuManager.me.SendMessage("OpenFailMenu");
     }
 
     private void Pause()
