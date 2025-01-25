@@ -14,7 +14,9 @@ public class BubbleScript : MonoBehaviour
 	private ShakeInstance shakeInstance;
 	public GameObject BubbleCircle;//Find Prefab Bubble's child "Circle", try to change color of it if it's a bomb
 	[Header("UPGRADE BOOLs")]
-	public bool bomb = false;
+	public bool lineExplosion = false;
+	public bool boxExplosion = false;
+	public bool thornFan = false;
 	[Header("BASICs")]
 	public int hp = 0;
 	public int rowNumber;
@@ -117,9 +119,17 @@ public class BubbleScript : MonoBehaviour
     }
     private void OnBurst()
 	{
-        if (bomb)
+        if (lineExplosion)
 		{
-			Explode();
+			BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
+		}
+		if (boxExplosion)
+		{
+			BubbleUpgrade.me.BoxExplode(rowNumber, colNumber);
+		}
+		if (thornFan)
+		{
+			BubbleUpgrade.me.ThornFan(5);
 		}
 		active = false;
 		pumping = false;
