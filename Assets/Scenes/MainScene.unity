@@ -1734,6 +1734,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5673151952044406008, guid: 53e29072eb0e0324bba0c446a3281709, type: 3}
+      propertyPath: pumpSpd
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6601454745644881039, guid: 53e29072eb0e0324bba0c446a3281709, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
