@@ -16,7 +16,8 @@ public class BubbleUpgrade : MonoBehaviour
     public enum Upgrades
     {
         lineExplode,
-        boxExplode
+        boxExplode,
+        thornFan
     };
     public GameObject prefab_thorn;
     //level for upgrade one bubble function
@@ -29,6 +30,8 @@ public class BubbleUpgrade : MonoBehaviour
     public GameObject prefab_lineExplosion;
     public bool boxExplosion;
     public GameObject prefab_boxExplosion;
+    public bool thornFan;
+    public GameObject prefab_thornFan;
 
     private void Start()
     {
@@ -87,15 +90,4 @@ public class BubbleUpgrade : MonoBehaviour
             }
         }
     }
-
-    #region ButtonFunctions
-    public void ActivateLineExplosion()
-    {
-        lineExplosion = true;
-    }
-    public void ActivateBoxExplosion()
-    {
-        boxExplosion = true;
-    }
-    #endregion
 }
