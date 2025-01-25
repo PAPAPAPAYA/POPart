@@ -97,6 +97,7 @@ public class BubbleScript : MonoBehaviour
 			shakeInstance.Start(SP_squeeze.FadeIn);
         }
     }
+
     private void OnMouseUp()
     {
 		mouseDown = false;
@@ -106,6 +107,16 @@ public class BubbleScript : MonoBehaviour
         shakeInstance.Stop(SP_squeeze.FadeOut, false);
 		// reset squeeze timer
 		squeezeTimer = squeezeTime;
+    }
+    public void ResetBubble()
+    {
+        mouseDown = false;
+        // stop playing ps_squeeze
+        PS_squeeze.GetComponent<ParticleSystem>().Stop();
+        // stop shaking
+        shakeInstance.Stop(SP_squeeze.FadeOut, false);
+        // reset squeeze timer
+        squeezeTimer = squeezeTime;
     }
     private void OnBurst()
 	{
