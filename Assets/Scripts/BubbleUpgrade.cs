@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+
+public class BubbleUpgrade : MonoBehaviour
+{
+    #region SINGLETON
+    public static BubbleUpgrade me;
+    private void Awake()
+    {
+        me = this;
+    }
+    #endregion
+    //level for upgrade one bubble function
+    public int lineExplodeLevel;
+    public int boxExplodeLevel;
+    public float ExplosionDelay = 0.25f;
+
+    private void Start()
+    {
+        //default is set to 1
+        lineExplodeLevel = 1;
+        boxExplodeLevel = 1;
+
+    }
+
+    //explode in horizontal and vertical line, each layer explode with different delay
+    public void LineExplode(int rowNumber, int colNumber)
+    {
+        foreach (var bubble in BubbleMasterScript.me.bubbles)
+        {
+            
+            BubbleScript bs = bubble.GetComponent<BubbleScript>();
+            if ((bs.rowNumber == rowNumber && (Mathf.Abs(bs.colNumber - colNumber) <= lineExplodeLevel) && bs.colNumber != colNumber) ||
+                (bs.colNumber == colNumber && (Mathf.Abs(bs.rowNumber - rowNumber) <= lineExplodeLevel) && bs.rowNumber != rowNumber))
+            {
+                int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
+                bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+            }
+
+        }
+
+
+    }
+
+    //explode in box around, level1 - 3x3, level2 - 5x5, level3 - 7x7...
+    public void BoxExplode(int rowNumber, int colNumber)
+    {
+        //add the coordinate of all bubble around according to the box explode level
+        List<(int, int)> offsets = new List<(int, int)>();
+        for (int i = 1; i <= boxExplodeLevel; i++)
+        {
+            for (int j = 0; j <= boxExplodeLevel + 1; j++)
+            {
+                offsets.Add((-1 * i, -1 * i + j));
+                offsets.Add((1 * i - j, -1 * i));
+                offsets.Add((-1 * i + j, 1 * i));
+                offsets.Add((1 * i, 1 * i - j));
+            }
+        }
+        //for each bubble in the offset boundary, explode with different delay
+        foreach (var bubble in BubbleMasterScript.me.bubbles)
+        {
+            BubbleScript bs = bubble.GetComponent<BubbleScript>();
+            if(offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
+            {
+                int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
+                bs.DelayedDMGCaller( ExplosionDelay * levelNum, 1);
+            }
+        }
+    }
+}
