@@ -21,15 +21,15 @@ public class BubbleMasterScript : MonoBehaviour
 	private void Update()
 	{
 		// check if list populated
-		if (!bubblesPopulated &&
-			bubbles.Count == BubbleMakerScript.me.amount_col * BubbleMakerScript.me.amount_row)
-		{
-			bubblesPopulated = true;
-		}
+		//if (!bubblesPopulated &&
+		//	bubbles.Count == BubbleMakerScript.me.amount_col * BubbleMakerScript.me.amount_row)
+		//{
+		//	bubblesPopulated = true;
+		//}
 		// when list populated, put in items once
 		if (bubblesPopulated && !bubblesReady)
 		{
-			PutInBombs();
+			//PutInBombs();
 			bubblesReady = true;
 		}
 	}
