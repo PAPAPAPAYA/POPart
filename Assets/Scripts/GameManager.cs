@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
             MenuManager.me.SendMessage("ChangePauseMenuState");
 
             AudioManager.Instance.ApplyMuffleEffect(isPaused);
+            AudioManager.Instance.SetMasterVolume(isPaused ? -80 : 0);
         }
     }
     public void ChestCountUp()
