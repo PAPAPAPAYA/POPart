@@ -141,6 +141,10 @@ PrefabInstance:
       value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: pumpSpdMultiplier_max
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: pumpSpdMult_apply_interval
       value: 10
       objectReference: {fileID: 0}

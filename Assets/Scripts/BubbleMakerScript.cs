@@ -30,6 +30,7 @@ public class BubbleMakerScript : MonoBehaviour
 	public float activateInterval_decrease_Interval;
 	private float activateInterval_decrease_timer;
 	public float activateInterval_decrease_Mult;
+	public float activateInterval_min;
 	[Header("For Upgrades")]
 	public float percentage_lineExplosion;
 	public float percentage_boxExplosion;
@@ -76,6 +77,7 @@ public class BubbleMakerScript : MonoBehaviour
             activateInterval_decrease_timer = activateInterval_decrease_Interval;
             activateInterval *= activateInterval_decrease_Mult;
 		}
+		activateInterval = Mathf.Clamp(activateInterval, activateInterval_min, activateInterval);
 	}
     // used to initializing bubbles
     private void MakeBubbles2()
