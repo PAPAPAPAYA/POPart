@@ -14,12 +14,37 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
     }
     #endregion
 
+    // button refs
     public GameObject option1;
     public GameObject option2;
     public GameObject option3;
 
+    // available upgrades
     public List<GameObject> upgrades;
     private List<GameObject> upgradeListToShuffle;
+
+    // upgrade queue
+    public int showButtonStack;
+    public bool showingButtons = false;
+
+    private void Update()
+    {
+        if (showButtonStack > 0 &&
+            !showingButtons)
+        {
+            showButtonStack--;
+            showingButtons = true;
+            ShowButtons();
+        }
+        if (showingButtons)
+        {
+            AudioManager.Instance.ApplyMuffleEffect(true);
+        }
+        else
+        {
+            AudioManager.Instance.ApplyMuffleEffect(false);
+        }
+    }
 
     public void ShowButtons()
     {
@@ -76,6 +101,12 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
         option1.SetActive(false);
         option2.SetActive(false);
         option3.SetActive(false);
+        if (showButtonStack > 0)
+        {
+            //StartCoroutine(WaitABit());
+            ShowButtons();
+        }
+        showingButtons = false;
     }
     public void ActivateBoxExplosion()
     {
@@ -84,6 +115,12 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
         option1.SetActive(false);
         option2.SetActive(false);
         option3.SetActive(false);
+        if (showButtonStack > 0)
+        {
+            //StartCoroutine(WaitABit());
+            ShowButtons();
+        }
+        showingButtons = false;
     }
     public void ActivateThornFan()
     {
@@ -92,6 +129,12 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
         option1.SetActive(false);
         option2.SetActive(false);
         option3.SetActive(false);
+        if (showButtonStack > 0)
+        {
+            //StartCoroutine(WaitABit());
+            ShowButtons();
+        }
+        showingButtons = false;
     }
     public void ActivateFastSqueeze()
     {
@@ -100,6 +143,16 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
         option1.SetActive(false);
         option2.SetActive(false);
         option3.SetActive(false);
+        if (showButtonStack > 0)
+        {
+            //StartCoroutine(WaitABit());
+            ShowButtons();
+        }
+        showingButtons = false;
     }
     #endregion
+    IEnumerator WaitABit()
+    {
+        yield return new WaitForSeconds(.1f);
+    }
 }
