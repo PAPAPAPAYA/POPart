@@ -102,7 +102,10 @@ public class HandUpgrade : MonoBehaviour
             {
                 if (bs.rowNumber == rowNumber && (Mathf.Abs(bs.colNumber - colNumber) <= 2) && bs.colNumber != colNumber)
                 {
-                    selectedBubbles.Add(bs);
+                    if (!selectedBubbles.Contains(bs))
+                    {
+                        selectedBubbles.Add(bs);
+                    }
                 }
             }
             else if (lineHandLevel > 1)
