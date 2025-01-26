@@ -170,7 +170,14 @@ public class BubbleScript : MonoBehaviour
 		active = true;
 		pumping = false;
 
+		if (BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+		{
+       BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
+    }
+
+
 		AudioManager.Instance.PlayRechargeSound();
+
 	}
 	private void OnMouseDown()
 	{
@@ -217,22 +224,36 @@ public class BubbleScript : MonoBehaviour
 		shakeInstance.Stop(SP_squeeze.FadeOut, false);
 		// reset squeeze timer
 		squeezeTimer = squeezeTime;
-	}
-	public void ResetBubble()
-	{
-		mouseDown = false;
-		// stop playing ps_squeeze
-		PS_squeeze.GetComponent<ParticleSystem>().Stop();
-		// stop shaking
-		shakeInstance.Stop(SP_squeeze.FadeOut, false);
-		// reset squeeze timer
-		squeezeTimer = squeezeTime;
+    }
+    private void OnMouseExit()
+    {
+        mouseDown = false;
+        // stop playing ps_squeeze
+        PS_squeeze.GetComponent<ParticleSystem>().Stop();
+        // stop shaking
+        shakeInstance.Stop(SP_squeeze.FadeOut, false);
+        // reset squeeze timer
+        squeezeTimer = squeezeTime;
+    }
+    public void ResetBubble()
+    {
+        mouseDown = false;
+        // stop playing ps_squeeze
+        PS_squeeze.GetComponent<ParticleSystem>().Stop();
+        // stop shaking
+        shakeInstance.Stop(SP_squeeze.FadeOut, false);
+        // reset squeeze timer
+        squeezeTimer = squeezeTime;
 
 		AudioManager.Instance.TerminateChargingSound();
 	}
 	protected virtual void OnBurst()
 	{
-		if (lineExplosion)
+		if (!BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+		{
+            BubbleMakerScript.me.inactiveBubbles.Add(gameObject.transform.parent.gameObject);
+        }
+        if (lineExplosion)
 		{
 			BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
 		}
@@ -242,7 +263,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (thornFan)
 		{
-			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2, transform.position);
+			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 1, transform.position);
 		}
 		if (fastSqueeze)
 		{
