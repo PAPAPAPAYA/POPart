@@ -98,7 +98,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (mouseDown)
 		{
-			if (active && // if bubble is pumped
+            if (active && // if bubble is pumped
 				!UpgradeInteractionManagerScript.me.showingButtons) // if not showing upgrade buttons
 			{
                 if (squeezeTimer > 0)
@@ -131,7 +131,19 @@ public class BubbleScript : MonoBehaviour
     private void OnMouseDown()
     {
         mouseDown = true;
-		if (active)
+        if (HandUpgrade.me.lineHand)
+        {
+            HandUpgrade.me.LineHand(rowNumber, colNumber);
+        }
+		if (HandUpgrade.me.xxHand)
+		{
+			HandUpgrade.me.XXHand(rowNumber, colNumber);
+		}
+		if (HandUpgrade.me.boxHand)
+		{
+			HandUpgrade.me.BoxHand(rowNumber, colNumber);
+		}
+        if (active)
 		{
 			// start playing ps_squeeze
             PS_squeeze.GetComponent<ParticleSystem>().Play();
@@ -146,7 +158,6 @@ public class BubbleScript : MonoBehaviour
 			// if not active, play a sound
 		}
     }
-
     private void OnMouseUp()
     {
 		mouseDown = false;
