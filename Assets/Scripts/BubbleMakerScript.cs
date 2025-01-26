@@ -67,7 +67,8 @@ public class BubbleMakerScript : MonoBehaviour
 		for (int i = 0; i < amount_layer; i++)
 		{
 			GameObject bubble1 = Instantiate(prefab_bubble);
-			if(i == 0)
+            Debug.Log("jj");
+            if (i == 0)
 			{
                 bubble1.transform.position = new(0,
                     0,
@@ -149,7 +150,7 @@ public class BubbleMakerScript : MonoBehaviour
 		for(int q = 0; q < bubbles.Count; q++)
 		{
 			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
-			if (!bs.pumping)
+			if (!bs.active)
 			{
 				bs.hp = bubbleHp;
 				bs.pumping = true;
