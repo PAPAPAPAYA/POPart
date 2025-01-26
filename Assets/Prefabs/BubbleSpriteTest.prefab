@@ -75,15 +75,67 @@ PrefabInstance:
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: bubbleImg
       value: 
-      objectReference: {fileID: 904520543399557806}
+      objectReference: {fileID: 5722927297338728961}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: ogColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: ogColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: ogColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: ogColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: SP_squeeze
       value: 
       objectReference: {fileID: 11400000, guid: b6f2d32e39f69124ca0eb09f0898e3fb, type: 2}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: inActiveMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 99bdaa2817af4d94b934587cec45a7eb, type: 2}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: BubbleCircle
+      value: 
+      objectReference: {fileID: 5722927297338728961}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: pumpReadyMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 28947b61c977a9346b6a97b559eb03ea, type: 2}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: size_baseline
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: bubbleAnimator
+      value: 
+      objectReference: {fileID: 8094726241461180041}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: inActiveColor.a
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: inActiveColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: inActiveColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: inActiveColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: shortShakePreset
+      value: 
+      objectReference: {fileID: 11400000, guid: 962c80d5abfdc804c9173250c824e853, type: 2}
     - target: {fileID: 5991238356593771807, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -141,18 +193,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7482265574867232785, guid: 7f0125981a638f54888033e181289f03, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2607641700856049854, guid: 7f0125981a638f54888033e181289f03, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6525767489595557920}
+    - targetCorrespondingSourceObject: {fileID: 2607641700856049854, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8094726241461180041}
   m_SourcePrefab: {fileID: 100100000, guid: 7f0125981a638f54888033e181289f03, type: 3}
---- !u!1 &904520543399557806 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7482265574867232785, guid: 7f0125981a638f54888033e181289f03, type: 3}
-  m_PrefabInstance: {fileID: 7736014561178276543}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1402950017882162342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8656938668280862233, guid: 7f0125981a638f54888033e181289f03, type: 3}
@@ -176,3 +227,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addToGlobalShakers: 0
+--- !u!95 &8094726241461180041
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722927297338728961}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87394786a204438478abc7eab7ae9cef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
