@@ -17,7 +17,6 @@ public class BubbleMakerScript : MonoBehaviour
 	public GameObject prefab_bubble;
 	public List<GameObject> bubbles = new();
 	[Header("For Spawning Inactive Bubbles")]
-	private Vector3 startPos;
 	public int amount_layer;
 	public float offset_row_x;
 	public float offset_row_y;
@@ -28,8 +27,10 @@ public class BubbleMakerScript : MonoBehaviour
 	[Header("For Activating Bubbles")]
 	public float activateInterval;
 	private float activateTimer;
-	[Header("For Putting in Upgrades")]
-	public float percentage_containUpgrade;
+	public float activateInterval_decrease_Interval;
+	private float activateInterval_decrease_timer;
+	public float activateInterval_decrease_Mult;
+	[Header("For Upgrades")]
 	public float percentage_lineExplosion;
 	public float percentage_boxExplosion;
 	public float percentage_thornFan;
@@ -46,6 +47,8 @@ public class BubbleMakerScript : MonoBehaviour
 
 		// pump a few bubbles at start
 		InitialPump(amount_initialPump);
+
+		activateInterval_decrease_timer = activateInterval_decrease_Interval;
     }
     private void Update()
     {
@@ -60,6 +63,19 @@ public class BubbleMakerScript : MonoBehaviour
 			ActivateABubble();
 			GameManager.me.IfFail();
 		}
+		SpeedUpBubbleActivationRateOverTime();
+    }
+	private void SpeedUpBubbleActivationRateOverTime()
+	{
+		if (activateInterval_decrease_timer > 0)
+		{
+			activateInterval_decrease_timer -= Time.deltaTime;
+		}
+		else
+		{
+            activateInterval_decrease_timer = activateInterval_decrease_Interval;
+            activateInterval *= activateInterval_decrease_Mult;
+		}
 	}
     // used to initializing bubbles
     private void MakeBubbles2()
@@ -67,7 +83,8 @@ public class BubbleMakerScript : MonoBehaviour
 		for (int i = 0; i < amount_layer; i++)
 		{
 			GameObject bubble1 = Instantiate(prefab_bubble);
-			if(i == 0)
+            Debug.Log("jj");
+            if (i == 0)
 			{
                 bubble1.transform.position = new(0,
                     0,
@@ -149,36 +166,39 @@ public class BubbleMakerScript : MonoBehaviour
 		for(int q = 0; q < bubbles.Count; q++)
 		{
 			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
-			if (!bs.pumping)
+			if (!bs.active)
 			{
 				bs.hp = bubbleHp;
 				bs.pumping = true;
-                if (CheckPercentage(percentage_containUpgrade))
+                if (GameManager.me.chestCount >= GameManager.me.chestCountMax)
 				{
 					bs.containUpgrade = true;
-					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
+					GameManager.me.ResetChestCount(); // reset chest count to zero
+					GameManager.me.ChestCountMaxUp(); // increase chest count max
+					ScoreManager.me.UpdateChestCountMax(); // update chest count max UI
                 }
-				if (CheckPercentage(percentage_lineExplosion) &&
-					BubbleUpgrade.me.lineExplosion)
+				if (BubbleUpgrade.me.lineExplosion &&
+                    CheckPercentage(percentage_lineExplosion))
 				{
 					bs.lineExplosion = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_lineExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
 
                 }
-				if (CheckPercentage(percentage_boxExplosion) &&
-                    BubbleUpgrade.me.boxExplosion)
+				if (BubbleUpgrade.me.boxExplosion &&
+                    CheckPercentage(percentage_boxExplosion))
 				{
 					bs.boxExplosion = true;
                     bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_boxExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
                 }
-				if (CheckPercentage(percentage_thornFan) &&
-                    BubbleUpgrade.me.thornFan)
+				if (BubbleUpgrade.me.thornFan &&
+                    CheckPercentage(percentage_thornFan))
 				{
 					bs.thornFan = true;
                     bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_thornFan.GetComponent<UpgradeHolderScript>().mat_upgrade;
                 }
-				if(CheckPercentage(percentage_fastSqueeze) &&
-					BubbleUpgrade.me.fastSqueeze)
+				if(BubbleUpgrade.me.fastSqueeze &&
+                    CheckPercentage(percentage_fastSqueeze))
 				{
 					bs.fastSqueeze = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_fastSqueeze.GetComponent<UpgradeHolderScript>().mat_upgrade;
@@ -196,13 +216,15 @@ public class BubbleMakerScript : MonoBehaviour
 		{
             BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
             bs.pumping = true;
-            bs.transform.localScale = new(bs.size_baseline, bs.size_baseline);
+            //bs.transform.localScale = new(bs.size_baseline, bs.size_baseline);
         }
 	}
 
 	private bool CheckPercentage(float percentage)
 	{
-		if (Random.Range(0, 1f) <= percentage)
+		float randNum = Random.Range(0f, 1f);
+        print("rolled " + randNum + " vs " + percentage);
+        if (randNum <= percentage)
 		{
 			return true;
 		}
@@ -212,26 +234,21 @@ public class BubbleMakerScript : MonoBehaviour
 		}
 	}
 
-    // DEPRECATED
-    private void MakeBubbles(int x, int y)
-    {
-        for (int i = 0; i < x; i++)
-        {
-            for (int j = 0; j < y; j++)
-            {
-                GameObject bubble = Instantiate(prefab_bubble);
-                bubble.transform.position = new Vector3(
-                    startPos.x + i * offset_row_x + j * offset_col_x,
-                    startPos.y + i * offset_row_y - j * offset_col_y,
-                    startPos.z + i * offset_row_y - j * offset_col_y);
-                BubbleMasterScript.me.bubbles.Add(bubble);
-                BubbleScript bs = bubble.GetComponent<BubbleScript>();
-                bs.hp = bubbleHp;
-                bs.rowNumber = i;
-                bs.colNumber = j;
-                bubble.name = bubble.name + " (" + i + ", " + j + ")";
-                //CameraZoomScript.me.SaveBubbleWidth(bubble.transform.position.x, bubble.transform.position.x, bubble.transform.position.y, bubble.transform.position.y);
-            }
-        }
-    }
+	public void SetPercentage(string bombClass, int level)
+	{
+		switch (bombClass)
+		{
+			case "box":
+				percentage_boxExplosion = level * HandUpgrade.me.moreBomb_percentageIncreasePerLevel;
+				break;
+			case "line":
+				percentage_lineExplosion = level * HandUpgrade.me.moreBomb_percentageIncreasePerLevel;
+				break;
+			case "thornFan":
+				percentage_thornFan = level * HandUpgrade.me.moreBomb_percentageIncreasePerLevel;
+				break;
+			default:
+				break;
+		}
+	}
 }

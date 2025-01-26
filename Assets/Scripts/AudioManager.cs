@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource sfxSource;
     public AudioSource chargingSource; // Separate AudioSource for charging sound
     public AudioMixer audioMixer;
+    public AudioMixerGroup sfxGroup; // Add this line
 
     public AudioClip[] popSounds;
     public AudioClip[] chargingSounds; // Array of charging sounds
@@ -40,7 +41,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayBGM(bgm); // Play the single BGM on start
+        //PlayBGM(bgm); // Play the single BGM on start
         SceneManager.sceneLoaded += OnSceneLoaded; // Register the event handler
     }
 
@@ -51,7 +52,14 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        ApplyMuffleEffect(false); // Unapply the muffle effect when a new scene is loaded
+        if (scene.name == "LeaderBoardScene")
+        {
+            ApplyMuffleEffect(true); // Apply the muffle effect when in LeaderBoardScene
+        }
+        else
+        {
+            ApplyMuffleEffect(false); // Unapply the muffle effect in other scenes
+        }
     }
 
     // Play a sound effect with volume attenuation
@@ -77,7 +85,9 @@ public class AudioManager : MonoBehaviour
     {
         GameObject newAudioSourceObject = new GameObject("AudioSource");
         newAudioSourceObject.transform.SetParent(transform);
-        return newAudioSourceObject.AddComponent<AudioSource>();
+        AudioSource newSource = newAudioSourceObject.AddComponent<AudioSource>();
+        newSource.outputAudioMixerGroup = sfxGroup; // Assign to sfxGroup
+        return newSource;
     }
 
     // Remove AudioSource after it finishes playing
