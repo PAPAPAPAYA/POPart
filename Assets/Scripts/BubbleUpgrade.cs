@@ -20,13 +20,15 @@ public class BubbleUpgrade : MonoBehaviour
         thornFan,
         fastSqueeze
     };
-    public GameObject prefab_thorn;
+    [Header("UPGRADE LEVELs")]
     //level for upgrade one bubble function
     public int lineExplodeLevel;
     public int boxExplodeLevel;
-    public float ExplosionDelay = 0.25f;
     public int thornFanLevel;
     public int fastSqueezeLevel;
+    [Header("UPGRADE VARIABLEs")]
+    public float ExplosionDelay = 0.25f;
+    public GameObject prefab_thorn;
     public float fastSqueezeTime = 0.1f;
     [Header("ACTIVATED UPGRADEs")]
     public bool lineExplosion;
@@ -128,9 +130,8 @@ public class BubbleUpgrade : MonoBehaviour
             BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
             if (offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
             {
-                bs.squeezeTime = fastSqueezeTime;
+                bs.squeezeTimer = fastSqueezeTime;
             }
         }
     }
-
 }
