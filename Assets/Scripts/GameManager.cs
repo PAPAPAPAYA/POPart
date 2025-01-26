@@ -7,11 +7,11 @@ public class GameManager : MonoBehaviour
     #region SINGLETON
     public static GameManager me;
     private void Awake()
-	{
-		me = this;
+    {
+        me = this;
         Time.timeScale = 1.0f;
-	}
-	#endregion
+    }
+    #endregion
 
     private int failBubbleNum;
 
@@ -28,10 +28,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<int> chestCountMaxPresets = new List<int>();
 
+    private float lastScore;
+    private float scoreCheckInterval = 0.2f; // Time interval to check score burst
+    private float scoreBurstThreshold = 10.0f; // Score burst threshold
+    private float screenShakeCooldown = 0.2f; // Cooldown time in seconds
+    private float lastScreenShakeTime = -5.0f; // Initialize to allow immediate shake
+
     void Start()
     {
-        failBubbleNum = (int)Mathf.Pow(2*BubbleMakerScript.me.amount_layer - 1f, 2.0f); 
+        failBubbleNum = (int)Mathf.Pow(2 * BubbleMakerScript.me.amount_layer - 1f, 2.0f);
         hasFailed = false;
+        StartCoroutine(CheckScoreBurst());
     }
 
     void Update()
@@ -40,6 +47,28 @@ public class GameManager : MonoBehaviour
         SlowDown();
     }
 
+    private IEnumerator CheckScoreBurst()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(scoreCheckInterval);
+
+            float scoreIncrement = score - lastScore;
+            lastScore = score;
+
+            if (scoreIncrement > scoreBurstThreshold && Time.time - lastScreenShakeTime > screenShakeCooldown)
+            {
+                ApplyScreenShake();
+                lastScreenShakeTime = Time.time;
+            }
+        }
+    }
+
+    private void ApplyScreenShake()
+    {
+        // Implement your screen shake logic here
+        Debug.Log("Screen Shake Applied!");
+    }
     public void IfFail()
     {
         if (!wudi)
@@ -70,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     private void Pause()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!isPaused)
             {
@@ -81,7 +110,7 @@ public class GameManager : MonoBehaviour
                 isPaused = false;
             }
             MenuManager.me.SendMessage("ChangePauseMenuState");
-            
+
             AudioManager.Instance.ApplyMuffleEffect(isPaused);
         }
     }

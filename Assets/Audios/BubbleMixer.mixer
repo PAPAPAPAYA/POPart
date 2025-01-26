@@ -34,6 +34,24 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-7703450864908505775
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 9701136148b7cad4daa5baae5f72f0d8
+  m_EffectName: Lowpass
+  m_MixLevel: f1cb4e98c7f330240b739c14260557db
+  m_Parameters:
+  - m_ParameterName: Cutoff freq
+    m_GUID: 0f83b6453f8710d4eb4f4a5ad3de4671
+  - m_ParameterName: Resonance
+    m_GUID: 0380c9389ee604e42bdabba2478154b6
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-6109170782688837870
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -108,10 +126,10 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: 369ff6be5922c49459f28f9727e0e08a
     name: BGMVolume
-  - guid: ae3ebbbd61e0526478879bb23bf0cbb4
-    name: LowPassCutoff
   - guid: 4ee4396bb5ac8044dbebba7c8ddc8bcb
     name: MasterVolume
+  - guid: 0f83b6453f8710d4eb4f4a5ad3de4671
+    name: LowPassCutoff
   - guid: 0f8da3e65ad72674bb88a5b0cec57c0f
     name: SFXVolume
   - guid: 4e8e64216f09cb849bca266322e31c41
@@ -145,6 +163,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
+  - {fileID: -7703450864908505775}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -176,6 +195,7 @@ AudioMixerSnapshotController:
     4e8e64216f09cb849bca266322e31c41: 1
     8b149093157a7cd4aa04f78a966d77f2: 10
     f0b604b3d41900347900a1fd68005f94: -10000
+    0f83b6453f8710d4eb4f4a5ad3de4671: 22000
     0f8da3e65ad72674bb88a5b0cec57c0f: -0.19117308
     ae3ebbbd61e0526478879bb23bf0cbb4: 22000
     19f082fd9135ebf49bfb1039e60bb6c5: -10
