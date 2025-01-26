@@ -222,13 +222,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22e80be87981bda42899a20b482553d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enable: 1
   zoomSpd: 15
+  camMinSize: 0
 --- !u!1 &618171290
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1428148953
 Transform:
   m_ObjectHideFlags: 0
@@ -408,13 +409,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_bubble: {fileID: 2607641700856049854, guid: 7f0125981a638f54888033e181289f03, type: 3}
-  amount_row: 5
-  amount_col: 10
+  bubbles: []
+  amount_layer: 0
   offset_row_x: 0.8
   offset_row_y: 0.6
   offset_col_x: 0.8
   offset_col_y: 0.6
   bubbleHp: 1
+  amount_initialPump: 0
+  activateInterval: 0
+  percentage_containUpgrade: 0
+  percentage_lineExplosion: 0
+  percentage_boxExplosion: 0
+  percentage_thornFan: 0
+  matChest: {fileID: 0}
 --- !u!1001 &530233435253977542
 PrefabInstance:
   m_ObjectHideFlags: 0
