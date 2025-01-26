@@ -2553,7 +2553,7 @@ MonoBehaviour:
   minSqueezeTime: 0.1
   currentSqueezeTime: 0
   fasterSqueeze: {fileID: 1596743578}
-  moreBomb_percentageIncreasePerLevel: 0.02
+  moreBomb_percentageIncreasePerLevel: 0.01
   boxHand: 0
   lineHand: 0
   xxHand: 0
@@ -3735,10 +3735,15 @@ MonoBehaviour:
   offset_col_y: 0.6
   bubbleHp: 1
   amount_initialPump: 16
-  activateInterval: 0.5
+  activateAmountPerFrame: 1
+  activateAmountPerFrame_increase_interval: 10
+  randomActivateAmountPerFrame: 1
+  randomActivateAmountPerFrame_increase_interval: 20
+  activateInterval: 0.4
   activateInterval_decrease_Interval: 5
   activateInterval_decrease_Mult: 0.95
-  activateInterval_min: 0.05
+  activateInterval_min: 0.4
+  inactiveBubbles: []
   percentage_lineExplosion: 0
   percentage_boxExplosion: 0
   percentage_thornFan: 0

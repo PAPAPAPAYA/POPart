@@ -25,18 +25,28 @@ public class BubbleMakerScript : MonoBehaviour
     public int bubbleHp;
 	public int amount_initialPump;
 	[Header("For Activating Bubbles")]
-	public float activateInterval;
+	public int activateAmountPerFrame;
+    public float activateAmountPerFrame_increase_interval;
+	private float activateAmountPerFrame_increase_timer;
+    public int randomActivateAmountPerFrame;
+    public float randomActivateAmountPerFrame_increase_interval;
+    private float randomActivateAmountPerFrame_increase_timer;
+    public float activateInterval;
 	private float activateTimer;
 	public float activateInterval_decrease_Interval;
 	private float activateInterval_decrease_timer;
 	public float activateInterval_decrease_Mult;
 	public float activateInterval_min;
+	public List<GameObject> inactiveBubbles = new();
+	
 	[Header("For Upgrades")]
 	public float percentage_lineExplosion;
 	public float percentage_boxExplosion;
 	public float percentage_thornFan;
 	public float percentage_fastSqueeze;
 	public Material matChest;
+
+
 
     private void Start()
 	{
@@ -50,9 +60,18 @@ public class BubbleMakerScript : MonoBehaviour
 		InitialPump(amount_initialPump);
 
 		activateInterval_decrease_timer = activateInterval_decrease_Interval;
+
+		foreach (GameObject bubble in bubbles)
+		{
+			inactiveBubbles.Add(bubble);
+		}
+
+		activateAmountPerFrame_increase_timer = activateAmountPerFrame_increase_interval;
+		randomActivateAmountPerFrame_increase_timer = randomActivateAmountPerFrame_increase_interval;
     }
     private void Update()
     {
+		
 		if (activateTimer > 0 &&
 			bubbles.Count == Mathf.Pow(amount_layer * 2 - 1, 2))
 		{
@@ -61,12 +80,39 @@ public class BubbleMakerScript : MonoBehaviour
 		else if (activateTimer <= 0)
 		{
 			activateTimer = activateInterval;
-			ActivateABubble();
-			GameManager.me.IfFail();
+			ActivateBubbles(activateAmountPerFrame);
+			ActivateARandomInactiveBubble(randomActivateAmountPerFrame);
+            GameManager.me.IfFail();
 		}
 		SpeedUpBubbleActivationRateOverTime();
+		IncreaseActivateAmountOverTime();
+		IncreaseRandomActivateAmountOverTime();
     }
-	private void SpeedUpBubbleActivationRateOverTime()
+	private void IncreaseActivateAmountOverTime()
+	{
+		if (activateAmountPerFrame_increase_timer > 0)
+		{
+            activateAmountPerFrame_increase_timer -= Time.deltaTime;
+		}
+		else
+		{
+			activateAmountPerFrame_increase_timer = activateAmountPerFrame_increase_interval;
+			activateAmountPerFrame++;
+		}
+	}
+    private void IncreaseRandomActivateAmountOverTime()
+    {
+        if (randomActivateAmountPerFrame_increase_timer > 0)
+        {
+            randomActivateAmountPerFrame_increase_timer -= Time.deltaTime;
+        }
+        else
+        {
+            randomActivateAmountPerFrame_increase_timer = randomActivateAmountPerFrame_increase_interval;
+            randomActivateAmountPerFrame++;
+        }
+    }
+    private void SpeedUpBubbleActivationRateOverTime()
 	{
 		if (activateInterval_decrease_timer > 0)
 		{
@@ -162,19 +208,19 @@ public class BubbleMakerScript : MonoBehaviour
 	}
 	
 	// used to start pumping a single bubble
-	private void ActivateABubble()
+	private void ActivateBubbles(int amount)
 	{
+		int amountMade = 0;
 		for(int q = 0; q < bubbles.Count; q++)
 		{
 			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
 			if (!bs.active)
 			{
-                print("chest test");
                 bs.hp = bubbleHp;
 				bs.pumping = true;
+                amountMade++;
                 if (GameManager.me.chestCount >= GameManager.me.chestCountMax)
 				{
-					print("chest test passed");
 					bs.containUpgrade = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
 					GameManager.me.ResetChestCount(); // reset chest count to zero
@@ -206,27 +252,80 @@ public class BubbleMakerScript : MonoBehaviour
 					bs.fastSqueeze = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_fastSqueeze.GetComponent<UpgradeHolderScript>().mat_upgrade;
 				}
-                //CameraZoomScript.me.FitCamera();
-                break;
+				if (amountMade >= amount)
+				{
+                    break;
+                }
 			}
 		}
 	}
+    private void ActivateARandomInactiveBubble(int amount)
+    {
+		if (inactiveBubbles.Count > 0)
+		{
+			for (int i = 0; i < amount; i++)
+			{
+				if (inactiveBubbles.Count > i)
+				{
+                    List<GameObject> listToShuffle = UtilityFunctions.me.ShuffleList(inactiveBubbles);
+                    BubbleScript bs = listToShuffle[i].GetComponentInChildren<BubbleScript>();
+                    if (!bs.active)
+                    {
+                        bs.hp = bubbleHp;
+                        bs.pumping = true;
+                        if (GameManager.me.chestCount >= GameManager.me.chestCountMax)
+                        {
+                            bs.containUpgrade = true;
+                            bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
+                            GameManager.me.ResetChestCount(); // reset chest count to zero
+                            GameManager.me.ChestCountMaxUp(); // increase chest count max
+                            ScoreManager.me.UpdateChestCountMax(); // update chest count max UI
+                        }
+                        if (BubbleUpgrade.me.lineExplosion &&
+                            CheckPercentage(percentage_lineExplosion))
+                        {
+                            bs.lineExplosion = true;
+                            bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_lineExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
 
-	// used to start pumping a few bubbles at start
-	private void InitialPump(int amount)
+                        }
+                        if (BubbleUpgrade.me.boxExplosion &&
+                            CheckPercentage(percentage_boxExplosion))
+                        {
+                            bs.boxExplosion = true;
+                            bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_boxExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
+                        }
+                        if (BubbleUpgrade.me.thornFan &&
+                            CheckPercentage(percentage_thornFan))
+                        {
+                            bs.thornFan = true;
+                            bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_thornFan.GetComponent<UpgradeHolderScript>().mat_upgrade;
+                        }
+                        if (BubbleUpgrade.me.fastSqueeze &&
+                            CheckPercentage(percentage_fastSqueeze))
+                        {
+                            bs.fastSqueeze = true;
+                            bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_fastSqueeze.GetComponent<UpgradeHolderScript>().mat_upgrade;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // used to start pumping a few bubbles at start
+    private void InitialPump(int amount)
 	{
 		for(int q = 0;q < amount; q++)
 		{
             BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
             bs.pumping = true;
-            //bs.transform.localScale = new(bs.size_baseline, bs.size_baseline);
         }
 	}
 
 	private bool CheckPercentage(float percentage)
 	{
-		float randNum = Random.Range(0f, 1f);
-        print("rolled " + randNum + " vs " + percentage);
+
+        float randNum = Random.Range(0f, 40f)/40f;
         if (randNum <= percentage)
 		{
 			return true;
