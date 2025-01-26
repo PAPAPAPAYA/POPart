@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class LeaderboardTester : MonoBehaviour
     public TMP_InputField inputField; // Reference to the TMP_InputField
     public Button submitButton; // Reference to the submit Button
     public Transform leaderboardContent; // Reference to the parent transform for leaderboard entries
+    public GameObject bubble; // Reference to the bubble GameObject
 
     // References to the TMP_Text elements for rank, name, and score
     public TMP_Text[] rankTexts = new TMP_Text[6];
@@ -110,6 +112,12 @@ public class LeaderboardTester : MonoBehaviour
         leaderboardContent.gameObject.SetActive(true);
         isLeaderboardDisplayed = true; // Set the flag to true
 
+        // Hide the bubble
+        if (bubble != null)
+        {
+            bubble.SetActive(true);
+        }
+
         // Display the top 5 scores
         for (int i = 0; i < Mathf.Min(5, scores.Count); i++)
         {
@@ -146,6 +154,19 @@ public class LeaderboardTester : MonoBehaviour
             nameTexts[i].text = "";
             scoreTexts[i].text = "";
         }
+    }
+
+    // Method to handle bubble burst
+    public void OnBubbleBurst()
+    {
+        StartCoroutine(LoadMainSceneWithDelay());
+    }
+
+    // Coroutine to load the main scene with a delay
+    private IEnumerator LoadMainSceneWithDelay()
+    {
+        yield return new WaitForSeconds(2.0f); // Adjust the delay as needed
+        SceneManager.LoadScene("MainScene"); // Replace "MainScene" with the actual name of your main scene
     }
 
     // Method to load the main scene
