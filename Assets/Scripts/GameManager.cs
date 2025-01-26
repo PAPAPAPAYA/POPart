@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Pause();
+        SlowDown();
     }
 
     public void IfFail()
@@ -100,5 +101,16 @@ public class GameManager : MonoBehaviour
     public void ResetChestCount()
     {
         chestCount = 0;
+    }
+    private void SlowDown()
+    {
+        if (UpgradeInteractionManagerScript.me.showingButtons)
+        {
+            Time.timeScale = 0.1f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
     }
 }

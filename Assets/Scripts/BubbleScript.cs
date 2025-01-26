@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
 using MilkShake;
 using System.Diagnostics.Tracing;
@@ -87,7 +86,8 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (mouseDown)
 		{
-			if (active)
+			if (active && // if bubble is pumped
+				!UpgradeInteractionManagerScript.me.showingButtons) // if not showing upgrade buttons
 			{
                 if (squeezeTimer > 0)
                 {
@@ -164,7 +164,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (thornFan)
 		{
-			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2);
+			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2, transform.position);
 		}
 		if (fastSqueeze)
 		{
@@ -172,7 +172,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (containUpgrade)
 		{
-            UpgradeInteractionManagerScript.me.ShowButtons();
+            UpgradeInteractionManagerScript.me.showButtonStack++;
         }
 		active = false;
 		pumping = false;

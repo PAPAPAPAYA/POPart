@@ -159,6 +159,7 @@ MonoBehaviour:
   - {fileID: 2072440526}
   - {fileID: 561806905}
   showButtonStack: 0
+  showingButtons: 0
 --- !u!4 &18173204
 Transform:
   m_ObjectHideFlags: 0
@@ -445,11 +446,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6601454745644881039, guid: 175e2603384b29d4daa3f0fe09f343dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.12
       objectReference: {fileID: 0}
     - target: {fileID: 6601454745644881039, guid: 175e2603384b29d4daa3f0fe09f343dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6601454745644881039, guid: 175e2603384b29d4daa3f0fe09f343dc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -671,12 +672,16 @@ MonoBehaviour:
   boxExplodeLevel: 0
   ExplosionDelay: 0.25
   thornFanLevel: 0
+  fastSqueezeLevel: 0
+  fastSqueezeTime: 0.1
   lineExplosion: 0
   prefab_lineExplosion: {fileID: 1477380782}
   boxExplosion: 0
   prefab_boxExplosion: {fileID: 2072440526}
   thornFan: 0
   prefab_thornFan: {fileID: 561806905}
+  fastSqueeze: 0
+  prefab_fastSqueeze: {fileID: 0}
 --- !u!4 &268900217
 Transform:
   m_ObjectHideFlags: 0
@@ -3538,6 +3543,7 @@ MonoBehaviour:
   percentage_lineExplosion: 0.2
   percentage_boxExplosion: 0.2
   percentage_thornFan: 0.2
+  percentage_fastSqueeze: 0
   matChest: {fileID: 2100000, guid: 9d4f9d361d9ab3946bb291483cd4328f, type: 2}
 --- !u!1 &1452065602
 GameObject:

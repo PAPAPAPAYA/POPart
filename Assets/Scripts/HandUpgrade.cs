@@ -32,7 +32,6 @@ public class HandUpgrade : MonoBehaviour
             {
                 bubble.mouseDown = true;
             }
-            Debug.Log("Down");
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -42,7 +41,6 @@ public class HandUpgrade : MonoBehaviour
 
             }
             selectedBubbles.Clear();
-            Debug.Log("Up");
         }
     }
 

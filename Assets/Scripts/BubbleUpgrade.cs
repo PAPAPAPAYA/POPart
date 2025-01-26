@@ -47,11 +47,12 @@ public class BubbleUpgrade : MonoBehaviour
         fastSqueezeLevel = 1;
     }
 
-    public void ThornFan(int amount)
+    public void ThornFan(int amount, Vector3 spawnPos)
     {
         for (int i = 0; i < amount; i++)
         {
             GameObject thorn = Instantiate(prefab_thorn);
+            thorn.transform.position = spawnPos;
         }
     }
 
