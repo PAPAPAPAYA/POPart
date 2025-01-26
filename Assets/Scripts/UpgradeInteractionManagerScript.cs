@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class UpgradeInteractionManagerScript : MonoBehaviour
 {
@@ -82,6 +83,8 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
         button.onClick.AddListener(() => ActivateBubbleUpgrade(uhs.bubbleUpgrade));
         button.onClick.AddListener(() => ActivateHandUpgrade(uhs.handUpgrade));
         button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
+        button.GetComponentInChildren<TextMeshProUGUI>().color = uhs.textColor;
+        button.GetComponent<Image>().sprite = uhs.icon_upgrade;
     }
     private void ActivateHandUpgrade(HandUpgrade.HandUpgrades upgrade)
     {
