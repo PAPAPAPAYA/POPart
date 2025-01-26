@@ -21,6 +21,7 @@ public class BubbleScript : MonoBehaviour
 	public bool lineExplosion = false;
 	public bool boxExplosion = false;
 	public bool thornFan = false;
+	public bool fastSqueeze = false;
 	[Header("BASICs")]
 	public int hp = 0;
 	public int rowNumber;
@@ -28,6 +29,7 @@ public class BubbleScript : MonoBehaviour
 	private Material ogMat;
 	[Header("POP")]
     public bool mouseDown;
+	public float defaultSqueezeTimer = 0.3f;
     public float squeezeTime;
     public float squeezeTimer;
 	//private bool hasBurst = false;
@@ -164,6 +166,10 @@ public class BubbleScript : MonoBehaviour
 		{
 			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2);
 		}
+		if (fastSqueeze)
+		{
+			BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
+		}
 		if (containUpgrade)
 		{
             UpgradeInteractionManagerScript.me.ShowButtons();
@@ -176,15 +182,16 @@ public class BubbleScript : MonoBehaviour
 		
 		Instantiate(PSprefab_burst, transform.position, Quaternion.identity);
 
-		//Score up
+		// Score up
 		GameManager.me.score += 1;
-		//Chest Count Up
+		// Chest Count Up
 		GameManager.me.ChestCountUp();
 		// stop shaking
 		shakeInstance.Stop(0, false);
 		// stop playing ps_squeeze
         PS_squeeze.GetComponent<ParticleSystem>().Stop();
-
+		// Recover squeeze time
+		squeezeTime = defaultSqueezeTimer;
 		AudioManager.Instance.PlayPopSound();
 
 		// reset mat
