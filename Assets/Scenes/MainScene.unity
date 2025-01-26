@@ -945,7 +945,7 @@ MonoBehaviour:
   thornFanLevel: 0
   fastSqueezeLevel: 0
   ExplosionDelay: 0.25
-  prefab_thorn: {fileID: 0}
+  prefab_thorn: {fileID: 719266978}
   fastSqueezeTime: 0.1
   lineExplosion: 0
   prefab_lineExplosion: {fileID: 1477380782}
@@ -2139,6 +2139,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691631693}
   m_CullTransparentMesh: 1
+--- !u!1 &719266978 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1539553533738188278, guid: 47d1a62397dfac4438967b501701913c, type: 3}
+  m_PrefabInstance: {fileID: 2694883844669168215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &802179359
 GameObject:
   m_ObjectHideFlags: 0
