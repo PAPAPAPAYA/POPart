@@ -41,6 +41,11 @@ public class BubbleScript : MonoBehaviour
 
     public bool hasPlayedRechargeSound = true; // Flag to check if the recharge sound has been played
 
+	[Header("ANIM")]
+	public Animator bubbleAnimator;
+	public Color ogColor;
+	public Color inActiveColor;
+
     private void Start()
     {
 		// initialize squeezeTimer
@@ -49,6 +54,7 @@ public class BubbleScript : MonoBehaviour
         shakeInstance = shaker.Shake(SP_squeeze);
 		shakeInstance.Stop(0, false);
 		ogMat = bubbleImg.GetComponent<SpriteRenderer>().material;
+		ogColor = bubbleImg.GetComponent<SpriteRenderer>().color;
     }
 
     private void Update()
@@ -58,7 +64,14 @@ public class BubbleScript : MonoBehaviour
 		if(transform.localScale.x >= size_baseline)
 		{
 			active = true;
-		}
+            bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
+        }
+
+		if (!active)
+		{
+            bubbleImg.GetComponent<SpriteRenderer>().color = inActiveColor;
+        }
+
         // if popped, call OnBurst()
         if (hp <= 0)
 		{
@@ -90,6 +103,10 @@ public class BubbleScript : MonoBehaviour
                 }
             }
 		}
+	}
+	public void setActive()
+	{
+		active = true;
 	}
     private void OnMouseDown()
     {
@@ -153,8 +170,12 @@ public class BubbleScript : MonoBehaviour
         }
 		active = false;
 		pumping = false;
-		transform.localScale = size_bursted;
+
+        //bubbleAnimator.Play("Flat");
+        transform.localScale = size_bursted;
+		
 		Instantiate(PSprefab_burst, transform.position, Quaternion.identity);
+
 		//Score up
 		GameManager.me.score += 1;
 		// stop shaking
@@ -176,6 +197,7 @@ public class BubbleScript : MonoBehaviour
     {
         if (transform.localScale.x < size_baseline - 0.1f)
         {
+            
             transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, size_baseline, pumpSpd * Time.deltaTime),
                 Mathf.Lerp(transform.localScale.y, size_baseline, pumpSpd * Time.deltaTime),
                 1);
@@ -199,6 +221,8 @@ public class BubbleScript : MonoBehaviour
             }
         }
     }
+
+
 	
 	
 	#region FOR UPGRADES
