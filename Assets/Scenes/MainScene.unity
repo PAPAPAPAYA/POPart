@@ -3728,12 +3728,14 @@ MonoBehaviour:
   offset_col_y: 0.6
   bubbleHp: 1
   amount_initialPump: 16
-  activateInterval: 0.1
-  percentage_containUpgrade: 0.1
-  percentage_lineExplosion: 0.2
-  percentage_boxExplosion: 0.2
-  percentage_thornFan: 0.2
-  percentage_fastSqueeze: 0.5
+  activateInterval: 1
+  activateInterval_decrease_Interval: 5
+  activateInterval_decrease_Mult: 0.95
+  activateInterval_min: 0.05
+  percentage_lineExplosion: 0
+  percentage_boxExplosion: 0
+  percentage_thornFan: 0
+  percentage_fastSqueeze: 0.02
   matChest: {fileID: 2100000, guid: 9d4f9d361d9ab3946bb291483cd4328f, type: 2}
 --- !u!1 &1452065602
 GameObject:
