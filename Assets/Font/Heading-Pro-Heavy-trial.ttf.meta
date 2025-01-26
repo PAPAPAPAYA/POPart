@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ce2ba2dc230727744bede11344d4216a
+guid: 1b596c34d70e25d4f95e0cb7d3842bbc
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - FORTA
+  - Heading Pro Trial
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
