@@ -227,4 +227,22 @@ public class BubbleMakerScript : MonoBehaviour
             }
         }
     }
+
+	public void SetPercentage(string bombClass, int level)
+	{
+		switch (bombClass)
+		{
+			case "box":
+				percentage_boxExplosion = level * 0.05f;
+				break;
+			case "line":
+				percentage_lineExplosion = level * 0.05f;
+				break;
+			case "thornFan":
+				percentage_thornFan = level * 0.05f;
+				break;
+			default:
+				break;
+		}
+	}
 }
