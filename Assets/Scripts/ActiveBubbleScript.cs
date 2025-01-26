@@ -10,5 +10,9 @@ public class ActiveBubbleScript : BubbleScript
         // Set the bubble as active and poppable
         active = true;
         bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
+        if (BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+        {
+            BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
+        }
     }
 }
