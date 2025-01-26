@@ -609,12 +609,16 @@ MonoBehaviour:
   boxExplodeLevel: 0
   ExplosionDelay: 0.25
   thornFanLevel: 0
+  fastSqueezeLevel: 0
+  fastSqueezeTime: 0.1
   lineExplosion: 0
   prefab_lineExplosion: {fileID: 1477380782}
   boxExplosion: 0
   prefab_boxExplosion: {fileID: 2072440526}
   thornFan: 0
   prefab_thornFan: {fileID: 561806905}
+  fastSqueeze: 0
+  prefab_fastSqueeze: {fileID: 0}
 --- !u!4 &268900217
 Transform:
   m_ObjectHideFlags: 0
@@ -3429,6 +3433,7 @@ MonoBehaviour:
   percentage_lineExplosion: 0.2
   percentage_boxExplosion: 0.2
   percentage_thornFan: 0.2
+  percentage_fastSqueeze: 0
   matChest: {fileID: 2100000, guid: 9d4f9d361d9ab3946bb291483cd4328f, type: 2}
 --- !u!1 &1452065602
 GameObject:
