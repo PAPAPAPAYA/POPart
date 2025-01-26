@@ -39,6 +39,8 @@ public class BubbleScript : MonoBehaviour
 	public bool pumping = true; // if not pumping, it can be pump
 	//public Vector3 size_bursted; // the size when popped
 	public float pumpSpdMultiplier; // how fast it's pumped
+	public float pumpSpdMult_apply_interval;
+	private float pumpSpdMult_apply_timer;
 
     public bool hasPlayedRechargeSound = true; // Flag to check if the recharge sound has been played
 
@@ -62,19 +64,21 @@ public class BubbleScript : MonoBehaviour
 		leaderboardTester = FindObjectOfType<LeaderboardTester>();
 
 		HandUpgrade.me.currentSqueezeTime = squeezeTime;
+
+		pumpSpdMult_apply_timer = pumpSpdMult_apply_interval;
     }
 
     private void Update()
 	{
 		bubbleAnimator.SetFloat("PumpSpeedMult", pumpSpdMultiplier); // change the [pump] animation speed
-
-		// if size reached baseline, it's active
-		/*if(transform.localScale.x >= size_baseline)
+		SpeedUpPumpTimeOverTime();
+        // if size reached baseline, it's active
+        /*if(transform.localScale.x >= size_baseline)
 		{
 			active = true;
             bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
         }*/
-		if (active)
+        if (active)
 		{
             bubbleAnimator.Play("Active");
             bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
@@ -120,7 +124,15 @@ public class BubbleScript : MonoBehaviour
 	}
 	private void SpeedUpPumpTimeOverTime()
 	{
-
+		if (pumpSpdMult_apply_timer > 0)
+		{
+			pumpSpdMult_apply_timer -= Time.deltaTime;
+		}
+		else
+		{
+			pumpSpdMultiplier *= pumpSpdMultiplier;
+            pumpSpdMult_apply_timer = pumpSpdMult_apply_interval;
+		}
 	}
 	public void setActive()
 	{
