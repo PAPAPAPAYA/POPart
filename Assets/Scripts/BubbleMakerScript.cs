@@ -45,6 +45,7 @@ public class BubbleMakerScript : MonoBehaviour
 	public float percentage_thornFan;
 	public float percentage_fastSqueeze;
 	public Material matChest;
+	public float chestSqueezeTime;
 
 
 
@@ -71,22 +72,24 @@ public class BubbleMakerScript : MonoBehaviour
     }
     private void Update()
     {
-		
-		if (activateTimer > 0 &&
-			bubbles.Count == Mathf.Pow(amount_layer * 2 - 1, 2))
+		if (!GameManager.me.isPaused)
 		{
-			activateTimer -= Time.deltaTime;
-		}
-		else if (activateTimer <= 0)
-		{
-			activateTimer = activateInterval;
-			ActivateBubbles(activateAmountPerFrame);
-			ActivateARandomInactiveBubble(randomActivateAmountPerFrame);
-            GameManager.me.IfFail();
-		}
-		SpeedUpBubbleActivationRateOverTime();
-		IncreaseActivateAmountOverTime();
-		IncreaseRandomActivateAmountOverTime();
+            if (activateTimer > 0 &&
+            bubbles.Count == Mathf.Pow(amount_layer * 2 - 1, 2))
+            {
+                activateTimer -= Time.deltaTime;
+            }
+            else if (activateTimer <= 0)
+            {
+                activateTimer = activateInterval;
+                ActivateBubbles(activateAmountPerFrame);
+                ActivateARandomInactiveBubble(randomActivateAmountPerFrame);
+                GameManager.me.IfFail();
+            }
+            SpeedUpBubbleActivationRateOverTime();
+            IncreaseActivateAmountOverTime();
+            IncreaseRandomActivateAmountOverTime();
+        }
     }
 	private void IncreaseActivateAmountOverTime()
 	{
@@ -223,6 +226,7 @@ public class BubbleMakerScript : MonoBehaviour
 				{
 					bs.containUpgrade = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
+					bs.squeezeTimer = chestSqueezeTime;
 					GameManager.me.ResetChestCount(); // reset chest count to zero
 					GameManager.me.ChestCountMaxUp(); // increase chest count max
 					ScoreManager.me.UpdateChestCountMax(); // update chest count max UI

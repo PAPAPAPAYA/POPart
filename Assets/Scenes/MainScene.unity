@@ -161,7 +161,7 @@ MonoBehaviour:
   - {fileID: 1136229345}
   - {fileID: 1596743578}
   - {fileID: 61426608}
-  - {fileID: 1228571892}
+  - {fileID: 85302375}
   - {fileID: 1621871448}
   showButtonStack: 0
   showingButtons: 0
@@ -230,6 +230,56 @@ MonoBehaviour:
   icon_upgrade: {fileID: 21300000, guid: 748ad56ec6f04934c904f8d4483db718, type: 3}
   bubbleUpgrade: 0
   handUpgrade: 2
+--- !u!1 &85302375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 85302376}
+  - component: {fileID: 85302377}
+  m_Layer: 0
+  m_Name: XxHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &85302376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85302375}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2010817551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &85302377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85302375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name_upgrade: X-POP
+  textColor: {r: 0.23529412, g: 0.45882353, b: 0, a: 1}
+  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  icon_upgrade: {fileID: 21300000, guid: db8cbaa73c486f4409a3c72b21977be7, type: 3}
+  bubbleUpgrade: 0
+  handUpgrade: 3
 --- !u!1 &85592925
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,7 +945,7 @@ MonoBehaviour:
   thornFanLevel: 0
   fastSqueezeLevel: 0
   ExplosionDelay: 0.25
-  prefab_thorn: {fileID: 1539553533738188278, guid: 47d1a62397dfac4438967b501701913c, type: 3}
+  prefab_thorn: {fileID: 0}
   fastSqueezeTime: 0.1
   lineExplosion: 0
   prefab_lineExplosion: {fileID: 1477380782}
@@ -904,7 +954,7 @@ MonoBehaviour:
   thornFan: 0
   prefab_thornFan: {fileID: 561806905}
   fastSqueeze: 0
-  prefab_fastSqueeze: {fileID: 1136229345}
+  prefab_fastSqueeze: {fileID: 1246615289}
 --- !u!4 &268900217
 Transform:
   m_ObjectHideFlags: 0
@@ -3560,7 +3610,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209341284}
   m_CullTransparentMesh: 1
---- !u!1 &1228571892
+--- !u!1 &1246615289
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3568,48 +3618,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1228571893}
-  - component: {fileID: 1228571894}
+  - component: {fileID: 1246615291}
+  - component: {fileID: 1246615290}
   m_Layer: 0
-  m_Name: XxHand
+  m_Name: FastSqueeze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1228571893
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228571892}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2010817551}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1228571894
+--- !u!114 &1246615290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228571892}
+  m_GameObject: {fileID: 1246615289}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name_upgrade: X-POP
-  textColor: {r: 0.23529412, g: 0.45882353, b: 0, a: 1}
-  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
-  icon_upgrade: {fileID: 21300000, guid: db8cbaa73c486f4409a3c72b21977be7, type: 3}
+  name_upgrade: Fast Squeeze
+  textColor: {r: 0, g: 0, b: 0, a: 0}
+  mat_upgrade: {fileID: 2100000, guid: f5e77784b8000da49a4092663a077bfa, type: 2}
+  icon_upgrade: {fileID: 0}
   bubbleUpgrade: 0
-  handUpgrade: 3
+  handUpgrade: 0
+--- !u!4 &1246615291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246615289}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1255456481
 GameObject:
   m_ObjectHideFlags: 0
@@ -4178,6 +4228,7 @@ MonoBehaviour:
   percentage_thornFan: 0
   percentage_fastSqueeze: 0.02
   matChest: {fileID: 2100000, guid: 9d4f9d361d9ab3946bb291483cd4328f, type: 2}
+  chestSqueezeTime: 1.4
 --- !u!1 &1452065602
 GameObject:
   m_ObjectHideFlags: 0
@@ -5143,6 +5194,9 @@ MonoBehaviour:
   chestCount: 0
   chestCountMax: 10
   chestCountMaxFactor: 1.5
+  CCMUpgradeCount: 0
+  upgradedCount: 0
+  chestCountMaxPresets: 
 --- !u!1 &1867653161
 GameObject:
   m_ObjectHideFlags: 0
@@ -6019,7 +6073,7 @@ Transform:
   - {fileID: 1136229346}
   - {fileID: 1596743579}
   - {fileID: 61426609}
-  - {fileID: 1228571893}
+  - {fileID: 85302376}
   - {fileID: 1715120035}
   - {fileID: 1621871449}
   m_Father: {fileID: 0}
@@ -6386,7 +6440,9 @@ SceneRoots:
   - {fileID: 159669774}
   - {fileID: 1867653162}
   - {fileID: 268900217}
-  - {fileID: 949832649}
+  - {fileID: 96494961}
+  - {fileID: 878371439}
+  - {fileID: 1246615291}
   - {fileID: 18173204}
   - {fileID: 2010817551}
   - {fileID: 917745510}
@@ -6396,12 +6452,11 @@ SceneRoots:
   - {fileID: 952649967}
   - {fileID: 1428148953}
   - {fileID: 2134493955}
-  - {fileID: 878371439}
   - {fileID: 448161685}
   - {fileID: 1883289825}
-  - {fileID: 96494961}
   - {fileID: 688127471}
   - {fileID: 1337678694}
   - {fileID: 222315301}
   - {fileID: 899187898}
   - {fileID: 92198828}
+  - {fileID: 949832649}
