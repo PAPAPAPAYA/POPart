@@ -21,7 +21,7 @@ public class LeaderboardTester : MonoBehaviour
     private const string PlayerNameKey = "PlayerName";
     private bool isLeaderboardDisplayed = false; // Flag to check if the leaderboard is displayed
 
-    private static int scoreToPass;
+    private static int scoreToPass = 1;
 
     private void Awake()
     {
@@ -62,12 +62,7 @@ public class LeaderboardTester : MonoBehaviour
             string savedName = PlayerPrefs.GetString(PlayerNameKey);
             inputField.gameObject.SetActive(false);
             submitButton.gameObject.SetActive(false);
-            FetchAndDisplayLeaderboard(savedName);
-            // if (bubble != null)
-            // {
-            //     bubble.SetActive(true);
-            // }
-
+            LeaderboardManager.Instance.InsertScore(savedName, scoreToPass, () => FetchAndDisplayLeaderboard(savedName));
         }
         else
         {
@@ -78,8 +73,6 @@ public class LeaderboardTester : MonoBehaviour
 
         // Clear all text fields when the scene loads
         ClearTextFields();
-
-        //Debug.Log(Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -107,8 +100,7 @@ public class LeaderboardTester : MonoBehaviour
         submitButton.gameObject.SetActive(false);
 
         // Insert the score and fetch the leaderboard
-        LeaderboardManager.Instance.InsertScore(inputValue, scoreToPass);
-        FetchAndDisplayLeaderboard(inputValue);
+        LeaderboardManager.Instance.InsertScore(inputValue, scoreToPass, () => FetchAndDisplayLeaderboard(inputValue));
     }
 
     // Method to fetch and display the leaderboard information
@@ -135,6 +127,7 @@ public class LeaderboardTester : MonoBehaviour
         // Sort the scores by descending order
         scores = scores.OrderByDescending(s => s.score).ToList();
 
+        
         // Clear existing leaderboard entries
         ClearTextFields();
 
@@ -146,6 +139,13 @@ public class LeaderboardTester : MonoBehaviour
         if (bubble != null)
         {
             bubble.SetActive(true);
+        }
+        
+               // Print all scores
+        Debug.Log("Leaderboard Scores:");
+        foreach (var score in scores)
+        {
+            Debug.Log($"Name: {score.name}, Score: {score.score}");
         }
 
         // Display the top 5 scores
