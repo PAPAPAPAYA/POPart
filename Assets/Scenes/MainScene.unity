@@ -5187,7 +5187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c75685f9a22d0945b519b8abe0da3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wudi: 1
+  wudi: 0
   hasFailed: 0
   isPaused: 0
   score: 0
