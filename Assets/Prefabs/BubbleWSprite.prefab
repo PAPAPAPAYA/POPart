@@ -186,7 +186,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 99bdaa2817af4d94b934587cec45a7eb, type: 2}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: squeezeTime
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: BubbleCircle

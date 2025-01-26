@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spd: 5
-  lifespan: 2
+  lifespan: 1
   destroyRadius: 0.6
   thornAmount: 0
 --- !u!61 &7008947889989691502
