@@ -111,25 +111,27 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (mouseDown)
 		{
-			if(active){
-				if(SceneManager.GetActiveScene().name != "MainScene" 
-				|| !UpgradeInteractionManagerScript.me.showingButtons){
+			if (active)
+			{
+				if (SceneManager.GetActiveScene().name != "MainScene"
+				|| !UpgradeInteractionManagerScript.me.showingButtons)
+				{
 					if (squeezeTimer > 0)
-				{
-					if (!PS_squeeze.GetComponent<ParticleSystem>().isPlaying)
 					{
-						PS_squeeze.GetComponent<ParticleSystem>().Play();
+						if (!PS_squeeze.GetComponent<ParticleSystem>().isPlaying)
+						{
+							PS_squeeze.GetComponent<ParticleSystem>().Play();
+						}
+						shakeInstance.Start(SP_squeeze.FadeIn);
+						squeezeTimer -= Time.deltaTime;
 					}
-					shakeInstance.Start(SP_squeeze.FadeIn);
-					squeezeTimer -= Time.deltaTime;
+					else if (squeezeTimer <= 0)
+					{
+						squeezeTimer = squeezeTime;
+						hp--;
+					}
 				}
-				else if (squeezeTimer <= 0)
-				{
-					squeezeTimer = squeezeTime;
-					hp--;
-				}
-				}
-			
+
 			}
 			else if (active && // if bubble is pumped
 				!UpgradeInteractionManagerScript.me.showingButtons)
@@ -170,10 +172,14 @@ public class BubbleScript : MonoBehaviour
 		active = true;
 		pumping = false;
 
-		if (BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+		if (BubbleMakerScript.me != null)
 		{
-       BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
-    }
+			if (BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+			{
+				BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
+			}
+		}
+
 
 
 		AudioManager.Instance.PlayRechargeSound();
@@ -224,55 +230,63 @@ public class BubbleScript : MonoBehaviour
 		shakeInstance.Stop(SP_squeeze.FadeOut, false);
 		// reset squeeze timer
 		squeezeTimer = squeezeTime;
-    }
-    private void OnMouseExit()
-    {
-        mouseDown = false;
-        // stop playing ps_squeeze
-        PS_squeeze.GetComponent<ParticleSystem>().Stop();
-        // stop shaking
-        shakeInstance.Stop(SP_squeeze.FadeOut, false);
-        // reset squeeze timer
-        squeezeTimer = squeezeTime;
-    }
-    public void ResetBubble()
-    {
-        mouseDown = false;
-        // stop playing ps_squeeze
-        PS_squeeze.GetComponent<ParticleSystem>().Stop();
-        // stop shaking
-        shakeInstance.Stop(SP_squeeze.FadeOut, false);
-        // reset squeeze timer
-        squeezeTimer = squeezeTime;
+	}
+	private void OnMouseExit()
+	{
+		mouseDown = false;
+		// stop playing ps_squeeze
+		PS_squeeze.GetComponent<ParticleSystem>().Stop();
+		// stop shaking
+		shakeInstance.Stop(SP_squeeze.FadeOut, false);
+		// reset squeeze timer
+		squeezeTimer = squeezeTime;
+	}
+	public void ResetBubble()
+	{
+		mouseDown = false;
+		// stop playing ps_squeeze
+		PS_squeeze.GetComponent<ParticleSystem>().Stop();
+		// stop shaking
+		shakeInstance.Stop(SP_squeeze.FadeOut, false);
+		// reset squeeze timer
+		squeezeTimer = squeezeTime;
 
 		AudioManager.Instance.TerminateChargingSound();
 	}
 	protected virtual void OnBurst()
 	{
-		if (!BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+		if (BubbleMakerScript.me != null)
 		{
-            BubbleMakerScript.me.inactiveBubbles.Add(gameObject.transform.parent.gameObject);
-        }
-        if (lineExplosion)
-		{
-			BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
+			if (!BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+			{
+				BubbleMakerScript.me.inactiveBubbles.Add(gameObject.transform.parent.gameObject);
+			}
 		}
-		if (boxExplosion)
+
+		if (BubbleUpgrade.me != null)
 		{
-			BubbleUpgrade.me.BoxExplode(rowNumber, colNumber);
+			if (lineExplosion)
+			{
+				BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
+			}
+			if (boxExplosion)
+			{
+				BubbleUpgrade.me.BoxExplode(rowNumber, colNumber);
+			}
+			if (thornFan)
+			{
+				BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 1, transform.position);
+			}
+			if (fastSqueeze)
+			{
+				BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
+			}
+			if (containUpgrade)
+			{
+				UpgradeInteractionManagerScript.me.showButtonStack++;
+			}
 		}
-		if (thornFan)
-		{
-			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 1, transform.position);
-		}
-		if (fastSqueeze)
-		{
-			BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
-		}
-		if (containUpgrade)
-		{
-			UpgradeInteractionManagerScript.me.showButtonStack++;
-		}
+
 		active = false;
 		pumping = false;
 
