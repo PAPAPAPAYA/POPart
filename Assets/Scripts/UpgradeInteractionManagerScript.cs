@@ -58,7 +58,22 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
 
     private void RollUpgradesToButtons()
     {
-        upgradeListToShuffle = UtilityFunctions.me.ShuffleList(upgradePool);
+        List<GameObject> upgrades = new List<GameObject>();
+        upgrades.AddRange(upgradePool);
+        Debug.Log(upgrades.Count);
+        if(GameManager.me.upgradedCount < 3)
+        {
+            foreach (GameObject ug in upgradePool) 
+            {
+                UpgradeHolderScript uhs = ug.GetComponent<UpgradeHolderScript>();
+                if(uhs.bubbleUpgrade == BubbleUpgrade.Upgrades.none && uhs.handUpgrade != HandUpgrade.HandUpgrades.none)
+                {
+                    upgrades.Remove(ug);
+                    Debug.Log("Removed " + ug.name);
+                }
+            }
+        }
+        upgradeListToShuffle = UtilityFunctions.me.ShuffleList(upgrades);
         
         // get the first three shuffled upgrades
         UpgradeHolderScript uhs1 = upgradeListToShuffle[0].GetComponent<UpgradeHolderScript>();
@@ -195,6 +210,8 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
             ShowButtons();
         }
         showingButtons = false;
+        // Count up upgradedCount in GameManager
+        GameManager.me.upgradedCount++;
     }
     private UpgradeHolderScript CheckMoreBombUpgradeDependency(UpgradeHolderScript uhs)
     {
