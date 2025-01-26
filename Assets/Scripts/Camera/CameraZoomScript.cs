@@ -15,6 +15,8 @@ public class CameraZoomScript : MonoBehaviour
     #endregion
     public bool enable = true;//Enable Zooming function
     public float zoomSpd;//Camera Zooming Speed
+    [SerializeField]
+    private float camMinSize;
 
     void Start()
     {
@@ -50,9 +52,13 @@ public class CameraZoomScript : MonoBehaviour
         Vector3 boundSize = bound.size;
         //float diagonal = Mathf.Sqrt((boundSize.x * boundSize.x) + (boundSize.y * boundSize.y) + (boundSize.z * boundSize.z));
         Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, (boundSize.y + 0.8f) / 2.0f, zoomSpd * Time.deltaTime);
+        if(Camera.main.orthographicSize < camMinSize)
+        {
+            Camera.main.orthographicSize = camMinSize;
+        }
         //transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
-        //Vector3 camCenter = new Vector3(bound.center.x, bound.center.y, transform.position.z);
-        //transform.position = Vector3.Lerp(transform.position, camCenter, zoomSpd * Time.deltaTime);
+        Vector3 camCenter = new Vector3(bound.center.x, bound.center.y, transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, camCenter, zoomSpd * Time.deltaTime);
     }
     public void SetCamZAxis()
     {
