@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     public int chestCount = 0; // when a bubble is popped, +1
     public float chestCountMax; // when chest count reached chest count max, next bubble is a chest
     public float chestCountMaxFactor; // when a chest bubble is spawned, multiply chest count max with chest count max factor
+    public int CCMUpgradeCount; //record how many times the chest max number has been upgraded
+    public int upgradedCount; //record how many times you have already upgraded
+    [SerializeField]
+    private List<int> chestCountMaxPresets = new List<int>();
 
     void Start()
     {
@@ -70,12 +74,10 @@ public class GameManager : MonoBehaviour
         {
             if (!isPaused)
             {
-                Time.timeScale = 0f;
                 isPaused = true;
             }
             else
             {
-                Time.timeScale = 1f;
                 isPaused = false;
             }
             MenuManager.me.SendMessage("ChangePauseMenuState");
@@ -97,8 +99,16 @@ public class GameManager : MonoBehaviour
     }
     public void ChestCountMaxUp()
     {
-        chestCountMax *= chestCountMaxFactor;
-        chestCountMax = (int)chestCountMax;
+        if (CCMUpgradeCount < chestCountMaxPresets.Count)
+        {
+            chestCountMax = chestCountMaxPresets[CCMUpgradeCount];
+        }
+        else if (CCMUpgradeCount >= chestCountMaxPresets.Count)
+        {
+            chestCountMax *= chestCountMaxFactor;
+            chestCountMax = (int)chestCountMax;
+        }
+        CCMUpgradeCount++;
     }
     public void ResetChestCount()
     {
