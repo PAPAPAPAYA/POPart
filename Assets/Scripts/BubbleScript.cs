@@ -29,16 +29,16 @@ public class BubbleScript : MonoBehaviour
 	private Material ogMat;
 	[Header("POP")]
     public bool mouseDown;
-    public float squeezeTime;
-    public float squeezeTimer;
+    public float squeezeTime; // base squeeze timer
+    public float squeezeTimer; // timer, used to count down
 	//private bool hasBurst = false;
 
 	[Header("PUMP")]
-    public float size_baseline; // when size baseline is reached, this bubble is active
+    //public float size_baseline; // when size baseline is reached, this bubble is active
     public bool active = false; // if active, it can be pop
 	public bool pumping = true; // if not pumping, it can be pump
-	public Vector3 size_bursted; // the size when popped
-	public float pumpSpd; // how fast it's pumped
+	//public Vector3 size_bursted; // the size when popped
+	public float pumpSpdMultiplier; // how fast it's pumped
 
     public bool hasPlayedRechargeSound = true; // Flag to check if the recharge sound has been played
 
@@ -60,10 +60,14 @@ public class BubbleScript : MonoBehaviour
 		ogColor = bubbleImg.GetComponent<SpriteRenderer>().color;
 
 		leaderboardTester = FindObjectOfType<LeaderboardTester>();
+
+		HandUpgrade.me.currentSqueezeTime = squeezeTime;
     }
 
     private void Update()
 	{
+		bubbleAnimator.SetFloat("PumpSpeedMult", pumpSpdMultiplier); // change the [pump] animation speed
+
 		// if size reached baseline, it's active
 		/*if(transform.localScale.x >= size_baseline)
 		{
@@ -114,6 +118,10 @@ public class BubbleScript : MonoBehaviour
             }
 		}
 	}
+	private void SpeedUpPumpTimeOverTime()
+	{
+
+	}
 	public void setActive()
 	{
 		Debug.Log("setactive");
@@ -122,7 +130,6 @@ public class BubbleScript : MonoBehaviour
 	}
     private void OnMouseDown()
     {
-
         mouseDown = true;
 		if (active)
 		{
@@ -234,9 +241,7 @@ public class BubbleScript : MonoBehaviour
     }
     protected virtual void Pump()
     {
-
 		bubbleAnimator.Play("Pump");
-
 		/*
         if (transform.localScale.x < size_baseline - 0.1f)
         {
