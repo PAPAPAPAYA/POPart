@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MilkShake;
 using System.Diagnostics.Tracing;
+using UnityEngine.SceneManagement;
 
 public class BubbleScript : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class BubbleScript : MonoBehaviour
 	public Color ogColor;
 	public Color inActiveColor;
 
+	private LeaderboardTester leaderboardTester;
+
     protected virtual void Start()
     {
 		// initialize squeezeTimer
@@ -54,6 +57,8 @@ public class BubbleScript : MonoBehaviour
 		shakeInstance.Stop(0, false);
 		ogMat = bubbleImg.GetComponent<SpriteRenderer>().material;
 		ogColor = bubbleImg.GetComponent<SpriteRenderer>().color;
+
+		leaderboardTester = FindObjectOfType<LeaderboardTester>();
     }
 
     private void Update()
@@ -184,10 +189,15 @@ public class BubbleScript : MonoBehaviour
 		
 		Instantiate(PSprefab_burst, transform.position, Quaternion.identity);
 
-		//Score up
-		GameManager.me.score += 1;
-		//Chest Count Up
-		GameManager.me.ChestCountUp();
+
+		if (GameManager.me != null)
+		{
+			// Score up
+			GameManager.me.score += 1;
+			// Chest Count Up
+			GameManager.me.ChestCountUp();
+		}
+
 		// stop shaking
 		shakeInstance.Stop(0, false);
 		// stop playing ps_squeeze
@@ -202,6 +212,20 @@ public class BubbleScript : MonoBehaviour
 		boxExplosion = false;
 		thornFan = false;
 		containUpgrade = false;
+
+		// Call the OnBubbleBurst method from LeaderboardTester
+        if (leaderboardTester != null && SceneManager.GetActiveScene().name == "LeaderBoardScene")
+        {
+            leaderboardTester.OnBubbleBurst();
+        }
+		
+		// Find the PumpThoseFuckers instance and call IncrementBurstCount
+        PumpThoseFuckers pumpManager = FindObjectOfType<PumpThoseFuckers>();
+        if (pumpManager != null)
+        {
+            pumpManager.IncrementBurstCount();
+        }
+
     }
     protected virtual void Pump()
     {

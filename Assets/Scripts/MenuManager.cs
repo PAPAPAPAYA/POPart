@@ -47,8 +47,14 @@ public class MenuManager : MonoBehaviour
     {
         if (GameManager.me.hasFailed)
         {
-            failMenu.transform.Find("Score").gameObject.GetComponent<TextMeshProUGUI>().text = "Score: " + GameManager.me.score;
-            failMenu.SetActive(true);
+            // failMenu.transform.Find("Score").gameObject.GetComponent<TextMeshProUGUI>().text = "Score: " + GameManager.me.score;
+            // failMenu.SetActive(true);
+            
+            // Set the score to pass to the LeaderboardTester
+            LeaderboardTester.SetScoreToPass(GameManager.me.score);
+
+            // Load the LeaderBoardScene
+            SceneManager.LoadScene("LeaderBoardScene");
         }
     }
 

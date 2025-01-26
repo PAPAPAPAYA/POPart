@@ -18,13 +18,34 @@ public class LeaderboardTester : MonoBehaviour
     public TMP_Text[] nameTexts = new TMP_Text[6];
     public TMP_Text[] scoreTexts = new TMP_Text[6];
 
-    private int score = 0526;
     private const string PlayerNameKey = "PlayerName";
     private bool isLeaderboardDisplayed = false; // Flag to check if the leaderboard is displayed
 
-    // Start is called before the first frame update
-    void Start()
+    private static int scoreToPass;
+
+    private void Awake()
     {
+        // // Ensure only one instance of LeaderboardTester exists
+        // if (FindObjectsOfType<LeaderboardTester>().Length > 1)
+        // {
+        //     Destroy(gameObject);
+        // }
+        // else
+        // {
+        //     DontDestroyOnLoad(gameObject);
+        // }
+    }
+
+    public static void SetScoreToPass(int score)
+    {
+        scoreToPass = score;
+    }
+
+    private void Start()
+    {
+        // Use the scoreToPass value as needed
+        Debug.Log("Score passed to LeaderboardTester: " + scoreToPass);
+
         // Add a listener to the submit button
         submitButton.onClick.AddListener(OnSubmit);
 
@@ -42,6 +63,11 @@ public class LeaderboardTester : MonoBehaviour
             inputField.gameObject.SetActive(false);
             submitButton.gameObject.SetActive(false);
             FetchAndDisplayLeaderboard(savedName);
+            // if (bubble != null)
+            // {
+            //     bubble.SetActive(true);
+            // }
+
         }
         else
         {
@@ -52,6 +78,8 @@ public class LeaderboardTester : MonoBehaviour
 
         // Clear all text fields when the scene loads
         ClearTextFields();
+
+        //Debug.Log(Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -79,7 +107,7 @@ public class LeaderboardTester : MonoBehaviour
         submitButton.gameObject.SetActive(false);
 
         // Insert the score and fetch the leaderboard
-        LeaderboardManager.Instance.InsertScore(inputValue, score);
+        LeaderboardManager.Instance.InsertScore(inputValue, scoreToPass);
         FetchAndDisplayLeaderboard(inputValue);
     }
 
@@ -87,12 +115,14 @@ public class LeaderboardTester : MonoBehaviour
     void FetchAndDisplayLeaderboard(string playerName)
     {
         LeaderboardManager.Instance.GetScores(
-            (scores) => {
+            (scores) =>
+            {
                 // Success callback
                 Debug.Log("Fetched scores: ");
                 DisplayScores(new List<ScoreRecord>(scores), playerName); // Convert array to list
             },
-            (error) => {
+            (error) =>
+            {
                 // Error callback
                 Debug.LogError(error);
             }
@@ -112,7 +142,7 @@ public class LeaderboardTester : MonoBehaviour
         leaderboardContent.gameObject.SetActive(true);
         isLeaderboardDisplayed = true; // Set the flag to true
 
-        // Hide the bubble
+        // Show the bubble
         if (bubble != null)
         {
             bubble.SetActive(true);
@@ -127,7 +157,7 @@ public class LeaderboardTester : MonoBehaviour
         }
 
         // Find the user's score
-        var userScore = scores.FirstOrDefault(s => s.name == playerName && s.score == score);
+        var userScore = scores.FirstOrDefault(s => s.name == playerName && s.score == scoreToPass);
         if (userScore != null)
         {
             int userRank = scores.IndexOf(userScore) + 1;
@@ -141,7 +171,7 @@ public class LeaderboardTester : MonoBehaviour
             int userRank = scores.Count + 1;
             rankTexts[5].text = userRank.ToString();
             nameTexts[5].text = playerName;
-            scoreTexts[5].text = score.ToString();
+            scoreTexts[5].text = scoreToPass.ToString();
         }
     }
 
@@ -165,7 +195,7 @@ public class LeaderboardTester : MonoBehaviour
     // Coroutine to load the main scene with a delay
     private IEnumerator LoadMainSceneWithDelay()
     {
-        yield return new WaitForSeconds(2.0f); // Adjust the delay as needed
+        yield return new WaitForSeconds(.2f); // Adjust the delay as needed
         SceneManager.LoadScene("MainScene"); // Replace "MainScene" with the actual name of your main scene
     }
 

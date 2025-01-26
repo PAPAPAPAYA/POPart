@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         failBubbleNum = (int)Mathf.Pow(2*BubbleMakerScript.me.amount_layer - 1f, 2.0f); 
+        hasFailed = false;
     }
 
     void Update()
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void Fail()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         MenuManager.me.SendMessage("OpenFailMenu");
         AudioManager.Instance.ApplyMuffleEffect(true);
     }
