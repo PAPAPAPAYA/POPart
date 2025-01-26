@@ -28,9 +28,9 @@ public class LeaderboardManager : MonoBehaviour
     /// </summary>
     /// <param name="name">Player name</param>
     /// <param name="score">Player score</param>
-    public void InsertScore(string name, int score)
+    public void InsertScore(string name, int score, Action onSuccess = null, Action<string> onError = null)
     {
-        StartCoroutine(InsertScoreCoroutine(name, score));
+        StartCoroutine(InsertScoreCoroutine(name, score, onSuccess, onError));
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class LeaderboardManager : MonoBehaviour
 
     // --- Private Coroutines ---
 
-    private IEnumerator InsertScoreCoroutine(string playerName, int playerScore)
+    private IEnumerator InsertScoreCoroutine(string playerName, int playerScore, Action onSuccess, Action<string> onError)
     {
         // Create a payload object
         ScoreRecord payload = new ScoreRecord { name = playerName, score = playerScore };
@@ -55,21 +55,22 @@ public class LeaderboardManager : MonoBehaviour
         {
             // Prepare the request
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonPayload);
-            request.uploadHandler   = new UploadHandlerRaw(jsonToSend);
+            request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
 
             // Send the request and wait for response
             yield return request.SendWebRequest();
 
-            if (request.result == UnityWebRequest.Result.ConnectionError 
-                || request.result == UnityWebRequest.Result.ProtocolError)
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError($"InsertScore Error: {request.error}");
+                onError?.Invoke(request.error);
             }
             else
             {
                 Debug.Log("Score inserted successfully: " + request.downloadHandler.text);
+                onSuccess?.Invoke();
             }
         }
     }
