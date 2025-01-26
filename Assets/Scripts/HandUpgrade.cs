@@ -14,6 +14,10 @@ public class HandUpgrade : MonoBehaviour
     public int boxHandLevel;
     public int lineHandLevel;
     public int xxHandLevel;
+    public int boxExplodePercentLevel=1;
+    public int lineExplodePercentLevel=1;
+    public int thornFanPercentLevel=1;
+
     public List<BubbleScript> selectedBubbles = new List<BubbleScript>();
 
     void Start()
@@ -21,6 +25,9 @@ public class HandUpgrade : MonoBehaviour
         boxHandLevel = 1;
         lineHandLevel = 1;
         xxHandLevel = 1;
+        BubbleMakerScript.me.SetPercentage("box",lineExplodePercentLevel);
+        BubbleMakerScript.me.SetPercentage("line",lineExplodePercentLevel);
+        BubbleMakerScript.me.SetPercentage("thornFan",lineExplodePercentLevel);
     }
 
     void Update()
@@ -41,6 +48,11 @@ public class HandUpgrade : MonoBehaviour
 
             }
             selectedBubbles.Clear();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            BoxExplodePercentUpgrade();
         }
     }
 
@@ -122,6 +134,21 @@ public class HandUpgrade : MonoBehaviour
         }
     }
 
+    public void BoxExplodePercentUpgrade()
+    {
+        boxExplodePercentLevel++;
+        BubbleMakerScript.me.SetPercentage("box",boxExplodePercentLevel);
+    }
 
+    public void LineExplodePercentUpgrade()
+    {
+        lineExplodePercentLevel++;
+        BubbleMakerScript.me.SetPercentage("line",lineExplodePercentLevel);
+    }
 
+    public void ThornFanPercentUpgrade()
+    {
+        thornFanPercentLevel++;
+        BubbleMakerScript.me.SetPercentage("thornFan",thornFanPercentLevel);
+    }
 }

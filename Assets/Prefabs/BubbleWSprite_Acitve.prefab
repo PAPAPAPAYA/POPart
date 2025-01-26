@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6601454745644881039}
   m_Layer: 0
-  m_Name: BubbleWSprite
+  m_Name: BubbleWSprite_Acitve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,6 +77,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5722927297338728961}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: ogColor.a
       value: 1
       objectReference: {fileID: 0}
@@ -142,15 +146,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8656938668280862233, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8656938668280862233, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8656938668280862233, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8656938668280862233, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: m_LocalPosition.x
@@ -203,10 +207,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2607641700856049854, guid: 7f0125981a638f54888033e181289f03, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8094726241461180041}
+    - targetCorrespondingSourceObject: {fileID: 2607641700856049854, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8411345015373601161}
   m_SourcePrefab: {fileID: 100100000, guid: 7f0125981a638f54888033e181289f03, type: 3}
 --- !u!4 &1402950017882162342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8656938668280862233, guid: 7f0125981a638f54888033e181289f03, type: 3}
+  m_PrefabInstance: {fileID: 7736014561178276543}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2827001632078109541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5503503473182820826, guid: 7f0125981a638f54888033e181289f03, type: 3}
   m_PrefabInstance: {fileID: 7736014561178276543}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5722927297338728961 stripped
@@ -248,3 +260,40 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8411345015373601161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722927297338728961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0ad6934d48a654a827553e6297f908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PSprefab_burst: {fileID: 4510758115324676906, guid: dcc0085f46950e042a7db599741d854b, type: 3}
+  PS_squeeze: {fileID: 2827001632078109541}
+  SP_squeeze: {fileID: 11400000, guid: b6f2d32e39f69124ca0eb09f0898e3fb, type: 2}
+  shortShakePreset: {fileID: 11400000, guid: 962c80d5abfdc804c9173250c824e853, type: 2}
+  BubbleCircle: {fileID: 5722927297338728961}
+  bubbleImg: {fileID: 5722927297338728961}
+  containUpgrade: 0
+  lineExplosion: 0
+  boxExplosion: 0
+  thornFan: 0
+  hp: 1
+  rowNumber: 0
+  colNumber: 0
+  mouseDown: 0
+  squeezeTime: 0.3
+  squeezeTimer: 0
+  size_baseline: 1.2
+  active: 0
+  pumping: 0
+  size_bursted: {x: 0.1, y: 0.1, z: 0.1}
+  pumpSpd: 0.5
+  hasPlayedRechargeSound: 1
+  bubbleAnimator: {fileID: 8094726241461180041}
+  ogColor: {r: 1, g: 1, b: 1, a: 1}
+  inActiveColor: {r: 0.8784314, g: 0.8784314, b: 0.8784314, a: 0.5529412}

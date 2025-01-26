@@ -51,7 +51,14 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        ApplyMuffleEffect(false); // Unapply the muffle effect when a new scene is loaded
+        if (scene.name == "LeaderBoardScene")
+        {
+            ApplyMuffleEffect(true); // Apply the muffle effect when in LeaderBoardScene
+        }
+        else
+        {
+            ApplyMuffleEffect(false); // Unapply the muffle effect in other scenes
+        }
     }
 
     // Play a sound effect with volume attenuation
@@ -207,4 +214,6 @@ public class AudioManager : MonoBehaviour
     {
         audioMixer.SetFloat("MasterVolume", volume);
     }
+
+    //when spawn source, assign it to audio mixer
 }

@@ -64,3 +64,7 @@ public class AudioTest : MonoBehaviour
         }
     }
 }
+
+//to do list 
+//1. when the selection pop up, slow the game, and muffle the bgm
+//2. start scene, start the game, start shape.
