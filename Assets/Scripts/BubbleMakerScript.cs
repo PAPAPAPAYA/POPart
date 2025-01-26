@@ -72,22 +72,24 @@ public class BubbleMakerScript : MonoBehaviour
     }
     private void Update()
     {
-		
-		if (activateTimer > 0 &&
-			bubbles.Count == Mathf.Pow(amount_layer * 2 - 1, 2))
+		if (!GameManager.me.isPaused)
 		{
-			activateTimer -= Time.deltaTime;
-		}
-		else if (activateTimer <= 0)
-		{
-			activateTimer = activateInterval;
-			ActivateBubbles(activateAmountPerFrame);
-			ActivateARandomInactiveBubble(randomActivateAmountPerFrame);
-            GameManager.me.IfFail();
-		}
-		SpeedUpBubbleActivationRateOverTime();
-		IncreaseActivateAmountOverTime();
-		IncreaseRandomActivateAmountOverTime();
+            if (activateTimer > 0 &&
+            bubbles.Count == Mathf.Pow(amount_layer * 2 - 1, 2))
+            {
+                activateTimer -= Time.deltaTime;
+            }
+            else if (activateTimer <= 0)
+            {
+                activateTimer = activateInterval;
+                ActivateBubbles(activateAmountPerFrame);
+                ActivateARandomInactiveBubble(randomActivateAmountPerFrame);
+                GameManager.me.IfFail();
+            }
+            SpeedUpBubbleActivationRateOverTime();
+            IncreaseActivateAmountOverTime();
+            IncreaseRandomActivateAmountOverTime();
+        }
     }
 	private void IncreaseActivateAmountOverTime()
 	{
