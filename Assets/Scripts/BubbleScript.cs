@@ -20,7 +20,8 @@ public class BubbleScript : MonoBehaviour
 	public bool lineExplosion = false;
 	public bool boxExplosion = false;
 	public bool thornFan = false;
-	[Header("BASICs")]
+	public bool fastSqueeze = false;
+    [Header("BASICs")]
 	public int hp = 0;
 	public int rowNumber;
 	public int colNumber;
@@ -58,7 +59,6 @@ public class BubbleScript : MonoBehaviour
 
     private void Update()
 	{
-		Debug.Log(active);
 		// if size reached baseline, it's active
 		/*if(transform.localScale.x >= size_baseline)
 		{
@@ -172,6 +172,10 @@ public class BubbleScript : MonoBehaviour
 		{
 			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2, transform.position);
 		}
+		if (fastSqueeze)
+		{
+			BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
+		}
 		if (containUpgrade)
 		{
             UpgradeInteractionManagerScript.me.showButtonStack++;
@@ -202,6 +206,7 @@ public class BubbleScript : MonoBehaviour
 		boxExplosion = false;
 		thornFan = false;
 		containUpgrade = false;
+		fastSqueeze = false;
     }
     protected virtual void Pump()
     {

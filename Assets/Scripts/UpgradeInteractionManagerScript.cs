@@ -70,89 +70,69 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
 
     private void DetectUpgrade(UpgradeHolderScript uhs, Button button)
     {
-        switch (uhs.thisUpgrade)
+        button.onClick.AddListener(() => ActivateUpgrade(uhs.thisUpgrade));
+        button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
+    }
+    private void ActivateUpgrade(BubbleUpgrade.Upgrades upgrade)
+    {
+        switch (upgrade)
         {
             case BubbleUpgrade.Upgrades.lineExplode:
-                button.onClick.AddListener(ActivateLineExplosion);
-                button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
+                if (BubbleUpgrade.me.lineExplosion)
+                {
+                    BubbleUpgrade.me.lineExplodeLevel++;
+                }
+                else
+                {
+                    BubbleUpgrade.me.lineExplosion = true;
+                }
                 break;
             case BubbleUpgrade.Upgrades.boxExplode:
-                button.onClick.AddListener(ActivateBoxExplosion);
-                button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
+                if (BubbleUpgrade.me.boxExplosion)
+                {
+                    BubbleUpgrade.me.boxExplodeLevel++;
+                }
+                else
+                {
+                    BubbleUpgrade.me.boxExplosion = true;
+                }
                 break;
             case BubbleUpgrade.Upgrades.thornFan:
-                button.onClick.AddListener(ActivateThornFan);
-                button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
+                if (BubbleUpgrade.me.thornFan)
+                {
+                    BubbleUpgrade.me.thornFanLevel++;
+                }
+                else
+                {
+                    BubbleUpgrade.me.thornFan = true;
+                }
                 break;
             case BubbleUpgrade.Upgrades.fastSqueeze:
-                button.onClick.AddListener(ActivateFastSqueeze);
-                button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
+                if (BubbleUpgrade.me.fastSqueeze)
+                {
+                    BubbleUpgrade.me.fastSqueezeLevel++;
+                }
+                else
+                {
+                    BubbleUpgrade.me.fastSqueeze = true;
+                }
                 break;
             default:
                 break;
         }
-    }
-
-    #region ButtonFunctions
-    public void ActivateLineExplosion()
-    {
-        BubbleUpgrade.me.lineExplosion = true;
         // close all buttons
         option1.SetActive(false);
         option2.SetActive(false);
         option3.SetActive(false);
+        // remove all listeners(onClick events)
+        option1.GetComponent<Button>().onClick.RemoveAllListeners();
+        option2.GetComponent<Button>().onClick.RemoveAllListeners();
+        option3.GetComponent<Button>().onClick.RemoveAllListeners();
+        // if there are other squeezed chest waiting in the queue, show buttons again
         if (showButtonStack > 0)
         {
-            //StartCoroutine(WaitABit());
             ShowButtons();
         }
         showingButtons = false;
-    }
-    public void ActivateBoxExplosion()
-    {
-        BubbleUpgrade.me.boxExplosion = true;
-        // close all buttons
-        option1.SetActive(false);
-        option2.SetActive(false);
-        option3.SetActive(false);
-        if (showButtonStack > 0)
-        {
-            //StartCoroutine(WaitABit());
-            ShowButtons();
-        }
-        showingButtons = false;
-    }
-    public void ActivateThornFan()
-    {
-        BubbleUpgrade.me.thornFan = true;
-        // close all buttons
-        option1.SetActive(false);
-        option2.SetActive(false);
-        option3.SetActive(false);
-        if (showButtonStack > 0)
-        {
-            //StartCoroutine(WaitABit());
-            ShowButtons();
-        }
-        showingButtons = false;
-    }
-    public void ActivateFastSqueeze()
-    {
-        BubbleUpgrade.me.fastSqueeze = true;
-        //close all buttons
-        option1.SetActive(false);
-        option2.SetActive(false);
-        option3.SetActive(false);
-        if (showButtonStack > 0)
-        {
-            //StartCoroutine(WaitABit());
-            ShowButtons();
-        }
-        showingButtons = false;
-    }
-    #endregion
-    IEnumerator WaitABit()
-    {
-        yield return new WaitForSeconds(.1f);
     }
 }
