@@ -28,8 +28,7 @@ public class BubbleMakerScript : MonoBehaviour
 	[Header("For Activating Bubbles")]
 	public float activateInterval;
 	private float activateTimer;
-	[Header("For Putting in Upgrades")]
-	public float percentage_containUpgrade;
+	[Header("For Upgrades")]
 	public float percentage_lineExplosion;
 	public float percentage_boxExplosion;
 	public float percentage_thornFan;
@@ -67,7 +66,8 @@ public class BubbleMakerScript : MonoBehaviour
 		for (int i = 0; i < amount_layer; i++)
 		{
 			GameObject bubble1 = Instantiate(prefab_bubble);
-			if(i == 0)
+            Debug.Log("jj");
+            if (i == 0)
 			{
                 bubble1.transform.position = new(0,
                     0,
@@ -149,14 +149,17 @@ public class BubbleMakerScript : MonoBehaviour
 		for(int q = 0; q < bubbles.Count; q++)
 		{
 			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
-			if (!bs.pumping)
+			if (!bs.active)
 			{
 				bs.hp = bubbleHp;
 				bs.pumping = true;
-                if (CheckPercentage(percentage_containUpgrade))
+                if (GameManager.me.chestCount >= GameManager.me.chestCountMax)
 				{
 					bs.containUpgrade = true;
-					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
+					GameManager.me.ResetChestCount(); // reset chest count to zero
+					GameManager.me.ChestCountMaxUp(); // increase chest count max
+					ScoreManager.me.UpdateChestCountMax(); // update chest count max UI
                 }
 				if (CheckPercentage(percentage_lineExplosion) &&
 					BubbleUpgrade.me.lineExplosion)
@@ -234,4 +237,22 @@ public class BubbleMakerScript : MonoBehaviour
             }
         }
     }
+
+	public void SetPercentage(string bombClass, int level)
+	{
+		switch (bombClass)
+		{
+			case "box":
+				percentage_boxExplosion = level * 0.05f;
+				break;
+			case "line":
+				percentage_lineExplosion = level * 0.05f;
+				break;
+			case "thornFan":
+				percentage_thornFan = level * 0.05f;
+				break;
+			default:
+				break;
+		}
+	}
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
 using MilkShake;
 using System.Diagnostics.Tracing;
@@ -22,7 +21,6 @@ public class BubbleScript : MonoBehaviour
 	public bool lineExplosion = false;
 	public bool boxExplosion = false;
 	public bool thornFan = false;
-	public bool fastSqueeze = false;
 	[Header("BASICs")]
 	public int hp = 0;
 	public int rowNumber;
@@ -30,7 +28,6 @@ public class BubbleScript : MonoBehaviour
 	private Material ogMat;
 	[Header("POP")]
     public bool mouseDown;
-	public float defaultSqueezeTimer = 0.3f;
     public float squeezeTime;
     public float squeezeTimer;
 	//private bool hasBurst = false;
@@ -66,14 +63,19 @@ public class BubbleScript : MonoBehaviour
 
     private void Update()
 	{
-		
+		Debug.Log(active);
 		// if size reached baseline, it's active
-		if(transform.localScale.x >= size_baseline)
+		/*if(transform.localScale.x >= size_baseline)
 		{
 			active = true;
             bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
-        }
+        }*/
+		if (active)
+		{
+            bubbleAnimator.Play("Active");
+            bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
 
+        }
 		if (!active)
 		{
             bubbleImg.GetComponent<SpriteRenderer>().color = inActiveColor;
@@ -92,7 +94,8 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (mouseDown)
 		{
-			if (active)
+			if (active && // if bubble is pumped
+				!UpgradeInteractionManagerScript.me.showingButtons) // if not showing upgrade buttons
 			{
                 if (squeezeTimer > 0)
                 {
@@ -113,7 +116,9 @@ public class BubbleScript : MonoBehaviour
 	}
 	public void setActive()
 	{
+		Debug.Log("setactive");
 		active = true;
+		pumping = false;
 	}
     private void OnMouseDown()
     {
@@ -159,6 +164,7 @@ public class BubbleScript : MonoBehaviour
     }
     protected virtual void OnBurst()
 	{
+        Debug.Log("b");
         if (lineExplosion)
 		{
 			BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
@@ -169,23 +175,20 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (thornFan)
 		{
-			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2);
-		}
-		if (fastSqueeze)
-		{
-			BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
+			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2, transform.position);
 		}
 		if (containUpgrade)
 		{
-            UpgradeInteractionManagerScript.me.ShowButtons();
+            UpgradeInteractionManagerScript.me.showButtonStack++;
         }
 		active = false;
 		pumping = false;
 
-        //bubbleAnimator.Play("Flat");
-        transform.localScale = size_bursted;
+        bubbleAnimator.Play("Flat");
+        //transform.localScale = size_bursted;
 		
 		Instantiate(PSprefab_burst, transform.position, Quaternion.identity);
+
 
 		if (GameManager.me != null)
 		{
@@ -194,12 +197,12 @@ public class BubbleScript : MonoBehaviour
 			// Chest Count Up
 			GameManager.me.ChestCountUp();
 		}
+
 		// stop shaking
 		shakeInstance.Stop(0, false);
 		// stop playing ps_squeeze
         PS_squeeze.GetComponent<ParticleSystem>().Stop();
-		// Recover squeeze time
-		squeezeTime = defaultSqueezeTimer;
+
 		AudioManager.Instance.PlayPopSound();
 
 		// reset mat
@@ -226,6 +229,10 @@ public class BubbleScript : MonoBehaviour
     }
     protected virtual void Pump()
     {
+
+		bubbleAnimator.Play("Pump");
+
+		/*
         if (transform.localScale.x < size_baseline - 0.1f)
         {
             
@@ -251,6 +258,7 @@ public class BubbleScript : MonoBehaviour
                 hasPlayedRechargeSound = true; // Set the flag to true
             }
         }
+		*/
     }
 
 
