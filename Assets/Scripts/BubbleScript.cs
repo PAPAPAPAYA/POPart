@@ -21,23 +21,27 @@ public class BubbleScript : MonoBehaviour
 	public bool lineExplosion = false;
 	public bool boxExplosion = false;
 	public bool thornFan = false;
-	[Header("BASICs")]
+	public bool fastSqueeze = false;
+    [Header("BASICs")]
 	public int hp = 0;
 	public int rowNumber;
 	public int colNumber;
 	private Material ogMat;
 	[Header("POP")]
     public bool mouseDown;
-    public float squeezeTime;
-    public float squeezeTimer;
+    public float squeezeTime; // base squeeze timer
+    public float squeezeTimer; // timer, used to count down
 	//private bool hasBurst = false;
 
 	[Header("PUMP")]
-    public float size_baseline; // when size baseline is reached, this bubble is active
+    //public float size_baseline; // when size baseline is reached, this bubble is active
     public bool active = false; // if active, it can be pop
 	public bool pumping = true; // if not pumping, it can be pump
-	public Vector3 size_bursted; // the size when popped
-	public float pumpSpd; // how fast it's pumped
+	//public Vector3 size_bursted; // the size when popped
+	public float pumpSpdMultiplier; // how fast it's pumped
+	public float pumpSpdMult_apply_interval;
+	private float pumpSpdMult_apply_timer;
+	public float pumpSpdMultiplier_max;
 
     public bool hasPlayedRechargeSound = true; // Flag to check if the recharge sound has been played
 
@@ -59,18 +63,23 @@ public class BubbleScript : MonoBehaviour
 		ogColor = bubbleImg.GetComponent<SpriteRenderer>().color;
 
 		leaderboardTester = FindObjectOfType<LeaderboardTester>();
+
+		HandUpgrade.me.currentSqueezeTime = squeezeTime;
+
+		pumpSpdMult_apply_timer = pumpSpdMult_apply_interval;
     }
 
     private void Update()
 	{
-		Debug.Log(active);
-		// if size reached baseline, it's active
-		/*if(transform.localScale.x >= size_baseline)
+		bubbleAnimator.SetFloat("PumpSpeedMult", pumpSpdMultiplier); // change the [pump] animation speed
+		SpeedUpPumpTimeOverTime();
+        // if size reached baseline, it's active
+        /*if(transform.localScale.x >= size_baseline)
 		{
 			active = true;
             bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
         }*/
-		if (active)
+        if (active)
 		{
             bubbleAnimator.Play("Active");
             bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
@@ -94,7 +103,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (mouseDown)
 		{
-			if (active && // if bubble is pumped
+            if (active && // if bubble is pumped
 				!UpgradeInteractionManagerScript.me.showingButtons) // if not showing upgrade buttons
 			{
                 if (squeezeTimer > 0)
@@ -114,17 +123,40 @@ public class BubbleScript : MonoBehaviour
             }
 		}
 	}
+	private void SpeedUpPumpTimeOverTime()
+	{
+		if (pumpSpdMult_apply_timer > 0)
+		{
+			pumpSpdMult_apply_timer -= Time.deltaTime;
+		}
+		else
+		{
+			pumpSpdMultiplier *= pumpSpdMultiplier;
+            pumpSpdMult_apply_timer = pumpSpdMult_apply_interval;
+		}
+		pumpSpdMultiplier = Mathf.Clamp(pumpSpdMultiplier, pumpSpdMultiplier, pumpSpdMultiplier_max);
+	}
 	public void setActive()
 	{
-		Debug.Log("setactive");
 		active = true;
 		pumping = false;
 	}
     private void OnMouseDown()
     {
-
         mouseDown = true;
-		if (active)
+        if (HandUpgrade.me.lineHand)
+        {
+            HandUpgrade.me.LineHand(rowNumber, colNumber);
+        }
+		if (HandUpgrade.me.xxHand)
+		{
+			HandUpgrade.me.XXHand(rowNumber, colNumber);
+		}
+		if (HandUpgrade.me.boxHand)
+		{
+			HandUpgrade.me.BoxHand(rowNumber, colNumber);
+		}
+        if (active)
 		{
 			// start playing ps_squeeze
             PS_squeeze.GetComponent<ParticleSystem>().Play();
@@ -139,7 +171,6 @@ public class BubbleScript : MonoBehaviour
 			// if not active, play a sound
 		}
     }
-
     private void OnMouseUp()
     {
 		mouseDown = false;
@@ -164,7 +195,6 @@ public class BubbleScript : MonoBehaviour
     }
     protected virtual void OnBurst()
 	{
-        Debug.Log("b");
         if (lineExplosion)
 		{
 			BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
@@ -176,6 +206,10 @@ public class BubbleScript : MonoBehaviour
 		if (thornFan)
 		{
 			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 2, transform.position);
+		}
+		if (fastSqueeze)
+		{
+			BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
 		}
 		if (containUpgrade)
 		{
@@ -212,6 +246,7 @@ public class BubbleScript : MonoBehaviour
 		boxExplosion = false;
 		thornFan = false;
 		containUpgrade = false;
+		fastSqueeze = false;
 
 		// Call the OnBubbleBurst method from LeaderboardTester
         if (leaderboardTester != null && SceneManager.GetActiveScene().name == "LeaderBoardScene")
@@ -229,9 +264,7 @@ public class BubbleScript : MonoBehaviour
     }
     protected virtual void Pump()
     {
-
 		bubbleAnimator.Play("Pump");
-
 		/*
         if (transform.localScale.x < size_baseline - 0.1f)
         {
