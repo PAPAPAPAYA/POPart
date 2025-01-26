@@ -59,6 +59,10 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
                 button.onClick.AddListener(ActivateThornFan);
                 button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
                 break;
+            case BubbleUpgrade.Upgrades.fastSqueeze:
+                button.onClick.AddListener(ActivateFastSqueeze);
+                button.GetComponentInChildren<TextMeshProUGUI>().text = uhs.name_upgrade;
+                break;
             default:
                 break;
         }
@@ -85,6 +89,14 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
     {
         BubbleUpgrade.me.thornFan = true;
         // close all buttons
+        option1.SetActive(false);
+        option2.SetActive(false);
+        option3.SetActive(false);
+    }
+    public void ActivateFastSqueeze()
+    {
+        BubbleUpgrade.me.fastSqueeze = true;
+        //close all buttons
         option1.SetActive(false);
         option2.SetActive(false);
         option3.SetActive(false);

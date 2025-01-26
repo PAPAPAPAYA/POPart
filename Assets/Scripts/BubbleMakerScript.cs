@@ -33,6 +33,7 @@ public class BubbleMakerScript : MonoBehaviour
 	public float percentage_lineExplosion;
 	public float percentage_boxExplosion;
 	public float percentage_thornFan;
+	public float percentage_fastSqueeze;
 	public Material matChest;
 
     private void Start()
@@ -177,6 +178,12 @@ public class BubbleMakerScript : MonoBehaviour
 					bs.thornFan = true;
                     bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_thornFan.GetComponent<UpgradeHolderScript>().mat_upgrade;
                 }
+				if(CheckPercentage(percentage_fastSqueeze) &&
+					BubbleUpgrade.me.fastSqueeze)
+				{
+					bs.fastSqueeze = true;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_fastSqueeze.GetComponent<UpgradeHolderScript>().mat_upgrade;
+				}
                 //CameraZoomScript.me.FitCamera();
                 break;
 			}
@@ -228,4 +235,22 @@ public class BubbleMakerScript : MonoBehaviour
             }
         }
     }
+
+	public void SetPercentage(string bombClass, int level)
+	{
+		switch (bombClass)
+		{
+			case "box":
+				percentage_boxExplosion = level * 0.05f;
+				break;
+			case "line":
+				percentage_lineExplosion = level * 0.05f;
+				break;
+			case "thornFan":
+				percentage_thornFan = level * 0.05f;
+				break;
+			default:
+				break;
+		}
+	}
 }
