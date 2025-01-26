@@ -945,7 +945,7 @@ MonoBehaviour:
   thornFanLevel: 0
   fastSqueezeLevel: 0
   ExplosionDelay: 0.25
-  prefab_thorn: {fileID: 719266978}
+  prefab_thorn: {fileID: 1539553533738188278, guid: 47d1a62397dfac4438967b501701913c, type: 3}
   fastSqueezeTime: 0.1
   lineExplosion: 0
   prefab_lineExplosion: {fileID: 1477380782}
@@ -2139,11 +2139,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691631693}
   m_CullTransparentMesh: 1
---- !u!1 &719266978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1539553533738188278, guid: 47d1a62397dfac4438967b501701913c, type: 3}
-  m_PrefabInstance: {fileID: 2694883844669168215}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &802179359
 GameObject:
   m_ObjectHideFlags: 0
@@ -2947,7 +2942,7 @@ MonoBehaviour:
   minSqueezeTime: 0.1
   currentSqueezeTime: 0
   fasterSqueeze: {fileID: 1596743578}
-  moreBomb_percentageIncreasePerLevel: 0.01
+  moreBomb_percentageIncreasePerLevel: 0.03
   boxHand: 0
   lineHand: 0
   xxHand: 0
@@ -4223,7 +4218,7 @@ MonoBehaviour:
   activateAmountPerFrame_increase_interval: 10
   randomActivateAmountPerFrame: 1
   randomActivateAmountPerFrame_increase_interval: 20
-  activateInterval: 0.4
+  activateInterval: 0.8
   activateInterval_decrease_Interval: 5
   activateInterval_decrease_Mult: 0.95
   activateInterval_min: 0.4
@@ -4233,7 +4228,7 @@ MonoBehaviour:
   percentage_thornFan: 0
   percentage_fastSqueeze: 0.02
   matChest: {fileID: 2100000, guid: 9d4f9d361d9ab3946bb291483cd4328f, type: 2}
-  chestSqueezeTime: 1.4
+  chestSqueezeTime: 1
 --- !u!1 &1452065602
 GameObject:
   m_ObjectHideFlags: 0
@@ -5197,11 +5192,11 @@ MonoBehaviour:
   isPaused: 0
   score: 0
   chestCount: 0
-  chestCountMax: 10
-  chestCountMaxFactor: 1.5
+  chestCountMax: 5
+  chestCountMaxFactor: 2
   CCMUpgradeCount: 0
   upgradedCount: 0
-  chestCountMaxPresets: 
+  chestCountMaxPresets: 070000000a0000000f0000001900000023000000
 --- !u!1 &1867653161
 GameObject:
   m_ObjectHideFlags: 0
