@@ -169,10 +169,12 @@ public class BubbleMakerScript : MonoBehaviour
 			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
 			if (!bs.active)
 			{
-				bs.hp = bubbleHp;
+                print("chest test");
+                bs.hp = bubbleHp;
 				bs.pumping = true;
                 if (GameManager.me.chestCount >= GameManager.me.chestCountMax)
 				{
+					print("chest test passed");
 					bs.containUpgrade = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
 					GameManager.me.ResetChestCount(); // reset chest count to zero

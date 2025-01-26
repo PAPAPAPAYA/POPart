@@ -85,14 +85,15 @@ public class GameManager : MonoBehaviour
     }
     public void ChestCountUp()
     {
-        if (chestCount < chestCountMax)
-        {
-            chestCount += 1;
-        }
-        else
-        {
-            chestCount = 0 + 1;
-        }
+        //if (chestCount < chestCountMax)
+        //{
+        //    chestCount += 1;
+        //}
+        //else
+        //{
+        //    chestCount = 0 + 1;
+        //}
+        chestCount++;
     }
     public void ChestCountMaxUp()
     {
