@@ -14,12 +14,16 @@ public class UpgradeInteractionManagerScript : MonoBehaviour
     }
     #endregion
 
+    // button refs
     public GameObject option1;
     public GameObject option2;
     public GameObject option3;
 
+    // available upgrades
     public List<GameObject> upgrades;
     private List<GameObject> upgradeListToShuffle;
+
+    public int showButtonStack;
 
     public void ShowButtons()
     {

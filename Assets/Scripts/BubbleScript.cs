@@ -178,7 +178,6 @@ public class BubbleScript : MonoBehaviour
 
 		//Score up
 		GameManager.me.score += 1;
-		BubbleMakerScript.me.currentPop++;
 		//Chest Count Up
 		GameManager.me.ChestCountUp();
 		// stop shaking
