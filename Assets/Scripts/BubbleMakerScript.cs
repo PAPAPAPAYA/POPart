@@ -60,6 +60,10 @@ public class BubbleMakerScript : MonoBehaviour
 			GameManager.me.IfFail();
 		}
 	}
+	private void SpeedUpBubbleActivationRateOverTime()
+	{
+
+	}
     // used to initializing bubbles
     private void MakeBubbles2()
 	{
@@ -161,27 +165,27 @@ public class BubbleMakerScript : MonoBehaviour
 					GameManager.me.ChestCountMaxUp(); // increase chest count max
 					ScoreManager.me.UpdateChestCountMax(); // update chest count max UI
                 }
-				if (CheckPercentage(percentage_lineExplosion) &&
-					BubbleUpgrade.me.lineExplosion)
+				if (BubbleUpgrade.me.lineExplosion &&
+                    CheckPercentage(percentage_lineExplosion))
 				{
 					bs.lineExplosion = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_lineExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
 
                 }
-				if (CheckPercentage(percentage_boxExplosion) &&
-                    BubbleUpgrade.me.boxExplosion)
+				if (BubbleUpgrade.me.boxExplosion &&
+                    CheckPercentage(percentage_boxExplosion))
 				{
 					bs.boxExplosion = true;
                     bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_boxExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
                 }
-				if (CheckPercentage(percentage_thornFan) &&
-                    BubbleUpgrade.me.thornFan)
+				if (BubbleUpgrade.me.thornFan &&
+                    CheckPercentage(percentage_thornFan))
 				{
 					bs.thornFan = true;
                     bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_thornFan.GetComponent<UpgradeHolderScript>().mat_upgrade;
                 }
-				if(CheckPercentage(percentage_fastSqueeze) &&
-					BubbleUpgrade.me.fastSqueeze)
+				if(BubbleUpgrade.me.fastSqueeze &&
+                    CheckPercentage(percentage_fastSqueeze))
 				{
 					bs.fastSqueeze = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_fastSqueeze.GetComponent<UpgradeHolderScript>().mat_upgrade;
@@ -199,13 +203,15 @@ public class BubbleMakerScript : MonoBehaviour
 		{
             BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
             bs.pumping = true;
-            bs.transform.localScale = new(bs.size_baseline, bs.size_baseline);
+            //bs.transform.localScale = new(bs.size_baseline, bs.size_baseline);
         }
 	}
 
 	private bool CheckPercentage(float percentage)
 	{
-		if (Random.Range(0, 1f) <= percentage)
+		float randNum = Random.Range(0f, 1f);
+        print("rolled " + randNum + " vs " + percentage);
+        if (randNum <= percentage)
 		{
 			return true;
 		}
@@ -215,41 +221,18 @@ public class BubbleMakerScript : MonoBehaviour
 		}
 	}
 
-    // DEPRECATED
-    private void MakeBubbles(int x, int y)
-    {
-        for (int i = 0; i < x; i++)
-        {
-            for (int j = 0; j < y; j++)
-            {
-                GameObject bubble = Instantiate(prefab_bubble);
-                bubble.transform.position = new Vector3(
-                    startPos.x + i * offset_row_x + j * offset_col_x,
-                    startPos.y + i * offset_row_y - j * offset_col_y,
-                    startPos.z + i * offset_row_y - j * offset_col_y);
-                BubbleMasterScript.me.bubbles.Add(bubble);
-                BubbleScript bs = bubble.GetComponent<BubbleScript>();
-                bs.hp = bubbleHp;
-                bs.rowNumber = i;
-                bs.colNumber = j;
-                bubble.name = bubble.name + " (" + i + ", " + j + ")";
-                //CameraZoomScript.me.SaveBubbleWidth(bubble.transform.position.x, bubble.transform.position.x, bubble.transform.position.y, bubble.transform.position.y);
-            }
-        }
-    }
-
 	public void SetPercentage(string bombClass, int level)
 	{
 		switch (bombClass)
 		{
 			case "box":
-				percentage_boxExplosion = level * 0.05f;
+				percentage_boxExplosion = level * HandUpgrade.me.moreBomb_percentageIncreasePerLevel;
 				break;
 			case "line":
-				percentage_lineExplosion = level * 0.05f;
+				percentage_lineExplosion = level * HandUpgrade.me.moreBomb_percentageIncreasePerLevel;
 				break;
 			case "thornFan":
-				percentage_thornFan = level * 0.05f;
+				percentage_thornFan = level * HandUpgrade.me.moreBomb_percentageIncreasePerLevel;
 				break;
 			default:
 				break;

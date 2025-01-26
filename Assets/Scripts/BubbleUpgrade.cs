@@ -15,6 +15,7 @@ public class BubbleUpgrade : MonoBehaviour
     #endregion
     public enum Upgrades
     {
+        none,
         lineExplode,
         boxExplode,
         thornFan,

@@ -154,11 +154,16 @@ MonoBehaviour:
   option1: {fileID: 845077113}
   option2: {fileID: 409967090}
   option3: {fileID: 1974141746}
-  upgrades:
+  upgradePool:
   - {fileID: 1477380782}
   - {fileID: 2072440526}
   - {fileID: 561806905}
   - {fileID: 1136229345}
+  - {fileID: 1596743578}
+  - {fileID: 61426608}
+  - {fileID: 1228571892}
+  - {fileID: 1715120034}
+  - {fileID: 1621871448}
   showButtonStack: 0
   showingButtons: 0
 --- !u!4 &18173204
@@ -176,6 +181,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &61426608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 61426609}
+  - component: {fileID: 61426610}
+  m_Layer: 0
+  m_Name: LineHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &61426609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61426608}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2010817551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &61426610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61426608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name_upgrade: Cross Finger
+  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  icon_upgrade: {fileID: 0}
+  bubbleUpgrade: 0
+  handUpgrade: 2
 --- !u!1 &85592925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,10 +1601,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name_upgrade: Thorn Fan
-  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  name_upgrade: Thorn Explosion
+  mat_upgrade: {fileID: 2100000, guid: 45634fa7c65124e4f99f14e8aa815082, type: 2}
   icon_upgrade: {fileID: 0}
-  thisUpgrade: 2
+  bubbleUpgrade: 3
+  handUpgrade: 0
 --- !u!4 &561806907
 Transform:
   m_ObjectHideFlags: 0
@@ -2494,6 +2549,14 @@ MonoBehaviour:
   lineExplodePercentLevel: 1
   thornFanPercentLevel: 1
   selectedBubbles: []
+  squeezeTimeDecreaseAmount: 0.05
+  minSqueezeTime: 0.1
+  currentSqueezeTime: 0
+  fasterSqueeze: {fileID: 1596743578}
+  moreBomb_percentageIncreasePerLevel: 0.02
+  boxHand: 0
+  lineHand: 0
+  xxHand: 0
 --- !u!4 &949832649
 Transform:
   m_ObjectHideFlags: 0
@@ -3016,10 +3079,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name_upgrade: Fast Squeeze
+  name_upgrade: Area Weakening
   mat_upgrade: {fileID: 2100000, guid: ca3373ccfff02374690709e3b3a4909c, type: 2}
   icon_upgrade: {fileID: 0}
-  thisUpgrade: 3
+  bubbleUpgrade: 4
+  handUpgrade: 0
 --- !u!1 &1209341284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3154,6 +3218,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209341284}
   m_CullTransparentMesh: 1
+--- !u!1 &1228571892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1228571893}
+  - component: {fileID: 1228571894}
+  m_Layer: 0
+  m_Name: XxHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1228571893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228571892}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2010817551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1228571894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228571892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name_upgrade: X Finger
+  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  icon_upgrade: {fileID: 0}
+  bubbleUpgrade: 0
+  handUpgrade: 3
 --- !u!1 &1255456481
 GameObject:
   m_ObjectHideFlags: 0
@@ -3623,10 +3736,10 @@ MonoBehaviour:
   bubbleHp: 1
   amount_initialPump: 16
   activateInterval: 0.1
-  percentage_lineExplosion: 0.2
+  percentage_lineExplosion: 0
   percentage_boxExplosion: 0
   percentage_thornFan: 0
-  percentage_fastSqueeze: 0.2
+  percentage_fastSqueeze: 0.02
   matChest: {fileID: 2100000, guid: 9d4f9d361d9ab3946bb291483cd4328f, type: 2}
 --- !u!1 &1452065602
 GameObject:
@@ -3957,7 +4070,8 @@ MonoBehaviour:
   name_upgrade: Cross Explosion
   mat_upgrade: {fileID: 2100000, guid: 690ddc39ed4321c4bba0f686b8b07e35, type: 2}
   icon_upgrade: {fileID: 0}
-  thisUpgrade: 0
+  bubbleUpgrade: 1
+  handUpgrade: 0
 --- !u!1 &1509181277
 GameObject:
   m_ObjectHideFlags: 0
@@ -4092,6 +4206,104 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1509181277}
   m_CullTransparentMesh: 1
+--- !u!1 &1596743578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1596743579}
+  - component: {fileID: 1596743580}
+  m_Layer: 0
+  m_Name: SqueezeSpdUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1596743579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596743578}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2010817551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1596743580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596743578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name_upgrade: Faster Squeeze
+  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  icon_upgrade: {fileID: 0}
+  bubbleUpgrade: 0
+  handUpgrade: 1
+--- !u!1 &1621871448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1621871449}
+  - component: {fileID: 1621871450}
+  m_Layer: 0
+  m_Name: moreBomb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1621871449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621871448}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2010817551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1621871450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621871448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name_upgrade: More Bombs
+  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  icon_upgrade: {fileID: 0}
+  bubbleUpgrade: 0
+  handUpgrade: 5
 --- !u!1 &1688449544
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,6 +4602,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689476794}
   m_CullTransparentMesh: 1
+--- !u!1 &1715120034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715120035}
+  - component: {fileID: 1715120036}
+  m_Layer: 0
+  m_Name: boxHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1715120035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715120034}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2010817551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1715120036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715120034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ce5b94b9b0f3f4eb18e4ab8304c009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name_upgrade: Fat Finger
+  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  icon_upgrade: {fileID: 0}
+  bubbleUpgrade: 0
+  handUpgrade: 4
 --- !u!1 &1736011097
 GameObject:
   m_ObjectHideFlags: 0
@@ -5315,6 +5576,11 @@ Transform:
   - {fileID: 2072440528}
   - {fileID: 561806907}
   - {fileID: 1136229346}
+  - {fileID: 1596743579}
+  - {fileID: 61426609}
+  - {fileID: 1228571893}
+  - {fileID: 1715120035}
+  - {fileID: 1621871449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2072440526
@@ -5349,7 +5615,8 @@ MonoBehaviour:
   name_upgrade: Square Explosion
   mat_upgrade: {fileID: 2100000, guid: d01bd4c36dc1eab41918ee815511b71c, type: 2}
   icon_upgrade: {fileID: 0}
-  thisUpgrade: 1
+  bubbleUpgrade: 2
+  handUpgrade: 0
 --- !u!4 &2072440528
 Transform:
   m_ObjectHideFlags: 0
@@ -5524,7 +5791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134493955}
   m_Layer: 0
-  m_Name: ------------------------------UIS---------------------------------------------
+  m_Name: ------------------------------UI---------------------------------------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
