@@ -111,9 +111,10 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (mouseDown)
 		{
-			if (SceneManager.GetActiveScene().name != "MainScene")
-			{
-				if (squeezeTimer > 0)
+			if(active){
+				if(SceneManager.GetActiveScene().name != "MainScene" 
+				|| !UpgradeInteractionManagerScript.me.showingButtons){
+					if (squeezeTimer > 0)
 				{
 					if (!PS_squeeze.GetComponent<ParticleSystem>().isPlaying)
 					{
@@ -127,6 +128,8 @@ public class BubbleScript : MonoBehaviour
 					squeezeTimer = squeezeTime;
 					hp--;
 				}
+				}
+			
 			}
 			else if (active && // if bubble is pumped
 				!UpgradeInteractionManagerScript.me.showingButtons)
@@ -166,10 +169,15 @@ public class BubbleScript : MonoBehaviour
 	{
 		active = true;
 		pumping = false;
+
 		if (BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
 		{
-            BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
-        }
+       BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
+    }
+
+
+		AudioManager.Instance.PlayRechargeSound();
+
 	}
 	private void OnMouseDown()
 	{
