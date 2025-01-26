@@ -307,6 +307,7 @@ MonoBehaviour:
   sfxSource: {fileID: 6920671696536298766}
   chargingSource: {fileID: 5553353153331445257}
   audioMixer: {fileID: 24100000, guid: 8ab6e52a98d201a498e41a2b22305927, type: 2}
+  sfxGroup: {fileID: 4522375071805153868, guid: 8ab6e52a98d201a498e41a2b22305927, type: 2}
   popSounds:
   - {fileID: 8300000, guid: c9e50e5d4d3e343498db35b9024d0d4b, type: 3}
   - {fileID: 8300000, guid: e6be9b09c2519d140b15499eba5225f6, type: 3}
