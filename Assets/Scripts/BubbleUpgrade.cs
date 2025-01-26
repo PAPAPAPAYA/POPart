@@ -58,8 +58,11 @@ public class BubbleUpgrade : MonoBehaviour
             if ((bs.rowNumber == rowNumber && (Mathf.Abs(bs.colNumber - colNumber) <= lineExplodeLevel) && bs.colNumber != colNumber) ||
                 (bs.colNumber == colNumber && (Mathf.Abs(bs.rowNumber - rowNumber) <= lineExplodeLevel) && bs.rowNumber != rowNumber))
             {
-                int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
-                bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+                if (bs.active)
+                {
+                    int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
+                    bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+                }
             }
         }
     }
@@ -90,8 +93,11 @@ public class BubbleUpgrade : MonoBehaviour
             //}
             if (offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
             {
-                int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
-                bs.DelayedDMGCaller( ExplosionDelay * levelNum, 1);
+                if (bs.active)
+                {
+                    int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
+                    bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+                }
             }
         }
     }

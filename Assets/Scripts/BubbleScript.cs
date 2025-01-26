@@ -178,6 +178,7 @@ public class BubbleScript : MonoBehaviour
 
 		//Score up
 		GameManager.me.score += 1;
+		BubbleMakerScript.me.currentPop++;
 		// stop shaking
 		shakeInstance.Stop(0, false);
 		// stop playing ps_squeeze

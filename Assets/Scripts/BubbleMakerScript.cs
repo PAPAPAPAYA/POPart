@@ -28,12 +28,16 @@ public class BubbleMakerScript : MonoBehaviour
 	[Header("For Activating Bubbles")]
 	public float activateInterval;
 	private float activateTimer;
-	[Header("For Putting in Upgrades")]
+	[Header("For Upgrades")]
 	public float percentage_containUpgrade;
 	public float percentage_lineExplosion;
 	public float percentage_boxExplosion;
 	public float percentage_thornFan;
 	public Material matChest;
+	// record pop count to spawn chest
+	public float popToSpawnChest; // pop count needed to spawn a chest
+	public int currentPop; // current pop count (when a chest is spawned, return to zero)
+	public float spawnChestFactor; // each time a chest is spawned, pop count needed is multiplied by this factor
 
     private void Start()
 	{
@@ -152,10 +156,13 @@ public class BubbleMakerScript : MonoBehaviour
 			{
 				bs.hp = bubbleHp;
 				bs.pumping = true;
-                if (CheckPercentage(percentage_containUpgrade))
+                if (currentPop >= popToSpawnChest)
 				{
 					bs.containUpgrade = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest;
+					currentPop = 0;
+					popToSpawnChest *= spawnChestFactor;
+					popToSpawnChest = (int) popToSpawnChest;
                 }
 				if (CheckPercentage(percentage_lineExplosion) &&
 					BubbleUpgrade.me.lineExplosion)
