@@ -3738,6 +3738,7 @@ MonoBehaviour:
   activateInterval: 1
   activateInterval_decrease_Interval: 5
   activateInterval_decrease_Mult: 0.95
+  activateInterval_min: 0.05
   percentage_lineExplosion: 0
   percentage_boxExplosion: 0
   percentage_thornFan: 0

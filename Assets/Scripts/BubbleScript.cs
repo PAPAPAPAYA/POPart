@@ -41,6 +41,7 @@ public class BubbleScript : MonoBehaviour
 	public float pumpSpdMultiplier; // how fast it's pumped
 	public float pumpSpdMult_apply_interval;
 	private float pumpSpdMult_apply_timer;
+	public float pumpSpdMultiplier_max;
 
     public bool hasPlayedRechargeSound = true; // Flag to check if the recharge sound has been played
 
@@ -133,6 +134,7 @@ public class BubbleScript : MonoBehaviour
 			pumpSpdMultiplier *= pumpSpdMultiplier;
             pumpSpdMult_apply_timer = pumpSpdMult_apply_interval;
 		}
+		pumpSpdMultiplier = Mathf.Clamp(pumpSpdMultiplier, pumpSpdMultiplier, pumpSpdMultiplier_max);
 	}
 	public void setActive()
 	{
