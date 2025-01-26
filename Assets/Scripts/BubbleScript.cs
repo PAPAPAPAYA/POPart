@@ -48,7 +48,7 @@ public class BubbleScript : MonoBehaviour
 	public Color ogColor;
 	public Color inActiveColor;
 
-    private void Start()
+    protected virtual void Start()
     {
 		// initialize squeezeTimer
 		squeezeTimer = squeezeTime;
@@ -152,7 +152,7 @@ public class BubbleScript : MonoBehaviour
 
 		AudioManager.Instance.TerminateChargingSound();
     }
-    private void OnBurst()
+    protected virtual void OnBurst()
 	{
         if (lineExplosion)
 		{
@@ -202,7 +202,7 @@ public class BubbleScript : MonoBehaviour
 		thornFan = false;
 		containUpgrade = false;
     }
-    public void Pump()
+    protected virtual void Pump()
     {
         if (transform.localScale.x < size_baseline - 0.1f)
         {
