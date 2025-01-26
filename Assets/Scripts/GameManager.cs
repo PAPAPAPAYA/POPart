@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour
         if (activecount >= failBubbleNum)
         {
             print("You failed");
-            Fail();
             hasFailed = true;
+            Fail();
         }
     }
 
