@@ -136,6 +136,10 @@ PrefabInstance:
       propertyPath: shortShakePreset
       value: 
       objectReference: {fileID: 11400000, guid: 962c80d5abfdc804c9173250c824e853, type: 2}
+    - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
+      propertyPath: pumpSpdMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5991238356593771807, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: m_Enabled
       value: 0

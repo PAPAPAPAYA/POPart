@@ -15,18 +15,21 @@ public class BubbleUpgrade : MonoBehaviour
     #endregion
     public enum Upgrades
     {
+        none,
         lineExplode,
         boxExplode,
         thornFan,
         fastSqueeze
     };
-    public GameObject prefab_thorn;
+    [Header("UPGRADE LEVELs")]
     //level for upgrade one bubble function
     public int lineExplodeLevel;
     public int boxExplodeLevel;
-    public float ExplosionDelay = 0.25f;
     public int thornFanLevel;
     public int fastSqueezeLevel;
+    [Header("UPGRADE VARIABLEs")]
+    public float ExplosionDelay = 0.25f;
+    public GameObject prefab_thorn;
     public float fastSqueezeTime = 0.1f;
     [Header("ACTIVATED UPGRADEs")]
     public bool lineExplosion;
@@ -47,11 +50,12 @@ public class BubbleUpgrade : MonoBehaviour
         fastSqueezeLevel = 1;
     }
 
-    public void ThornFan(int amount)
+    public void ThornFan(int amount, Vector3 spawnPos)
     {
         for (int i = 0; i < amount; i++)
         {
             GameObject thorn = Instantiate(prefab_thorn);
+            thorn.transform.position = spawnPos;
         }
     }
 
@@ -64,8 +68,11 @@ public class BubbleUpgrade : MonoBehaviour
             if ((bs.rowNumber == rowNumber && (Mathf.Abs(bs.colNumber - colNumber) <= lineExplodeLevel) && bs.colNumber != colNumber) ||
                 (bs.colNumber == colNumber && (Mathf.Abs(bs.rowNumber - rowNumber) <= lineExplodeLevel) && bs.rowNumber != rowNumber))
             {
-                int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
-                bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+                if (bs.active)
+                {
+                    int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
+                    bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+                }
             }
         }
     }
@@ -96,8 +103,11 @@ public class BubbleUpgrade : MonoBehaviour
             //}
             if (offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
             {
-                int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
-                bs.DelayedDMGCaller( ExplosionDelay * levelNum, 1);
+                if (bs.active)
+                {
+                    int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
+                    bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+                }
             }
         }
     }
@@ -121,9 +131,8 @@ public class BubbleUpgrade : MonoBehaviour
             BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
             if (offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
             {
-                bs.squeezeTime = fastSqueezeTime;
+                bs.squeezeTimer = fastSqueezeTime;
             }
         }
     }
-
 }

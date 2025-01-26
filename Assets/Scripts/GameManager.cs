@@ -20,17 +20,20 @@ public class GameManager : MonoBehaviour
     public bool isPaused = false;
 
     public int score = 0;
-    public int chestCount = 0;
-    public int chestCountMax;
+    public int chestCount = 0; // when a bubble is popped, +1
+    public float chestCountMax; // when chest count reached chest count max, next bubble is a chest
+    public float chestCountMaxFactor; // when a chest bubble is spawned, multiply chest count max with chest count max factor
 
     void Start()
     {
         failBubbleNum = (int)Mathf.Pow(2*BubbleMakerScript.me.amount_layer - 1f, 2.0f); 
+        hasFailed = false;
     }
 
     void Update()
     {
         Pause();
+        SlowDown();
     }
 
     public void IfFail()
@@ -56,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void Fail()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         MenuManager.me.SendMessage("OpenFailMenu");
         AudioManager.Instance.ApplyMuffleEffect(true);
     }
@@ -90,6 +93,25 @@ public class GameManager : MonoBehaviour
         {
             chestCount = 0 + 1;
         }
-
+    }
+    public void ChestCountMaxUp()
+    {
+        chestCountMax *= chestCountMaxFactor;
+        chestCountMax = (int)chestCountMax;
+    }
+    public void ResetChestCount()
+    {
+        chestCount = 0;
+    }
+    private void SlowDown()
+    {
+        if (UpgradeInteractionManagerScript.me.showingButtons)
+        {
+            Time.timeScale = 0.1f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
     }
 }

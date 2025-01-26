@@ -19,6 +19,26 @@ public class HandUpgrade : MonoBehaviour
     public int thornFanPercentLevel=1;
 
     public List<BubbleScript> selectedBubbles = new List<BubbleScript>();
+    public float squeezeTimeDecreaseAmount;
+    public float minSqueezeTime;
+    public float currentSqueezeTime;
+    public GameObject fasterSqueeze;
+    public float moreBomb_percentageIncreasePerLevel;
+
+    [Header("ACTIVATED UPGRADEs")]
+    public bool boxHand;
+    public bool lineHand;
+    public bool xxHand;
+
+    public enum HandUpgrades
+    {
+        none,
+        hand_fastSqueeze,
+        hand_lineHand,
+        hand_xxHand,
+        hand_box,
+        moreBomb
+    }
 
     void Start()
     {
@@ -32,24 +52,20 @@ public class HandUpgrade : MonoBehaviour
 
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             foreach (var bubble in selectedBubbles)
             {
                 bubble.mouseDown = true;
             }
-            Debug.Log("Down");
         }
         if (Input.GetMouseButtonUp(0))
         {
             foreach (var bubble in selectedBubbles)
             {
                 bubble.ResetBubble();
-
             }
             selectedBubbles.Clear();
-            Debug.Log("Up");
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -63,14 +79,22 @@ public class HandUpgrade : MonoBehaviour
         foreach (var bubble in BubbleMakerScript.me.bubbles)
         {
             BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
-            bs.squeezeTime -= 0.1f;
+            bs.squeezeTime -= squeezeTimeDecreaseAmount;
         }
-
+        currentSqueezeTime -= squeezeTimeDecreaseAmount;
+        if (currentSqueezeTime < minSqueezeTime) // if minimum squeeze time is reached, set squeeze time to min and remove this upgrade from pool
+        {
+            foreach (var bubble in BubbleMakerScript.me.bubbles)
+            {
+                BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
+                bs.squeezeTime = minSqueezeTime;
+            }
+            UpgradeInteractionManagerScript.me.upgradePool.Remove(fasterSqueeze);
+        }
     }
 
     public void LineHand(int rowNumber, int colNumber)
     {
-
         foreach (var bubble in BubbleMakerScript.me.bubbles)
         {
             BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
@@ -129,11 +153,16 @@ public class HandUpgrade : MonoBehaviour
                 if (bs.active == true)
                 {
                     selectedBubbles.Add(bs);
-
                 }
-
             }
         }
+    }
+
+    public void MoreBombUpgrade()
+    {
+        BoxExplodePercentUpgrade();
+        LineExplodePercentUpgrade();
+        ThornFanPercentUpgrade();
     }
 
     public void BoxExplodePercentUpgrade()
