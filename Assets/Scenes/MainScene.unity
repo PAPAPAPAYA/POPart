@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e80be87981bda42899a20b482553d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enable: 0
+  enable: 1
   zoomSpd: 5
   camMinSize: 4
 --- !u!1 &561806905
@@ -3434,7 +3434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6870e2ec968e3ad4491e623fe9a81933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_bubble: {fileID: 3512516516704826017, guid: 53e29072eb0e0324bba0c446a3281709, type: 3}
+  prefab_bubble: {fileID: 3512516516704826017, guid: 175e2603384b29d4daa3f0fe09f343dc, type: 3}
   bubbles: []
   amount_layer: 4
   offset_row_x: 0.8
