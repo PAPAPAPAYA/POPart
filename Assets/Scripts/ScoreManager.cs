@@ -49,4 +49,9 @@ public class ScoreManager : MonoBehaviour
         score.text = "" + GameManager.me.score;
         scoreShadow.text = "" + GameManager.me.score;
     }
+    public void UpdateChestCountMax()
+    {
+        chestCountMax.text = "/" + GameManager.me.chestCountMax;
+        chestCountMaxShadow.text = "/" + GameManager.me.chestCountMax;
+    }
 }
