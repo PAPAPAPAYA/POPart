@@ -17,7 +17,8 @@ public class BubbleUpgrade : MonoBehaviour
     {
         lineExplode,
         boxExplode,
-        thornFan
+        thornFan,
+        fastSqueeze
     };
     public GameObject prefab_thorn;
     //level for upgrade one bubble function
@@ -25,6 +26,8 @@ public class BubbleUpgrade : MonoBehaviour
     public int boxExplodeLevel;
     public float ExplosionDelay = 0.25f;
     public int thornFanLevel;
+    public int fastSqueezeLevel;
+    public float fastSqueezeTime = 0.1f;
     [Header("ACTIVATED UPGRADEs")]
     public bool lineExplosion;
     public GameObject prefab_lineExplosion;
@@ -32,6 +35,8 @@ public class BubbleUpgrade : MonoBehaviour
     public GameObject prefab_boxExplosion;
     public bool thornFan;
     public GameObject prefab_thornFan;
+    public bool fastSqueeze;
+    public GameObject prefab_fastSqueeze;
 
     private void Start()
     {
@@ -39,6 +44,7 @@ public class BubbleUpgrade : MonoBehaviour
         lineExplodeLevel = 1;
         boxExplodeLevel = 1;
         thornFanLevel = 1;
+        fastSqueezeLevel = 1;
     }
 
     public void ThornFan(int amount)
@@ -95,4 +101,29 @@ public class BubbleUpgrade : MonoBehaviour
             }
         }
     }
+
+    //make squeeze time lower for bubbles around this one, lv1 - 33, lv2 - 55, lv3 - 77
+    public void FastSqueeze(int rowNumber, int colNumber)
+    {
+        List<(int, int)> offsets = new List<(int, int)>();
+        for (int i = 1; i <= boxExplodeLevel; i++)
+        {
+            for (int j = 0; j <= boxExplodeLevel + 1; j++)
+            {
+                offsets.Add((-1 * i, -1 * i + j));
+                offsets.Add((1 * i - j, -1 * i));
+                offsets.Add((-1 * i + j, 1 * i));
+                offsets.Add((1 * i, 1 * i - j));
+            }
+        }
+        foreach (var bubble in BubbleMakerScript.me.bubbles)
+        {
+            BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
+            if (offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
+            {
+                bs.squeezeTime = fastSqueezeTime;
+            }
+        }
+    }
+
 }

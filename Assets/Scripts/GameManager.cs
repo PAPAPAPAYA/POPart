@@ -15,11 +15,13 @@ public class GameManager : MonoBehaviour
 
     private int failBubbleNum;
 
-    public bool wudi;//�����޵У������������������
+    public bool wudi;//Wudi
     public bool hasFailed = false;
     public bool isPaused = false;
 
     public int score = 0;
+    public int chestCount = 0;
+    public int chestCountMax;
 
     void Start()
     {
@@ -78,5 +80,16 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.ApplyMuffleEffect(isPaused);
         }
     }
+    public void ChestCountUp()
+    {
+        if (chestCount < chestCountMax)
+        {
+            chestCount += 1;
+        }
+        else
+        {
+            chestCount = 0 + 1;
+        }
 
+    }
 }
