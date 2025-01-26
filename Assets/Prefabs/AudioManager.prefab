@@ -313,9 +313,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e6be9b09c2519d140b15499eba5225f6, type: 3}
   - {fileID: 8300000, guid: 2eb9a4f3f484f7941bf4937409cd8ba4, type: 3}
   chargingSounds:
-  - {fileID: 8300000, guid: c560835e44ea1fb4aa154667fff8429c, type: 3}
-  - {fileID: 8300000, guid: a54069b6064b8b34b82a46011d967e20, type: 3}
-  - {fileID: 8300000, guid: 3842211f158d15b41a9380a6a2b72b98, type: 3}
+  - {fileID: 8300000, guid: ebeef04b4503f054295c5d1863cffa1e, type: 3}
+  - {fileID: 8300000, guid: b2c22e2b8cc0e5c4db9168549e9f689d, type: 3}
+  - {fileID: 8300000, guid: 8ef9afbbc7609d6478e11614f23f2b6d, type: 3}
   rechargeSounds:
   - {fileID: 8300000, guid: 5ac92e4629a53ee46bd36a80a2dac8b7, type: 3}
   popDenySounds:

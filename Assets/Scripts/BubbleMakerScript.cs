@@ -169,10 +169,62 @@ public class BubbleMakerScript : MonoBehaviour
 			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
 			if (!bs.active)
 			{
-				bs.hp = bubbleHp;
+                print("chest test");
+                bs.hp = bubbleHp;
 				bs.pumping = true;
                 if (GameManager.me.chestCount >= GameManager.me.chestCountMax)
 				{
+					print("chest test passed");
+					bs.containUpgrade = true;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
+					GameManager.me.ResetChestCount(); // reset chest count to zero
+					GameManager.me.ChestCountMaxUp(); // increase chest count max
+					ScoreManager.me.UpdateChestCountMax(); // update chest count max UI
+                }
+				if (BubbleUpgrade.me.lineExplosion &&
+                    CheckPercentage(percentage_lineExplosion))
+				{
+					bs.lineExplosion = true;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_lineExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
+
+                }
+				if (BubbleUpgrade.me.boxExplosion &&
+                    CheckPercentage(percentage_boxExplosion))
+				{
+					bs.boxExplosion = true;
+                    bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_boxExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
+                }
+				if (BubbleUpgrade.me.thornFan &&
+                    CheckPercentage(percentage_thornFan))
+				{
+					bs.thornFan = true;
+                    bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_thornFan.GetComponent<UpgradeHolderScript>().mat_upgrade;
+                }
+				if(BubbleUpgrade.me.fastSqueeze &&
+                    CheckPercentage(percentage_fastSqueeze))
+				{
+					bs.fastSqueeze = true;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_fastSqueeze.GetComponent<UpgradeHolderScript>().mat_upgrade;
+				}
+                //CameraZoomScript.me.FitCamera();
+                break;
+			}
+		}
+	}
+
+	private void ActivateARandomBubble()
+	{
+		for(int q = 0; q < bubbles.Count; q++)
+		{
+			BubbleScript bs = bubbles[q].GetComponentInChildren<BubbleScript>();
+			if (!bs.active)
+			{
+                print("chest test");
+                bs.hp = bubbleHp;
+				bs.pumping = true;
+                if (GameManager.me.chestCount >= GameManager.me.chestCountMax)
+				{
+					print("chest test passed");
 					bs.containUpgrade = true;
 					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest; // set bubble mat to yellow
 					GameManager.me.ResetChestCount(); // reset chest count to zero

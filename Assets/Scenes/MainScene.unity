@@ -162,7 +162,6 @@ MonoBehaviour:
   - {fileID: 1596743578}
   - {fileID: 61426608}
   - {fileID: 1228571892}
-  - {fileID: 1715120034}
   - {fileID: 1621871448}
   showButtonStack: 0
   showingButtons: 0
@@ -3903,10 +3902,10 @@ MonoBehaviour:
   offset_col_y: 0.6
   bubbleHp: 1
   amount_initialPump: 16
-  activateInterval: 1
+  activateInterval: 0.3
   activateInterval_decrease_Interval: 5
   activateInterval_decrease_Mult: 0.95
-  activateInterval_min: 0.05
+  activateInterval_min: 0.001
   percentage_lineExplosion: 0
   percentage_boxExplosion: 0
   percentage_thornFan: 0
