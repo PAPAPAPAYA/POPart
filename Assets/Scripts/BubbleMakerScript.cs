@@ -17,7 +17,6 @@ public class BubbleMakerScript : MonoBehaviour
 	public GameObject prefab_bubble;
 	public List<GameObject> bubbles = new();
 	[Header("For Spawning Inactive Bubbles")]
-	private Vector3 startPos;
 	public int amount_layer;
 	public float offset_row_x;
 	public float offset_row_y;
@@ -28,6 +27,9 @@ public class BubbleMakerScript : MonoBehaviour
 	[Header("For Activating Bubbles")]
 	public float activateInterval;
 	private float activateTimer;
+	public float activateInterval_decrease_Interval;
+	private float activateInterval_decrease_timer;
+	public float activateInterval_decrease_Mult;
 	[Header("For Upgrades")]
 	public float percentage_lineExplosion;
 	public float percentage_boxExplosion;
@@ -45,6 +47,8 @@ public class BubbleMakerScript : MonoBehaviour
 
 		// pump a few bubbles at start
 		InitialPump(amount_initialPump);
+
+		activateInterval_decrease_timer = activateInterval_decrease_Interval;
     }
     private void Update()
     {
@@ -59,10 +63,19 @@ public class BubbleMakerScript : MonoBehaviour
 			ActivateABubble();
 			GameManager.me.IfFail();
 		}
-	}
+		SpeedUpBubbleActivationRateOverTime();
+    }
 	private void SpeedUpBubbleActivationRateOverTime()
 	{
-
+		if (activateInterval_decrease_timer > 0)
+		{
+			activateInterval_decrease_timer -= Time.deltaTime;
+		}
+		else
+		{
+            activateInterval_decrease_timer = activateInterval_decrease_Interval;
+            activateInterval *= activateInterval_decrease_Mult;
+		}
 	}
     // used to initializing bubbles
     private void MakeBubbles2()

@@ -39,6 +39,8 @@ public class BubbleScript : MonoBehaviour
 	public bool pumping = true; // if not pumping, it can be pump
 	//public Vector3 size_bursted; // the size when popped
 	public float pumpSpdMultiplier; // how fast it's pumped
+	public float pumpSpdMult_apply_interval;
+	private float pumpSpdMult_apply_timer;
 
     public bool hasPlayedRechargeSound = true; // Flag to check if the recharge sound has been played
 
@@ -62,19 +64,21 @@ public class BubbleScript : MonoBehaviour
 		leaderboardTester = FindObjectOfType<LeaderboardTester>();
 
 		HandUpgrade.me.currentSqueezeTime = squeezeTime;
+
+		pumpSpdMult_apply_timer = pumpSpdMult_apply_interval;
     }
 
     private void Update()
 	{
 		bubbleAnimator.SetFloat("PumpSpeedMult", pumpSpdMultiplier); // change the [pump] animation speed
-
-		// if size reached baseline, it's active
-		/*if(transform.localScale.x >= size_baseline)
+		SpeedUpPumpTimeOverTime();
+        // if size reached baseline, it's active
+        /*if(transform.localScale.x >= size_baseline)
 		{
 			active = true;
             bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
         }*/
-		if (active)
+        if (active)
 		{
             bubbleAnimator.Play("Active");
             bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
@@ -98,7 +102,7 @@ public class BubbleScript : MonoBehaviour
 		}
 		if (mouseDown)
 		{
-			if (active && // if bubble is pumped
+            if (active && // if bubble is pumped
 				!UpgradeInteractionManagerScript.me.showingButtons) // if not showing upgrade buttons
 			{
                 if (squeezeTimer > 0)
@@ -120,7 +124,15 @@ public class BubbleScript : MonoBehaviour
 	}
 	private void SpeedUpPumpTimeOverTime()
 	{
-
+		if (pumpSpdMult_apply_timer > 0)
+		{
+			pumpSpdMult_apply_timer -= Time.deltaTime;
+		}
+		else
+		{
+			pumpSpdMultiplier *= pumpSpdMultiplier;
+            pumpSpdMult_apply_timer = pumpSpdMult_apply_interval;
+		}
 	}
 	public void setActive()
 	{
@@ -131,7 +143,19 @@ public class BubbleScript : MonoBehaviour
     private void OnMouseDown()
     {
         mouseDown = true;
-		if (active)
+        if (HandUpgrade.me.lineHand)
+        {
+            HandUpgrade.me.LineHand(rowNumber, colNumber);
+        }
+		if (HandUpgrade.me.xxHand)
+		{
+			HandUpgrade.me.XXHand(rowNumber, colNumber);
+		}
+		if (HandUpgrade.me.boxHand)
+		{
+			HandUpgrade.me.BoxHand(rowNumber, colNumber);
+		}
+        if (active)
 		{
 			// start playing ps_squeeze
             PS_squeeze.GetComponent<ParticleSystem>().Play();
@@ -146,7 +170,6 @@ public class BubbleScript : MonoBehaviour
 			// if not active, play a sound
 		}
     }
-
     private void OnMouseUp()
     {
 		mouseDown = false;
