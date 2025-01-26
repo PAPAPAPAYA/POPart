@@ -60,11 +60,11 @@ public class MenuManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainScene");
     }
     public void BackToTitle()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("StartScene");
     }
 
     // Function to set the master volume based on the slider value
