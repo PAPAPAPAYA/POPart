@@ -3735,7 +3735,7 @@ MonoBehaviour:
   offset_col_y: 0.6
   bubbleHp: 1
   amount_initialPump: 16
-  activateInterval: 1
+  activateInterval: 0.5
   activateInterval_decrease_Interval: 5
   activateInterval_decrease_Mult: 0.95
   activateInterval_min: 0.05
