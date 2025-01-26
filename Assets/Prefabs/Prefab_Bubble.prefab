@@ -145,10 +145,12 @@ MonoBehaviour:
   lineExplosion: 0
   boxExplosion: 0
   thornFan: 0
+  fastSqueeze: 0
   hp: 1
   rowNumber: 0
   colNumber: 0
   mouseDown: 0
+  defaultSqueezeTimer: 0.3
   squeezeTime: 0.3
   squeezeTimer: 0
   size_baseline: 1.2
@@ -157,6 +159,9 @@ MonoBehaviour:
   size_bursted: {x: 0.1, y: 0.1, z: 0.1}
   pumpSpd: 2
   hasPlayedRechargeSound: 1
+  bubbleAnimator: {fileID: 0}
+  ogColor: {r: 0, g: 0, b: 0, a: 0}
+  inActiveColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &7482265574867232785
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class UpgradeHolderScript : MonoBehaviour
     {
         switch (thisUpgrade)
         {
+            case BubbleUpgrade.Upgrades.fastSqueeze:
+                break;
             case BubbleUpgrade.Upgrades.lineExplode:
 
                 break;
