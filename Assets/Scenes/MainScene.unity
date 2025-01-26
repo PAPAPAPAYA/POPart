@@ -1823,7 +1823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name_upgrade: SPIKE<br>BOMB
   textColor: {r: 0.9372549, g: 0.49803922, b: 0, a: 1}
-  mat_upgrade: {fileID: 2100000, guid: 45634fa7c65124e4f99f14e8aa815082, type: 2}
+  mat_upgrade: {fileID: 2100000, guid: becaf34cb513fb64d912ef6c971dbfbe, type: 2}
   icon_upgrade: {fileID: 21300000, guid: f50b0427c1c941f43b9c6c247804527c, type: 3}
   bubbleUpgrade: 3
   handUpgrade: 0
@@ -3470,7 +3470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name_upgrade: WEAKEN<br>BOMB
   textColor: {r: 0.5019608, g: 0.28235295, b: 0.6862745, a: 1}
-  mat_upgrade: {fileID: 2100000, guid: ca3373ccfff02374690709e3b3a4909c, type: 2}
+  mat_upgrade: {fileID: 2100000, guid: f5e77784b8000da49a4092663a077bfa, type: 2}
   icon_upgrade: {fileID: 21300000, guid: 248b1c10dec7dd242bf5785bbc96efe2, type: 3}
   bubbleUpgrade: 4
   handUpgrade: 0
@@ -4791,7 +4791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name_upgrade: BOMB<br>BOOST
   textColor: {r: 0.3019608, g: 0.3019608, b: 0.3019608, a: 1}
-  mat_upgrade: {fileID: 2100000, guid: 1870b1d57bb80484a9e52d725ae59ba2, type: 2}
+  mat_upgrade: {fileID: 2100000, guid: 99bdaa2817af4d94b934587cec45a7eb, type: 2}
   icon_upgrade: {fileID: 21300000, guid: 5a26e9473215e0047b9bb5ae537d7e0a, type: 3}
   bubbleUpgrade: 0
   handUpgrade: 5
