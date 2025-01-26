@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     private int failBubbleNum;
 
-    public bool wudi;//¿ª¹ÒÎÞµÐ£¬²»»áËÀÍö£¬·½±ã²âÊÔ
+    public bool wudi;//ï¿½ï¿½ï¿½ï¿½ï¿½ÞµÐ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public bool hasFailed = false;
     public bool isPaused = false;
 
@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         MenuManager.me.SendMessage("OpenFailMenu");
+        AudioManager.Instance.ApplyMuffleEffect(true);
     }
 
     private void Pause()
@@ -73,6 +74,8 @@ public class GameManager : MonoBehaviour
                 isPaused = false;
             }
             MenuManager.me.SendMessage("ChangePauseMenuState");
+            
+            AudioManager.Instance.ApplyMuffleEffect(isPaused);
         }
     }
 
