@@ -85,7 +85,6 @@ public class BubbleMakerScript : MonoBehaviour
 		for (int i = 0; i < amount_layer; i++)
 		{
 			GameObject bubble1 = Instantiate(prefab_bubble);
-            Debug.Log("jj");
             if (i == 0)
 			{
                 bubble1.transform.position = new(0,

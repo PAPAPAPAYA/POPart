@@ -138,7 +138,6 @@ public class BubbleScript : MonoBehaviour
 	}
 	public void setActive()
 	{
-		Debug.Log("setactive");
 		active = true;
 		pumping = false;
 	}
@@ -196,7 +195,6 @@ public class BubbleScript : MonoBehaviour
     }
     protected virtual void OnBurst()
 	{
-        Debug.Log("b");
         if (lineExplosion)
 		{
 			BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
