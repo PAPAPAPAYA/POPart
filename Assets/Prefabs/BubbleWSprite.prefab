@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6601454745644881039}
   m_Layer: 0
-  m_Name: BubbleSpriteTest
+  m_Name: BubbleWSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,15 +122,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: inActiveColor.b
-      value: 1
+      value: 0.8792453
       objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: inActiveColor.g
-      value: 1
+      value: 0.8792453
       objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: inActiveColor.r
-      value: 1
+      value: 0.8792453
       objectReference: {fileID: 0}
     - target: {fileID: 2729407757922625095, guid: 7f0125981a638f54888033e181289f03, type: 3}
       propertyPath: shortShakePreset

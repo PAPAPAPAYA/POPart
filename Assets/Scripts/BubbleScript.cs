@@ -104,6 +104,10 @@ public class BubbleScript : MonoBehaviour
             }
 		}
 	}
+	public void setActive()
+	{
+		active = true;
+	}
     private void OnMouseDown()
     {
 
