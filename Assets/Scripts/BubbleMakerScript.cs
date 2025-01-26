@@ -28,7 +28,12 @@ public class BubbleMakerScript : MonoBehaviour
 	[Header("For Activating Bubbles")]
 	public float activateInterval;
 	private float activateTimer;
-
+	[Header("For Putting in Upgrades")]
+	public float percentage_containUpgrade;
+	public float percentage_lineExplosion;
+	public float percentage_boxExplosion;
+	public float percentage_thornFan;
+	public Material matChest;
 
     private void Start()
 	{
@@ -52,6 +57,7 @@ public class BubbleMakerScript : MonoBehaviour
 		{
 			activateTimer = activateInterval;
 			ActivateABubble();
+			GameManager.me.IfFail();
 		}
 	}
     // used to initializing bubbles
@@ -146,6 +152,30 @@ public class BubbleMakerScript : MonoBehaviour
 			{
 				bs.hp = bubbleHp;
 				bs.pumping = true;
+                if (CheckPercentage(percentage_containUpgrade))
+				{
+					bs.containUpgrade = true;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = matChest;
+                }
+				if (CheckPercentage(percentage_lineExplosion) &&
+					BubbleUpgrade.me.lineExplosion)
+				{
+					bs.lineExplosion = true;
+					bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_lineExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
+
+                }
+				if (CheckPercentage(percentage_boxExplosion) &&
+                    BubbleUpgrade.me.boxExplosion)
+				{
+					bs.boxExplosion = true;
+                    bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_boxExplosion.GetComponent<UpgradeHolderScript>().mat_upgrade;
+                }
+				if (CheckPercentage(percentage_thornFan) &&
+                    BubbleUpgrade.me.thornFan)
+				{
+					bs.thornFan = true;
+                    bs.bubbleImg.GetComponent<SpriteRenderer>().material = BubbleUpgrade.me.prefab_thornFan.GetComponent<UpgradeHolderScript>().mat_upgrade;
+                }
                 //CameraZoomScript.me.FitCamera();
                 break;
 			}
@@ -163,7 +193,17 @@ public class BubbleMakerScript : MonoBehaviour
         }
 	}
 
-
+	private bool CheckPercentage(float percentage)
+	{
+		if (Random.Range(0, 1f) <= percentage)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
     // DEPRECATED
     private void MakeBubbles(int x, int y)
