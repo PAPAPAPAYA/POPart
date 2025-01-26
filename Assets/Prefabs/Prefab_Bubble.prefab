@@ -138,6 +138,7 @@ MonoBehaviour:
   PSprefab_burst: {fileID: 4510758115324676906, guid: dcc0085f46950e042a7db599741d854b, type: 3}
   PS_squeeze: {fileID: 5503503473182820826}
   SP_squeeze: {fileID: 0}
+  shortShakePreset: {fileID: 0}
   BubbleCircle: {fileID: 7482265574867232785}
   bubbleImg: {fileID: 0}
   containUpgrade: 0
@@ -155,6 +156,7 @@ MonoBehaviour:
   pumping: 0
   size_bursted: {x: 0.1, y: 0.1, z: 0.1}
   pumpSpd: 2
+  hasPlayedRechargeSound: 1
 --- !u!1 &7482265574867232785
 GameObject:
   m_ObjectHideFlags: 0

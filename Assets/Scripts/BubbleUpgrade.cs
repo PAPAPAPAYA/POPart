@@ -83,7 +83,12 @@ public class BubbleUpgrade : MonoBehaviour
         foreach (var bubble in BubbleMakerScript.me.bubbles)
         {
             BubbleScript bs = bubble.GetComponentInChildren<BubbleScript>();
-            if(offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
+            //int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
+            //if (levelNum <= boxExplodeLevel)
+            //{
+                //bs.DelayedDMGCaller(ExplosionDelay * levelNum, 1);
+            //}
+            if (offsets.Contains((bs.rowNumber - rowNumber, bs.colNumber - colNumber)))
             {
                 int levelNum = Mathf.Max(Mathf.Abs(bs.rowNumber - rowNumber), Mathf.Abs(bs.colNumber - colNumber));
                 bs.DelayedDMGCaller( ExplosionDelay * levelNum, 1);

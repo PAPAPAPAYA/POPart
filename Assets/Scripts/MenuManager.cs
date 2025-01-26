@@ -60,4 +60,12 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    // Function to set the master volume based on the slider value
+    public void SetVolume(float volume)
+    {
+        // Convert the slider value (0-1) to a logarithmic scale (-80dB to 0dB)
+        float dB = Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20;
+        AudioManager.Instance.SetMasterVolume(dB);
+    }
 }
