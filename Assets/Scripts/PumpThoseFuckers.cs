@@ -46,7 +46,7 @@ public class PumpThoseFuckers : MonoBehaviour
         {
             AudioManager.Instance.PlayBGM(AudioManager.Instance.bgm);
         }
-        if (burstCount == 18)
+        if (burstCount == 24)
         {
             SceneManager.LoadScene("MainScene");
         }
