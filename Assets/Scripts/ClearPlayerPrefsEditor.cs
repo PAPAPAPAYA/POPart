@@ -1,8 +1,8 @@
-//using UnityEditor;
-//using UnityEngine;
+// using UnityEditor;
+// using UnityEngine;
 
-//public class ClearPlayerPrefsEditor : Editor
-//{
+// public class ClearPlayerPrefsEditor : Editor
+// {
 //    [MenuItem("Tools/Clear Player Preferences")]
 //    public static void ClearPlayerPrefs()
 //    {
@@ -14,4 +14,4 @@
 //            Debug.Log("Player preferences cleared.");
 //        }
 //    }
-//}
+// }
