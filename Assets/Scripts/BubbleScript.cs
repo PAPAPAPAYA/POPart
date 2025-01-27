@@ -79,92 +79,94 @@ public class BubbleScript : MonoBehaviour
 
 	private void Update()
 	{
-		if (!GameManager.me.isPaused)
+
+		if (GameManager.me == null || !GameManager.me.isPaused)
 		{
-            if (!GameManager.me.isPaused)
-            {
-                bubbleAnimator.SetFloat("PumpSpeedMult", pumpSpdMultiplier); // change the [pump] animation speed
-                SpeedUpPumpTimeOverTime();
-                // if size reached baseline, it's active
-                /*if(transform.localScale.x >= size_baseline)
-                {
-                    active = true;
-                    bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
-                }*/
-                if (active)
-                {
-                    bubbleAnimator.Play("Active");
-                    bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
 
-                }
-                if (!active)
-                {
-                    bubbleImg.GetComponent<SpriteRenderer>().color = inActiveColor;
-                }
+			bubbleAnimator.SetFloat("PumpSpeedMult", pumpSpdMultiplier); // change the [pump] animation speed
+			SpeedUpPumpTimeOverTime();
+			// if size reached baseline, it's active
+			/*if(transform.localScale.x >= size_baseline)
+			{
+				active = true;
+				bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
+			}*/
+			if (active)
+			{
+				bubbleAnimator.Play("Active");
+				bubbleImg.GetComponent<SpriteRenderer>().color = ogColor;
 
-                // if popped, call OnBurst()
-                if (hp <= 0)
-                {
-                    OnBurst();
-                    hp = 1;
-                }
-                // pumping is set in BubbleMaker, when pumping is true, pump()
-                if (pumping)
-                {
-                    Pump();
-                }
-                if (mouseDown)
-                {
-                    if (active)
-                    {
-                        if (SceneManager.GetActiveScene().name != "MainScene"
-                        || !UpgradeInteractionManagerScript.me.showingButtons)
-                        {
-                            if (squeezeTimer > 0)
-                            {
-                                if (!PS_squeeze.GetComponent<ParticleSystem>().isPlaying)
-                                {
-                                    PS_squeeze.GetComponent<ParticleSystem>().Play();
-                                }
-                                shakeInstance.Start(SP_squeeze.FadeIn);
-                                squeezeTimer -= Time.deltaTime;
-                            }
-                            else if (squeezeTimer <= 0)
-                            {
-                                if (containUpgrade)
-                                    squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
-                                else
-                                    squeezeTimer = squeezeTime;
-                                hp--;
-                            }
-                        }
+			}
+			if (!active)
+			{
+				bubbleImg.GetComponent<SpriteRenderer>().color = inActiveColor;
+			}
 
-                    }
-                    else if (active && // if bubble is pumped
-                        !UpgradeInteractionManagerScript.me.showingButtons)
-                    {// if not showing upgrade buttons
-                        if (squeezeTimer > 0)
-                        {
-                            if (!PS_squeeze.GetComponent<ParticleSystem>().isPlaying)
-                            {
-                                PS_squeeze.GetComponent<ParticleSystem>().Play();
-                            }
-                            shakeInstance.Start(SP_squeeze.FadeIn);
-                            squeezeTimer -= Time.deltaTime;
-                        }
-                        else if (squeezeTimer <= 0)
-                        {
-                            if (containUpgrade)
-                                squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
-                            else
-                                squeezeTimer = squeezeTime;
-                            hp--;
-                        }
-                    }
+			// if popped, call OnBurst()
+			if (hp <= 0)
+			{
+				OnBurst();
+				hp = 1;
+			}
+			// pumping is set in BubbleMaker, when pumping is true, pump()
+			if (pumping)
+			{
+				Pump();
+			}
+			if (mouseDown)
+			{
+				if (active)
+				{
+					if (SceneManager.GetActiveScene().name != "MainScene"
+					|| !UpgradeInteractionManagerScript.me.showingButtons)
+					{
+						if (squeezeTimer > 0)
+						{
+							if (!PS_squeeze.GetComponent<ParticleSystem>().isPlaying)
+							{
+								PS_squeeze.GetComponent<ParticleSystem>().Play();
+							}
+							shakeInstance.Start(SP_squeeze.FadeIn);
+							squeezeTimer -= Time.deltaTime;
+						}
+						else if (squeezeTimer <= 0)
+						{
+							if (containUpgrade)
+								squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
+							else
+								squeezeTimer = squeezeTime;
+							hp--;
+						}
+					}
 
-                }
-            }
-        }
+				}
+				else if (active && // if bubble is pumped
+					!UpgradeInteractionManagerScript.me.showingButtons)
+				{// if not showing upgrade buttons
+					if (squeezeTimer > 0)
+					{
+						if (!PS_squeeze.GetComponent<ParticleSystem>().isPlaying)
+						{
+							PS_squeeze.GetComponent<ParticleSystem>().Play();
+						}
+						shakeInstance.Start(SP_squeeze.FadeIn);
+						squeezeTimer -= Time.deltaTime;
+					}
+					else if (squeezeTimer <= 0)
+					{
+						if (containUpgrade)
+							squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
+						else
+							squeezeTimer = squeezeTime;
+						hp--;
+					}
+				}
+
+
+
+			}
+		}
+
 	}
 	private void SpeedUpPumpTimeOverTime()
 	{
@@ -184,124 +186,146 @@ public class BubbleScript : MonoBehaviour
 		active = true;
 		pumping = false;
 
-		if (BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+		if (BubbleMakerScript.me != null)
 		{
-       BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
-    }
+			if (BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+			{
+				BubbleMakerScript.me.inactiveBubbles.Remove(gameObject.transform.parent.gameObject);
+			}
+		}
 
+		
 
+	}
+
+	public void PlayRecharageSound()
+	{
 		AudioManager.Instance.PlayRechargeSound();
-
 	}
 	private void OnMouseDown()
 	{
-        if (!GameManager.me.isPaused)
-        {
-            mouseDown = true;
-            if (HandUpgrade.me != null)
-            {
-                if (HandUpgrade.me.lineHand)
-                {
-                    HandUpgrade.me.LineHand(rowNumber, colNumber);
-                }
-                if (HandUpgrade.me.xxHand)
-                {
-                    HandUpgrade.me.XXHand(rowNumber, colNumber);
-                }
-                if (HandUpgrade.me.boxHand)
-                {
-                    HandUpgrade.me.BoxHand(rowNumber, colNumber);
-                }
-            }
+		if (GameManager.me == null || !GameManager.me.isPaused)
+		{
 
-            if (active)
-            {
-                // start playing ps_squeeze
-                PS_squeeze.GetComponent<ParticleSystem>().Play();
-                // start shaking
-                shakeInstance.Start(SP_squeeze.FadeIn);
+			mouseDown = true;
+			if (HandUpgrade.me != null)
+			{
+				if (HandUpgrade.me.lineHand)
+				{
+					HandUpgrade.me.LineHand(rowNumber, colNumber);
+				}
+				if (HandUpgrade.me.xxHand)
+				{
+					HandUpgrade.me.XXHand(rowNumber, colNumber);
+				}
+				if (HandUpgrade.me.boxHand)
+				{
+					HandUpgrade.me.BoxHand(rowNumber, colNumber);
+				}
+			}
 
-                AudioManager.Instance.PlayChargingSound(squeezeTimer);
-            }
-            else
-            {
-                shaker.Shake(shortShakePreset);
-                AudioManager.Instance.PlayPopDenySound();
-                // if not active, play a sound
-            }
-        }
-        
+			if (active)
+			{
+				// start playing ps_squeeze
+				PS_squeeze.GetComponent<ParticleSystem>().Play();
+				// start shaking
+				shakeInstance.Start(SP_squeeze.FadeIn);
+
+				AudioManager.Instance.PlayChargingSound(squeezeTimer);
+			}
+			else
+			{
+				shaker.Shake(shortShakePreset);
+				AudioManager.Instance.PlayPopDenySound();
+				// if not active, play a sound
+			}
+
+
+		}
+
+
 	}
 	private void OnMouseUp()
 	{
-        mouseDown = false;
-        if (!GameManager.me.isPaused)
+		mouseDown = false;
+		if (GameManager.me == null || !GameManager.me.isPaused)
 		{
-            // stop playing ps_squeeze
-            PS_squeeze.GetComponent<ParticleSystem>().Stop();
-            // stop shaking
-            shakeInstance.Stop(SP_squeeze.FadeOut, false);
-            // reset squeeze timer
-            if (containUpgrade)
-                squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
-            else
-                squeezeTimer = squeezeTime;
-        }
-    }
-    private void OnMouseExit()
-    {
-        mouseDown = false;
-        // stop playing ps_squeeze
-        PS_squeeze.GetComponent<ParticleSystem>().Stop();
-        // stop shaking
-        shakeInstance.Stop(SP_squeeze.FadeOut, false);
-        // reset squeeze timer
-        if (containUpgrade)
-            squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
-        else
-            squeezeTimer = squeezeTime;
-    }
-    public void ResetBubble()
-    {
-        mouseDown = false;
-        // stop playing ps_squeeze
-        PS_squeeze.GetComponent<ParticleSystem>().Stop();
-        // stop shaking
-        shakeInstance.Stop(SP_squeeze.FadeOut, false);
-        // reset squeeze timer
-        if (containUpgrade)
-            squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
-        else
-            squeezeTimer = squeezeTime;
 
-        AudioManager.Instance.TerminateChargingSound();
+			// stop playing ps_squeeze
+			PS_squeeze.GetComponent<ParticleSystem>().Stop();
+			// stop shaking
+			shakeInstance.Stop(SP_squeeze.FadeOut, false);
+			// reset squeeze timer
+			if (containUpgrade)
+				squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
+			else
+				squeezeTimer = squeezeTime;
+
+		}
+
+	}
+	private void OnMouseExit()
+	{
+		mouseDown = false;
+		// stop playing ps_squeeze
+		PS_squeeze.GetComponent<ParticleSystem>().Stop();
+		// stop shaking
+		shakeInstance.Stop(SP_squeeze.FadeOut, false);
+		// reset squeeze timer
+		if (containUpgrade)
+			squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
+		else
+			squeezeTimer = squeezeTime;
+	}
+	public void ResetBubble()
+	{
+		mouseDown = false;
+		// stop playing ps_squeeze
+		PS_squeeze.GetComponent<ParticleSystem>().Stop();
+		// stop shaking
+		shakeInstance.Stop(SP_squeeze.FadeOut, false);
+		// reset squeeze timer
+		if (containUpgrade)
+			squeezeTimer = BubbleMakerScript.me.chestSqueezeTime;
+		else
+			squeezeTimer = squeezeTime;
+
+		AudioManager.Instance.TerminateChargingSound();
 	}
 	protected virtual void OnBurst()
 	{
-		if (!BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+		if (BubbleMakerScript.me != null)
 		{
-            BubbleMakerScript.me.inactiveBubbles.Add(gameObject.transform.parent.gameObject);
-        }
-        if (lineExplosion)
-		{
-			BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
+			if (!BubbleMakerScript.me.inactiveBubbles.Contains(gameObject.transform.parent.gameObject))
+			{
+				BubbleMakerScript.me.inactiveBubbles.Add(gameObject.transform.parent.gameObject);
+			}
 		}
-		if (boxExplosion)
+
+		if (BubbleUpgrade.me != null)
 		{
-			BubbleUpgrade.me.BoxExplode(rowNumber, colNumber);
+			if (lineExplosion)
+			{
+				BubbleUpgrade.me.LineExplode(rowNumber, colNumber);
+			}
+			if (boxExplosion)
+			{
+				BubbleUpgrade.me.BoxExplode(rowNumber, colNumber);
+			}
+			if (thornFan)
+			{
+				BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 1, transform.position);
+			}
+			if (fastSqueeze)
+			{
+				BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
+			}
+			if (containUpgrade)
+			{
+				UpgradeInteractionManagerScript.me.showButtonStack++;
+			}
 		}
-		if (thornFan)
-		{
-			BubbleUpgrade.me.ThornFan(BubbleUpgrade.me.thornFanLevel * 1, transform.position);
-		}
-		if (fastSqueeze)
-		{
-			BubbleUpgrade.me.FastSqueeze(rowNumber, colNumber);
-		}
-		if (containUpgrade)
-		{
-			UpgradeInteractionManagerScript.me.showButtonStack++;
-		}
+
 		active = false;
 		pumping = false;
 
