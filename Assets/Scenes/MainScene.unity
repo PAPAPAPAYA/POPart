@@ -5202,6 +5202,7 @@ MonoBehaviour:
   CCMUpgradeCount: 0
   upgradedCount: 0
   chestCountMaxPresets: 
+  gameLength: 10
 --- !u!1 &1867653161
 GameObject:
   m_ObjectHideFlags: 0

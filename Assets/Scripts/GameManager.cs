@@ -34,17 +34,31 @@ public class GameManager : MonoBehaviour
     private float screenShakeCooldown = 0.2f; // Cooldown time in seconds
     private float lastScreenShakeTime = -5.0f; // Initialize to allow immediate shake
 
+    private float startTime;
+    private float currentTime;
+    public float gameLength;
+    private int timeLeft;
+
     void Start()
     {
         failBubbleNum = (int)Mathf.Pow(2 * BubbleMakerScript.me.amount_layer - 1f, 2.0f);
         hasFailed = false;
         StartCoroutine(CheckScoreBurst());
+        startTime = Time.time;
     }
 
     void Update()
     {
         Pause();
         SlowDown();
+        currentTime = Time.time;
+        timeLeft = (int)(gameLength - currentTime + startTime);
+        print(timeLeft);
+        if (timeLeft <= 0)
+        {
+            hasFailed = true;
+            Fail();
+        }
     }
 
     private IEnumerator CheckScoreBurst()
