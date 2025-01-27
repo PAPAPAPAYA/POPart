@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class GameManager : MonoBehaviour
     public float gameLength;
     private int timeLeft;
 
+    public GameObject UI_timer;
+    public GameObject UI_timer_shadow;
+
     void Start()
     {
         failBubbleNum = (int)Mathf.Pow(2 * BubbleMakerScript.me.amount_layer - 1f, 2.0f);
@@ -59,6 +63,8 @@ public class GameManager : MonoBehaviour
             hasFailed = true;
             Fail();
         }
+        UI_timer.GetComponent<TextMeshProUGUI>().text = ""+timeLeft;
+        UI_timer_shadow.GetComponent<TextMeshProUGUI>().text = "" + timeLeft;
     }
 
     private IEnumerator CheckScoreBurst()
