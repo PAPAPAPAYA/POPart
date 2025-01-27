@@ -3840,8 +3840,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4290954596
+  m_fontColor: {r: 0.39044145, g: 0.7735849, b: 0.7590308, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5495,7 +5495,7 @@ MonoBehaviour:
   CCMUpgradeCount: 0
   upgradedCount: 0
   chestCountMaxPresets: 070000000a0000000f0000001900000023000000
-  gameLength: 300
+  gameLength: 180
   UI_timer: {fileID: 1235735051}
   UI_timer_shadow: {fileID: 604792043}
 --- !u!1 &1867653161
